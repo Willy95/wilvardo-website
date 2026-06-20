@@ -177,4 +177,3 @@ devuelven la 404 con status 404).
 - **Logo SVG:** el isotipo es PNG. Convertir a SVG para nitidez y favicon dedicado.
 - **Legal:** aviso de privacidad y terminos no existen aun.
 - **Dominio del sitemap:** confirmar `SITE_URL` en `vite.config.ts` antes de desplegar, y configurar en el hosting el redirect de rutas sin slash (la mayoria lo hace solo).
-```
