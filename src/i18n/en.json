@@ -140,5 +140,20 @@
     "contactHeading": "Contact",
     "siteHeading": "Map",
     "copyright": "© 2026 Wilvardo Ramírez · made with judgment"
+  },
+  "error": {
+    "meta": { "title": "404 · Route not found — Wilvardo Ramírez" },
+    "codes": {
+      "404": {
+        "code": "404",
+        "shell": "bash: cd: route not found",
+        "title": "This route doesn't exist.",
+        "body": "The link is broken or the page moved. Let's get back to solid ground."
+      }
+    },
+    "actions": {
+      "home": "Back to home",
+      "blog": "Go to the blog"
+    }
   }
 }

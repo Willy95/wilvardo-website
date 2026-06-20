@@ -140,5 +140,20 @@
     "contactHeading": "Contacto",
     "siteHeading": "Mapa",
     "copyright": "© 2026 Wilvardo Ramírez · hecho con criterio"
+  },
+  "error": {
+    "meta": { "title": "404 · Ruta no encontrada — Wilvardo Ramírez" },
+    "codes": {
+      "404": {
+        "code": "404",
+        "shell": "bash: cd: ruta no encontrada",
+        "title": "Esta ruta no existe.",
+        "body": "El enlace está roto o la página se movió. Volvamos a terreno conocido."
+      }
+    },
+    "actions": {
+      "home": "Volver al inicio",
+      "blog": "Ir al blog"
+    }
   }
 }
