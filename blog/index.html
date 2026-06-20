@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <script>
+      (function () {
+        try {
+          var p = localStorage.getItem("wilvardo:theme");
+          var sys = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+          document.documentElement.setAttribute("data-theme", p === "light" || p === "dark" ? p : sys);
+        } catch (e) {}
+      })();
+    </script>
+    <meta name="theme-color" content="#0A0E16" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#F7F9FC" media="(prefers-color-scheme: light)" />
+
+    <title>Blog — Wilvardo Ramírez</title>
+    <meta name="description" content="Criterio: ensayos, tutoriales y análisis sobre ingeniería, dirección de producto y el uso responsable de la IA en el desarrollo de software. Por Wilvardo Ramírez." />
+    <meta name="author" content="Wilvardo Ramírez" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://wilvardo.com/blog/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content="Wilvardo · Criterio" />
+    <meta property="og:title" content="Criterio — Software con criterio" />
+    <meta property="og:description" content="Ensayos, tutoriales y análisis sobre ingeniería, dirección de producto e IA con criterio." />
+    <meta property="og:url" content="https://wilvardo.com/blog/" />
+    <meta property="og:image" content="https://wilvardo.com/og-default.webp" />
+    <meta property="og:image:alt" content="Criterio — el blog de Wilvardo Ramírez." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Criterio — Software con criterio" />
+    <meta name="twitter:description" content="Ensayos, tutoriales y análisis sobre ingeniería, dirección de producto e IA con criterio." />
+    <meta name="twitter:image" content="https://wilvardo.com/og-default.webp" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400..600&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="/isotipo.png" />
+    <link rel="apple-touch-icon" href="/isotipo.png" />
+  </head>
+  <body>
+    <a class="visually-hidden" href="#posts">Saltar a los artículos</a>
+
+    <header class="site-header" role="banner">
+      <div class="header-inner">
+        <a class="brand-link" href="/" aria-label="Wilvardo Ramírez — Inicio">
+          <img src="/isotipo.png" alt="" width="34" height="34" />
+          <span class="brand-wordmark">Wilvardo</span>
+          <span class="brand-meta" aria-hidden="true">/ criterio</span>
+        </a>
+
+        <nav class="site-nav" aria-label="Navegación principal">
+          <a href="/#about">Identidad</a>
+          <a href="/#capabilities">Capacidades</a>
+          <a href="/#standards">Cómo trabajo</a>
+          <a href="/blog/" aria-current="page">Blog</a>
+        </nav>
+
+        <div class="header-actions">
+          <button class="icon-btn" type="button" data-action="toggle-theme" data-pref="system" aria-label="Tema: sistema. Pulsa para cambiar" title="Tema: sistema">
+            <svg data-icon="system" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none" /></svg>
+            <svg data-icon="light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" /></svg>
+            <svg data-icon="dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>
+          </button>
+          <a class="btn-primary header-cta" href="/#cta">Agenda una llamada</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="blog-hero">
+        <div class="container">
+          <h1 class="blog-title">Blog</h1>
+          <p class="blog-intro">Notas sobre construir y dirigir software con criterio: ingeniería, dirección de producto y el uso de la IA sin entregarle el pensamiento.</p>
+        </div>
+      </section>
+
+      <div class="container">
+        <div class="filters" role="group" aria-label="Filtrar por pilar">
+          <button class="filter" type="button" data-filter="all" aria-pressed="true">Todos <span class="count">10</span></button>
+          <button class="filter" type="button" data-filter="ia" aria-pressed="false">IA con criterio <span class="count">2</span></button>
+          <button class="filter" type="button" data-filter="ing" aria-pressed="false">Ingeniería <span class="count">4</span></button>
+          <button class="filter" type="button" data-filter="dir" aria-pressed="false">Dirección y producto <span class="count">2</span></button>
+          <button class="filter" type="button" data-filter="ux" aria-pressed="false">UX y oficio <span class="count">2</span></button>
+        </div>
+
+        <section id="posts" class="blog-grid" aria-label="Artículos">
+          <article class="card is-featured" data-pilar="ia">
+            <div class="card-thumb"><img src="/blog/programar-en-la-era-de-la-ia/programar-en-la-era-de-la-ia-hero.webp" alt="Manos sosteniendo a contraluz una hoja impresa." width="1200" height="800" decoding="async" /><span class="card-badge">Nuevo</span></div>
+            <div class="card-body">
+              <p class="card-meta"><span class="pilar">IA con criterio</span></p>
+              <h2><a class="card-cover-link" href="/blog/programar-en-la-era-de-la-ia/">Programar en la era de la IA: por qué el criterio es el diferenciador</a></h2>
+              <p>El criterio es lo que la IA no escribe por ti. El manifiesto que abre el blog.</p>
+              <span class="card-cta">Leer →</span>
+            </div>
+          </article>
+
+          <article class="card is-soon" data-pilar="ing">
+            <div class="card-thumb"><img src="/blog/placeholder-card.webp" alt="" loading="lazy" width="1200" height="800" decoding="async" /><span class="card-badge soon">Próximo</span></div>
+            <div class="card-body">
+              <p class="card-meta"><span class="pilar">Ingeniería</span></p>
+              <h2>El modelo de datos: la decisión más cara de improvisar</h2>
+              <p>Lo barato hoy se vuelve carísimo cuando ya hay datos en producción.</p>
+              <span class="card-cta">Próximamente</span>
+            </div>
+          </article>
+
+          <article class="card is-soon" data-pilar="ing">
+            <div class="card-thumb"><img src="/blog/placeholder-card.webp" alt="" loading="lazy" width="1200" height="800" decoding="async" /><span class="card-badge soon">Próximo</span></div>
+            <div class="card-body">
+              <p class="card-meta"><span class="pilar">Ingeniería</span></p>
+              <h2>Arquitectura hexagonal + vertical slicing en un API real</h2>
+              <p>Cómo estructuro un API Node/Adonis que escala y se mantiene.</p>
+              <span class="card-cta">Próximamente</span>
+            </div>
+          </article>
+
+          <article class="card is-soon" data-pilar="ia">
+            <div class="card-thumb"><img src="/blog/placeholder-card.webp" alt="" loading="lazy" width="1200" height="800" decoding="async" /><span class="card-badge soon">Próximo</span></div>
+            <div class="card-body">
+              <p class="card-meta"><span class="pilar">IA con criterio</span></p>
+              <h2>La deuda técnica que la IA acumula sin que la veas</h2>
+              <p>El riesgo del que nadie en tu equipo habla.</p>
+              <span class="card-cta">Próximamente</span>
+            </div>
+          </article>
+
+          <article class="card is-soon" data-pilar="ing">
+            <div class="card-thumb"><img src="/blog/placeholder-card.webp" alt="" loading="lazy" width="1200" height="800" decoding="async" /><span class="card-badge soon">Próximo</span></div>
+            <div class="card-body">
+              <p class="card-meta"><span class="pilar">Ingeniería</span></p>
+              <h2>Cero <code>any</code>: lo que TypeScript estricto te obliga a entender</h2>
+              <p>Prohibir any no es purismo: es disciplina de pensamiento.</p>
+              <span class="card-cta">Próximamente</span>
+            </div>
+          </article>
+
+          <article class="card is-soon" data-pilar="ing">
+            <div class="card-thumb"><img src="/blog/placeholder-card.webp" alt="" loading="lazy" width="1200" height="800" decoding="async" /><span class="card-badge soon">Próximo</span></div>
+            <div class="card-body">
+              <p class="card-meta"><span class="pilar">Ingeniería</span></p>
+              <h2>Errores de API que no odies: título, detalle y key</h2>
+              <p>Un estándar de errores REST que tu frontend agradece.</p>
+              <span class="card-cta">Próximamente</span>
+            </div>
+          </article>
+
+          <article class="card is-soon" data-pilar="dir">
+            <div class="card-thumb"><img src="/blog/placeholder-card.webp" alt="" loading="lazy" width="1200" height="800" decoding="async" /><span class="card-badge soon">Próximo</span></div>
+            <div class="card-body">
+              <p class="card-meta"><span class="pilar">Dirección y producto</span></p>
+              <h2>Scrum de libro vs. el que sí funciona en equipo chico</h2>
+              <p>La certificación enseña ceremonias; la operación enseña qué tirar.</p>
+              <span class="card-cta">Próximamente</span>
+            </div>
+          </article>
+
+          <article class="card is-soon" data-pilar="ux">
+            <div class="card-thumb"><img src="/blog/placeholder-card.webp" alt="" loading="lazy" width="1200" height="800" decoding="async" /><span class="card-badge soon">Próximo</span></div>
+            <div class="card-body">
+              <p class="card-meta"><span class="pilar">UX y oficio</span></p>
+              <h2>Interfaces bonitas no son lujo: la UX como prioridad</h2>
+              <p>La experiencia gana sobre la lista de features.</p>
+              <span class="card-cta">Próximamente</span>
+            </div>
+          </article>
+
+          <article class="card is-soon" data-pilar="dir">
+            <div class="card-thumb"><img src="/blog/placeholder-card.webp" alt="" loading="lazy" width="1200" height="800" decoding="async" /><span class="card-badge soon">Próximo</span></div>
+            <div class="card-body">
+              <p class="card-meta"><span class="pilar">Dirección y producto</span></p>
+              <h2>Control de calidad antes del deploy: el filtro que no se delega</h2>
+              <p>Dónde pongo el ojo humano sin volverme cuello de botella.</p>
+              <span class="card-cta">Próximamente</span>
+            </div>
+          </article>
+
+          <article class="card is-soon" data-pilar="ux">
+            <div class="card-thumb"><img src="/blog/placeholder-card.webp" alt="" loading="lazy" width="1200" height="800" decoding="async" /><span class="card-badge soon">Próximo</span></div>
+            <div class="card-body">
+              <p class="card-meta"><span class="pilar">UX y oficio</span></p>
+              <h2>Cuatro proyectos fallidos: lo que aprendí sobre construir software</h2>
+              <p>Crecer sin estructura mata más rápido que no crecer.</p>
+              <span class="card-cta">Próximamente</span>
+            </div>
+          </article>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <img src="/isotipo.png" alt="" width="30" height="30" />
+            <strong>Wilvardo Ramírez</strong>
+            <small>Software con criterio.</small>
+          </div>
+          <div class="footer-col">
+            <h4>Contacto</h4>
+            <ul>
+              <li><a href="mailto:hola@wilvardo.com">hola@wilvardo.com</a></li>
+              <li><a href="https://linkedin.com/in/wilvardo" target="_blank" rel="noopener">LinkedIn</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Sitio</h4>
+            <ul>
+              <li><a href="/#about">Identidad</a></li>
+              <li><a href="/blog/">Blog</a></li>
+              <li><a href="/#cta">Contacto</a></li>
+            </ul>
+          </div>
+        </div>
+        <p class="footer-copy t-mono">© 2026 Wilvardo Ramírez · hecho con criterio</p>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/scripts/blog-main.ts"></script>
+  </body>
+</html>

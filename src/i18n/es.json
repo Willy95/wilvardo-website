@@ -1,0 +1,144 @@
+{
+  "meta": {
+    "title": "Wilvardo Ramírez · Director de producto, consultor y desarrollador",
+    "description": "Una década dirigiendo y construyendo desarrollo y diseño de producto de software. Carta de presentación técnica: capacidades, estándares y formas de colaborar."
+  },
+  "header": {
+    "navAbout": "Identidad",
+    "navCaps": "Capacidades",
+    "navStandards": "Cómo trabajo",
+    "navServices": "Colaborar",
+    "cta": "Agenda una llamada"
+  },
+  "hero": {
+    "kicker": "DESARROLLADOR · CONSULTOR · DIRECTOR DE PRODUCTO",
+    "claim1": "Construyo y dirijo",
+    "claim2": "software con",
+    "claim3": "criterio.",
+    "sub": "Una década construyendo y dirigiendo producto y desarrollo de software en operación real. Esta es mi carta de presentación técnica.",
+    "ctaPrimary": "Agenda una llamada",
+    "ctaSecondary": "Ver capacidades →"
+  },
+  "credentials": {
+    "items": [
+      "10+ AÑOS DE SOFTWARE EN PRODUCCIÓN",
+      "ARQUITECTURA HEXAGONAL · VERTICAL SLICING · SOLID",
+      "TYPESCRIPT ESTRICTO · CERO ANY",
+      "MEJORO PROCESOS DE DESARROLLO DE SOFTWARE",
+      "POSTURA CRÍTICA SOBRE IA",
+      "REVISO CADA AVANCE ANTES DE CADA DEPLOY"
+    ]
+  },
+  "about": {
+    "kicker": "Identidad",
+    "portraitCaption": "Wilvardo Ramírez",
+    "headline": "Hace una década construyo y dirijo equipos y producto de software.",
+    "body1": "Soy analítico e investigador por naturaleza: antes de decidir, busco toda la información posible. Dirijo el desarrollo y el diseño de producto de software en operación real, donde la calidad pasa por mí; reviso cada avance antes de cada deploy.",
+    "body2": "Tengo una postura crítica y responsable sobre la IA: la uso como acelerador con criterio, nunca como sustituto del pensamiento. El código que entrego se entiende, se justifica y se puede mantener.",
+    "creds": [
+      "Dirección de producto",
+      "10+ años en producción",
+      "Consultoría técnica"
+    ],
+    "link": "Perfil completo en LinkedIn →",
+    "stats": [
+      "Años construyendo software en operación real.",
+      "Frentes: desarrollador, consultor y director.",
+      "Tipos <code>any</code>. TypeScript estricto, sin excepción.",
+      "De los avances revisados antes de cada deploy."
+    ]
+  },
+  "caps": {
+    "kicker": "Capacidades",
+    "headline": "Qué sé hacer, en concreto.",
+    "sub": "No es una lista de buzzwords. Es el inventario de lo que puedo diagnosticar, construir y dirigir hoy.",
+    "groups": [
+      {
+        "title": "Lenguajes & stack",
+        "desc": "El stack con el que entrego producto a diario."
+      },
+      {
+        "title": "Arquitectura & ingeniería",
+        "desc": "Código que escala y se mantiene, cuidando siempre la UX y la UI."
+      },
+      {
+        "title": "Producto, procesos & dirección",
+        "desc": "De la necesidad difusa al plan ejecutado: negocio, producto y gestión de talento."
+      },
+      {
+        "title": "IA con criterio",
+        "desc": "La integro en tus procesos solo si es necesario. Siempre con revisión humana."
+      }
+    ]
+  },
+  "std": {
+    "kicker": "Cómo trabajo",
+    "headline": "No entrego una línea que no entienda.",
+    "body": "Estos son los principios que no negocio. Son la razón por la que un fundador puede dormir tranquilo con lo que sale a producción, y por la que un equipo dev mejora trabajando conmigo en lugar de acumular deuda.",
+    "items": [
+      { "t": "Datos antes que código.", "d": "El modelo de datos no se improvisa: se justifica." },
+      { "t": "Nada entra sin estar planeado.", "d": "Toda tarea se documenta y se estima antes de tocar el teclado." },
+      { "t": "Refactor obligatorio.", "d": "Funcionar no basta; una vez funciona, se limpia." },
+      { "t": "Seguridad antes de cada deploy.", "d": "Reviso huecos antes de liberar, no después del incidente." }
+    ]
+  },
+  "modes": {
+    "kicker": "Cómo colaboramos",
+    "headline": "Tres formas de sumar. Una conversación.",
+    "sub": "Según lo que necesites, entro como uno de los tres. A veces como los tres.",
+    "cardLink": "Conversemos →",
+    "items": [
+      {
+        "title": "Desarrollador",
+        "claim": "Implemento.",
+        "body": "Habilidades técnicas fuertes en arquitectura y estándares, cuidando siempre la UX y la UI. Código limpio que tu equipo puede mantener cuando yo no esté.",
+        "pills": ["Arquitectura & estándares", "Full-stack TS", "UX / UI"]
+      },
+      {
+        "title": "Consultor técnico",
+        "claim": "Mejoro tus procesos.",
+        "body": "Diagnostico y mejoro tus procesos de desarrollo de software con visión de negocio. Estructura técnica acompañada del criterio de tu operación. Implemento IA con criterio en tu flujo, solo si de verdad suma.",
+        "pills": ["Procesos de desarrollo", "Visión de negocio", "IA con criterio"]
+      },
+      {
+        "title": "Director de producto y proyectos",
+        "claim": "Planeo y dirijo.",
+        "body": "Producto, planeación y ejecución: discovery, especificación, Scrum y project management. Gestiono equipo y talento para que el negocio y el desarrollo avancen juntos.",
+        "pills": ["Producto & discovery", "Scrum / PM", "Gestión de talento"]
+      }
+    ]
+  },
+  "traj": {
+    "kicker": "Trayectoria",
+    "headline": "Una década de construir, fallar y volver a construir.",
+    "items": [
+      { "t": "Primer emprendimiento", "d": "Una plataforma de e-learning para estudiantes. Primera empresa; primera lección dura." },
+      { "t": "Software a la medida", "d": "Desarrollo para PyMEs en múltiples giros. Aprendí que crecer sin estructura mata más rápido que no crecer." },
+      { "t": "Plataforma financiera", "d": "Sistema de créditos y evaluación de prospectos. Modelo de datos y arquitectura financiera sólidos." },
+      { "t": "Dirección de producto — actualidad", "d": "Dirijo el desarrollo y el diseño de producto de software bajo membresía, con clientes activos." }
+    ]
+  },
+  "faq": {
+    "kicker": "Preguntas",
+    "headline": "Lo que casi siempre me preguntan.",
+    "items": [
+      { "q": "¿Programas o solo diriges?", "a": "Ambos. Diagnostico, dirijo y, cuando aporta, implemento yo mismo." },
+      { "q": "¿Con qué empresas trabajas?", "a": "PyMEs mexicanas que ya tienen software y necesitan que rinda. También trabajo en remoto." },
+      { "q": "¿Tienes un rol de tiempo completo además de la consultoría?", "a": "Sí. Mi rol principal es de dirección de producto y desarrollo; la consultoría independiente es compatible y declarada, no compite con él." },
+      { "q": "¿Cuál es tu postura sobre la IA?", "a": "Acelerador con criterio. Todo código generado con IA se revisa, se entiende y se justifica antes de entregarse. Nunca sustituye el análisis." },
+      { "q": "¿Cómo es la primera conversación?", "a": "Treinta minutos por video. Sin propuesta ni compromiso detrás. Para entender qué tienes hoy y qué necesitarías mañana." }
+    ]
+  },
+  "ctaFinal": {
+    "kicker": "Siguiente paso",
+    "headline": "Empecemos por una conversación.",
+    "sub": "30 minutos. Sin propuesta ni contrato detrás. Una llamada para entender qué tienes hoy y qué necesitarías mañana.",
+    "cta": "Agenda una llamada"
+  },
+  "footer": {
+    "tagline": "Software con criterio.",
+    "contactHeading": "Contacto",
+    "siteHeading": "Mapa",
+    "copyright": "© 2026 Wilvardo Ramírez · hecho con criterio"
+  }
+}

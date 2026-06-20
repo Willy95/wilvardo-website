@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <script>
+      (function () {
+        try {
+          var p = localStorage.getItem("wilvardo:theme");
+          var sys = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+          document.documentElement.setAttribute("data-theme", p === "light" || p === "dark" ? p : sys);
+        } catch (e) {}
+      })();
+    </script>
+    <meta name="theme-color" content="#0A0E16" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#F7F9FC" media="(prefers-color-scheme: light)" />
+
+    <title>Programar en la era de la IA: por qué el criterio es el diferenciador</title>
+    <meta name="description" content="Cuando una máquina escribe mil líneas correctas en segundos, entender lo que firmas dejó de ser buena práctica para volverse el último diferenciador. Por qué el criterio es lo que la IA no escribe por ti." />
+    <meta name="keywords" content="programación, inteligencia artificial, criterio, calidad de código, deuda técnica, code review, desarrollo de software" />
+    <meta name="author" content="Wilvardo Ramírez" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://wilvardo.com/blog/programar-en-la-era-de-la-ia/" />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content="Wilvardo · Criterio" />
+    <meta property="og:title" content="Programar en la era de la IA: por qué el criterio es el diferenciador" />
+    <meta property="og:description" content="Entender lo que firmas dejó de ser buena práctica para volverse el último diferenciador." />
+    <meta property="og:url" content="https://wilvardo.com/blog/programar-en-la-era-de-la-ia/" />
+    <meta property="og:image" content="https://wilvardo.com/og-default.webp" />
+    <meta property="og:image:alt" content="Wilvardo Ramírez — Software con criterio." />
+    <meta property="article:published_time" content="2026-06-19" />
+    <meta property="article:author" content="Wilvardo Ramírez" />
+    <meta property="article:section" content="IA con criterio" />
+    <meta property="article:tag" content="criterio" />
+    <meta property="article:tag" content="inteligencia artificial" />
+    <meta property="article:tag" content="calidad de código" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Programar en la era de la IA: por qué el criterio es el diferenciador" />
+    <meta name="twitter:description" content="Entender lo que firmas dejó de ser buena práctica para volverse el último diferenciador." />
+    <meta name="twitter:image" content="https://wilvardo.com/og-default.webp" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400..600&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="/isotipo.png" />
+    <link rel="apple-touch-icon" href="/isotipo.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Programar en la era de la IA: por qué el criterio es el diferenciador",
+        "description": "Entender lo que firmas dejó de ser buena práctica para volverse el último diferenciador. Por qué el criterio es lo que la IA no escribe por ti.",
+        "datePublished": "2026-06-19",
+        "dateModified": "2026-06-19",
+        "inLanguage": "es",
+        "author": { "@type": "Person", "name": "Wilvardo Ramírez", "url": "https://wilvardo.com" },
+        "publisher": { "@type": "Person", "name": "Wilvardo Ramírez" },
+        "image": "https://wilvardo.com/og-default.webp",
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://wilvardo.com/blog/programar-en-la-era-de-la-ia/" },
+        "keywords": "programación, inteligencia artificial, criterio, calidad de código, deuda técnica, code review",
+        "articleSection": "IA con criterio"
+      }
+    </script>
+  </head>
+  <body>
+    <a class="visually-hidden" href="#main">Saltar al contenido</a>
+
+    <header class="site-header" role="banner">
+      <div class="header-inner">
+        <a class="brand-link" href="/" aria-label="Wilvardo Ramírez — Inicio">
+          <img src="/isotipo.png" alt="" width="34" height="34" />
+          <span class="brand-wordmark">Wilvardo</span>
+          <span class="brand-meta" aria-hidden="true">/ criterio</span>
+        </a>
+
+        <nav class="site-nav" aria-label="Navegación principal">
+          <a href="/#about">Identidad</a>
+          <a href="/#capabilities">Capacidades</a>
+          <a href="/#standards">Cómo trabajo</a>
+          <a href="/blog/" aria-current="page">Blog</a>
+        </nav>
+
+        <div class="header-actions">
+          <button class="icon-btn" type="button" data-action="toggle-theme" data-pref="system" aria-label="Tema: sistema. Pulsa para cambiar" title="Tema: sistema">
+            <svg data-icon="system" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none" /></svg>
+            <svg data-icon="light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" /></svg>
+            <svg data-icon="dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>
+          </button>
+          <a class="btn-primary header-cta" href="/#cta">Agenda una llamada</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <article class="post">
+        <div class="post-layout">
+          <div class="post-col">
+            <header class="post-head">
+              <a class="post-back" href="/blog/">← Regresar</a>
+              <p class="post-kicker"><span class="pilar">IA con criterio</span></p>
+              <h1 class="post-title">Programar en la era de la IA: por qué el criterio es el diferenciador</h1>
+              <p class="post-dek">Cuando una máquina escribe mil líneas correctas en segundos, entender lo que firmas dejó de ser buena práctica para volverse el último diferenciador.</p>
+              <div class="post-meta">
+                <time datetime="2026-06-19">19 jun 2026</time>
+                <span class="sep" aria-hidden="true">·</span>
+                <span>5 min de lectura</span>
+                <span class="sep" aria-hidden="true">·</span>
+                <span>Wilvardo Ramírez</span>
+                <button class="share-btn" type="button" data-share aria-label="Compartir este artículo">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4" /></svg>
+                  <span class="share-label">Compartir</span>
+                </button>
+              </div>
+            </header>
+
+            <figure class="post-hero">
+              <div class="post-hero-media">
+                <img src="/blog/programar-en-la-era-de-la-ia/programar-en-la-era-de-la-ia-hero.webp" alt="Manos sosteniendo a contraluz una hoja impresa, en un escritorio en penumbra." width="1200" height="630" fetchpriority="high" decoding="async" onerror="this.remove()" />
+                <span class="tick tl"></span><span class="tick tr"></span><span class="tick bl"></span><span class="tick br"></span>
+              </div>
+            </figure>
+
+            <div class="post-body">
+              <p>Hay una frase que repito tanto que ya es parte de cómo me presento: <strong>no entrego una línea de código que no entienda.</strong> No es un eslogan para una página de inicio. Es una regla operativa que aplico todos los días, y la razón por la que reviso cada avance antes de cada deploy.</p>
+              <p>Durante años fue, simplemente, una buena práctica. Sentido común de ingeniero. Hoy, cuando una máquina puede escribir mil líneas correctas en segundos, esa regla se convirtió en otra cosa: es el último diferenciador que me queda. Y creo que es el que te queda a ti también.</p>
+
+              <h2 class="ph2" id="sec-funciona">Funciona no es lo mismo que entendido</h2>
+              <p>Empecemos por lo que significa la frase en la práctica, porque es más estricta de lo que suena.</p>
+              <p>Si un desarrollador de mi equipo me trae código que funciona —pasa las pruebas, hace lo que pide la historia, se ve limpio— pero no me lo puede explicar, ese código no entra. No porque desconfíe de él, sino porque <em>funcionar</em> y <em>entender</em> son dos cosas distintas, y solo una de las dos se puede mantener.</p>
+              <p>El código que funciona pero nadie entiende es una bomba de tiempo con fecha desconocida. Funciona hasta que el caso borde que nadie previó lo rompe en producción, un martes, a las once de la noche. Y entonces alguien tiene que abrir ese archivo y entenderlo bajo presión, con un cliente molesto del otro lado. Si nadie lo entendía cuando se escribió, con calma, nadie lo va a entender ahí.</p>
+              <p>Por eso la regla no es "que pase las pruebas". Es: <strong>lo firmo solo si lo entiendo.</strong> Mi nombre va en ese deploy.</p>
+
+              <h2 class="ph2" id="sec-miedo">Mi miedo real con la IA no es el que crees</h2>
+              <p>No me da miedo que la IA me quite el trabajo. Me da miedo algo más concreto y más cercano: que el avance que genera supere mi capacidad de revisarlo.</p>
+              <p>Esa es la trampa. La IA no falla por escribir código malo —muchas veces escribe código razonable—. Falla porque escribe <em>demasiado, demasiado rápido</em>. Produce a una velocidad que el juicio humano no alcanza a auditar. Y cuando la velocidad de producción supera la velocidad de comprensión, lo que se acumula no es progreso: es deuda con interés compuesto.</p>
+              <p>Y no es solo mi intuición. Una investigación de <a href="https://www.gitclear.com/ai_assistant_code_quality_2025_research" target="_blank" rel="noopener">GitClear</a> sobre 211 millones de líneas de código encontró que, conforme se dispararon los asistentes de IA, el código duplicado se multiplicó y la proporción de código refactorizado —el que se reordena para que el sistema siga siendo mantenible— se desplomó del 24% en 2020 a menos del 10% en 2024. Producimos más y reordenamos menos. La investigación de <a href="https://dora.dev/research/2024/dora-report/" target="_blank" rel="noopener">DORA</a> apunta al mecanismo, con un matiz que importa: la IA sube la productividad que <em>siente</em> cada desarrollador, pero también empuja a entregar lotes de cambios más grandes, y a mayor lote, mayor inestabilidad en producción. La velocidad sube; la estabilidad baja.</p>
+              <p>Ya viví una versión de esto sin IA de por medio. En uno de mis primeros emprendimientos crecimos por encima de nuestra estructura: aceptamos más de lo que podíamos sostener y contratamos más rápido de lo que podíamos formar. No nos mató la falta de trabajo. Nos mató el exceso sin control.</p>
+              <blockquote class="pullquote">Crecer sin estructura mata más rápido que no crecer.</blockquote>
+              <p>La IA es exactamente esa dinámica, comprimida en el editor de código. Produce más de lo que puedes revisar. Y si no pones una estructura que te obligue a entender antes de avanzar, el sistema se vuelve, mes a mes, una caja negra que tu propio equipo no puede abrir.</p>
+
+              <h2 class="ph2" id="sec-prompts">El desarrollador que solo hace prompts se vuelve torpe</h2>
+              <p>Hay un segundo riesgo, y este no es técnico: es humano.</p>
+              <p>Cuando delegas la escritura del código sin delegar el pensamiento, creces. Cuando delegas el pensamiento, te atrofias. La diferencia entre las dos no se nota el primer mes. Se nota a los dos años, cuando uno de los dos desarrolladores puede diagnosticar un problema que la IA no sabe resolver, y el otro solo sabe pedirle a la IA que lo intente otra vez.</p>
+              <p>Una calculadora no te hace matemático. Un copiloto no te hace piloto. Y un modelo que genera código no te hace ingeniero —puede hacerte más rápido, si ya lo eres, o más dependiente, si todavía no—. La herramienta amplifica lo que ya hay. Si hay criterio, lo multiplica. Si hay vacío, lo esconde por un rato y después lo cobra.</p>
+              <p>Esto me importa como director más que como programador. No quiero un equipo de gente que teclea prompts y pega resultados. Quiero un equipo que use la IA como acelerador y que entienda cada cosa que entrega. Lo primero escala en cantidad. Lo segundo escala en capacidad. Solo lo segundo sostiene un producto a tres años.</p>
+
+              <h2 class="ph2" id="sec-criterio">Criterio es lo que no se automatiza</h2>
+              <p>Entonces, ¿qué queda para nosotros cuando la máquina escribe el código?</p>
+              <p>Queda lo que siempre fue lo difícil de verdad: decidir. Saber qué código merece existir y cuál sobra. Saber qué se mantiene y qué se tira. Saber cuál es la pregunta correcta antes de pedir la respuesta. Saber cuándo la solución elegante es la incorrecta porque el modelo de datos de abajo está mal pensado. Saber leer un avance y sentir, antes de poder explicarlo, que algo no cuadra.</p>
+              <p>Eso es criterio. No es un don: se construye revisando, equivocándose, sosteniendo lo que uno firma. Es lento de adquirir y por eso mismo escasea. Es lo más difícil de transmitir —no cabe en un tutorial— y lo primero que se nota cuando falta.</p>
+              <p>La IA hizo que escribir código fuera barato. Al hacerlo, volvió carísimo el criterio para decidir qué código vale la pena. Esa inversión de valor es la mejor noticia para quien se tomó en serio el oficio, y la peor para quien creyó que el oficio era solo teclear.</p>
+              <p>De eso va este blog. De criterio: el de ingeniería, el de dirección, el de producto, y el de usar la IA sin entregarle el pensamiento. No te voy a dar una línea que yo no entienda. Empezamos por ahí.</p>
+
+              <p class="post-refs">Referencias: <a href="https://www.gitclear.com/ai_assistant_code_quality_2025_research" target="_blank" rel="noopener">GitClear — AI Copilot Code Quality 2025</a> · <a href="https://dora.dev/research/2024/dora-report/" target="_blank" rel="noopener">DORA — Accelerate State of DevOps 2024</a></p>
+            </div>
+
+            <footer class="post-foot">
+              <ul class="post-tags" aria-label="Temas del artículo">
+                <li><a href="/blog/tema/criterio/"><span class="hash" aria-hidden="true">#</span>criterio</a></li>
+                <li><a href="/blog/tema/ia/"><span class="hash" aria-hidden="true">#</span>ia</a></li>
+                <li><a href="/blog/tema/calidad/"><span class="hash" aria-hidden="true">#</span>calidad</a></li>
+                <li><a href="/blog/tema/deuda-tecnica/"><span class="hash" aria-hidden="true">#</span>deuda-tecnica</a></li>
+              </ul>
+
+              <div class="post-author">
+                <span class="iso" aria-hidden="true"><img src="/portrait.webp" alt="" width="46" height="46" onerror="this.remove()" /><span class="iso-mono">W</span></span>
+                <div class="who">
+                  <strong>Wilvardo Ramírez</strong>
+                  <p>Director de desarrollo y diseño de producto.</p>
+                </div>
+              </div>
+
+              <nav class="post-nav" aria-label="Más del blog">
+                <a class="disabled" href="#" aria-disabled="true"><span class="lbl">← Anterior</span><span class="ttl">Este es el primero</span></a>
+                <a class="next" href="/blog/datos-antes-que-codigo/"><span class="lbl">Siguiente →</span><span class="ttl">Datos antes que código</span></a>
+              </nav>
+            </footer>
+          </div>
+
+          <aside class="post-rail" aria-label="Índice y acciones del artículo">
+            <nav class="toc" aria-label="Contenido del artículo">
+              <p class="toc-title">En este artículo</p>
+              <ul>
+                <li><a href="#sec-funciona">Funciona no es lo mismo que entendido</a></li>
+                <li><a href="#sec-miedo">Mi miedo real con la IA</a></li>
+                <li><a href="#sec-prompts">El desarrollador que solo hace prompts</a></li>
+                <li><a href="#sec-criterio">Criterio es lo que no se automatiza</a></li>
+              </ul>
+            </nav>
+            <button class="rail-share" type="button" data-share aria-label="Compartir este artículo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4" /></svg>
+              <span class="share-label">Compartir</span>
+            </button>
+          </aside>
+        </div>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <img src="/isotipo.png" alt="" width="30" height="30" />
+            <strong>Wilvardo Ramírez</strong>
+            <small>Software con criterio.</small>
+          </div>
+          <div class="footer-col">
+            <h4>Contacto</h4>
+            <ul>
+              <li><a href="mailto:hola@wilvardo.com">hola@wilvardo.com</a></li>
+              <li><a href="https://linkedin.com/in/wilvardo" target="_blank" rel="noopener">LinkedIn</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Sitio</h4>
+            <ul>
+              <li><a href="/#about">Identidad</a></li>
+              <li><a href="/blog/">Blog</a></li>
+              <li><a href="/#cta">Contacto</a></li>
+            </ul>
+          </div>
+        </div>
+        <p class="footer-copy t-mono">© 2026 Wilvardo Ramírez · hecho con criterio</p>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/scripts/blog-main.ts"></script>
+  </body>
+</html>

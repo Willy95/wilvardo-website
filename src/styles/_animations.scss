@@ -1,0 +1,169 @@
+// Animaciones globales — reveals, marquee, hero claim, scramble, terminal.
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 700ms var(--ease-standard),
+    transform 700ms var(--ease-standard);
+
+  &.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 600ms var(--ease-standard),
+    transform 600ms var(--ease-standard);
+}
+
+@for $i from 1 through 10 {
+  .reveal-stagger.is-visible > *:nth-child(#{$i}) {
+    transition-delay: #{($i - 1) * 80}ms;
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ---- Tira de credenciales — scroll horizontal infinito ----
+.marquee {
+  overflow: hidden;
+  position: relative;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 120px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  &::before {
+    left: 0;
+    background: linear-gradient(to right, var(--color-surface-base), transparent);
+  }
+
+  &::after {
+    right: 0;
+    background: linear-gradient(to left, var(--color-surface-base), transparent);
+  }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 38s linear infinite;
+
+  &:hover {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+// ---- Hero claim — letras entran con stagger ----
+.hero-claim-line {
+  display: block;
+  overflow: hidden;
+}
+
+.hero-claim-line .word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.hero-claim-line .char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.5em);
+  transition:
+    opacity 500ms var(--ease-standard),
+    transform 500ms var(--ease-emphasis);
+}
+
+.hero-claim-line.is-revealed .char {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+// ---- Counter ----
+.counter {
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+}
+
+// ---- Scramble — caret tecnico mientras decodifica ----
+[data-scramble] {
+  // se mantiene visible; el efecto lo aplica JS reemplazando glifos.
+  min-height: 1em;
+}
+
+.scramble-char {
+  color: var(--color-accent-text);
+}
+
+// ---- Terminal — caret parpadeante ----
+.t-caret {
+  display: inline-block;
+  width: 8px;
+  height: 1.05em;
+  margin-left: 2px;
+  background: var(--color-brand-primary);
+  vertical-align: text-bottom;
+  animation: caret-blink 1s steps(2, start) infinite;
+}
+
+@keyframes caret-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+// ---- Line de timeline dibujandose ----
+.timeline::before {
+  transform-origin: top;
+  transition: transform 900ms var(--ease-standard);
+}
+.timeline:not(.is-visible)::before {
+  transform: scaleY(0);
+}
+
+// ---- Reduced motion: todo estatico ----
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+  .reveal,
+  .reveal-stagger > * {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .hero-claim-line .char {
+    opacity: 1;
+    transform: none;
+  }
+  .t-caret {
+    animation: none;
+  }
+  .timeline::before {
+    transform: none;
+  }
+}

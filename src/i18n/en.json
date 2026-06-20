@@ -1,0 +1,144 @@
+{
+  "meta": {
+    "title": "Wilvardo Ramírez · Product director, advisor and developer",
+    "description": "A decade leading and building software development and product design. A technical introduction: capabilities, standards and ways to work together."
+  },
+  "header": {
+    "navAbout": "Identity",
+    "navCaps": "Capabilities",
+    "navStandards": "How I work",
+    "navServices": "Work with me",
+    "cta": "Book a call"
+  },
+  "hero": {
+    "kicker": "DEVELOPER · ADVISOR · PRODUCT DIRECTOR",
+    "claim1": "I build and lead",
+    "claim2": "software with",
+    "claim3": "judgment.",
+    "sub": "A decade building and leading software product and development in real production. This is my technical introduction.",
+    "ctaPrimary": "Book a call",
+    "ctaSecondary": "See capabilities →"
+  },
+  "credentials": {
+    "items": [
+      "10+ YEARS OF SOFTWARE IN PRODUCTION",
+      "HEXAGONAL ARCHITECTURE · VERTICAL SLICING · SOLID",
+      "STRICT TYPESCRIPT · ZERO ANY",
+      "I IMPROVE SOFTWARE DEVELOPMENT PROCESSES",
+      "A CRITICAL STANCE ON AI",
+      "I REVIEW EVERY CHANGE BEFORE EVERY DEPLOY"
+    ]
+  },
+  "about": {
+    "kicker": "Identity",
+    "portraitCaption": "Wilvardo Ramírez",
+    "headline": "For a decade I've built and led software teams and product.",
+    "body1": "I'm analytical and a researcher by nature: before deciding, I gather as much information as possible. I lead software development and product design in real production, where quality goes through me; I review every change before every deploy.",
+    "body2": "I hold a critical, responsible stance on AI: I use it as an accelerator with judgment, never as a substitute for thinking. The code I deliver is understood, justified and maintainable.",
+    "creds": [
+      "Product leadership",
+      "10+ years in production",
+      "Technical consulting"
+    ],
+    "link": "Full profile on LinkedIn →",
+    "stats": [
+      "Years building software in real production.",
+      "Fronts: developer, advisor and director.",
+      "<code>any</code> types. Strict TypeScript, no exceptions.",
+      "Of all changes reviewed before every deploy."
+    ]
+  },
+  "caps": {
+    "kicker": "Capabilities",
+    "headline": "What I can actually do.",
+    "sub": "Not a list of buzzwords. It's the inventory of what I can diagnose, build and lead today.",
+    "groups": [
+      {
+        "title": "Languages & stack",
+        "desc": "The stack I ship product with every day."
+      },
+      {
+        "title": "Architecture & engineering",
+        "desc": "Code that scales and stays maintainable, always caring for UX and UI."
+      },
+      {
+        "title": "Product, process & leadership",
+        "desc": "From a fuzzy need to an executed plan: business, product and talent management."
+      },
+      {
+        "title": "AI with judgment",
+        "desc": "Brought into your processes only when needed. Always with human review."
+      }
+    ]
+  },
+  "std": {
+    "kicker": "How I work",
+    "headline": "I don't ship a line I don't understand.",
+    "body": "These are the principles I won't negotiate. They're why a founder can sleep easy with what goes to production, and why a dev team gets better working with me instead of piling up debt.",
+    "items": [
+      { "t": "Data before code.", "d": "The data model isn't improvised: it's justified." },
+      { "t": "Nothing starts unplanned.", "d": "Every task is documented and estimated before touching the keyboard." },
+      { "t": "Refactoring is mandatory.", "d": "Working isn't enough; once it works, it gets cleaned up." },
+      { "t": "Security before every deploy.", "d": "I check for gaps before releasing, not after the incident." }
+    ]
+  },
+  "modes": {
+    "kicker": "Ways to work together",
+    "headline": "Three ways to help. One conversation.",
+    "sub": "Depending on what you need, I step in as one of the three. Sometimes as all three.",
+    "cardLink": "Let's talk →",
+    "items": [
+      {
+        "title": "Developer",
+        "claim": "I build.",
+        "body": "Strong technical skills in architecture and standards, always caring for UX and UI. Clean code your team can maintain when I'm not around.",
+        "pills": ["Architecture & standards", "Full-stack TS", "UX / UI"]
+      },
+      {
+        "title": "Technical advisor",
+        "claim": "I improve your processes.",
+        "body": "I diagnose and improve your software development processes with business sense. Technical structure paired with your operation's judgment. I bring AI into your flow with criteria — only when it truly adds value.",
+        "pills": ["Dev processes", "Business sense", "AI with judgment"]
+      },
+      {
+        "title": "Product & project director",
+        "claim": "I plan and lead.",
+        "body": "Product, planning and execution: discovery, specification, Scrum and project management. I manage team and talent so business and development move together.",
+        "pills": ["Product & discovery", "Scrum / PM", "Talent management"]
+      }
+    ]
+  },
+  "traj": {
+    "kicker": "Trajectory",
+    "headline": "A decade of building, failing and building again.",
+    "items": [
+      { "t": "First venture", "d": "An e-learning platform for students. First company; first hard lesson." },
+      { "t": "Custom software", "d": "Development for SMBs across many industries. I learned that growing without structure kills faster than not growing." },
+      { "t": "Financial platform", "d": "A credit and prospect-evaluation system. Solid data model and financial architecture." },
+      { "t": "Product leadership — present", "d": "I lead software development and product design for membership software, with active clients." }
+    ]
+  },
+  "faq": {
+    "kicker": "Questions",
+    "headline": "What I get asked most.",
+    "items": [
+      { "q": "Do you code or just lead?", "a": "Both. I diagnose, I lead and, when it adds value, I implement it myself." },
+      { "q": "Which companies do you work with?", "a": "Mexican SMBs that already have software and need it to pay off. I also work remotely." },
+      { "q": "Do you have a full-time role besides consulting?", "a": "Yes. My main role is in product and development leadership; independent consulting is compatible and disclosed — it doesn't compete with it." },
+      { "q": "What's your stance on AI?", "a": "An accelerator with judgment. Any AI-generated code is reviewed, understood and justified before delivery. It never replaces analysis." },
+      { "q": "What's the first conversation like?", "a": "Thirty minutes over video. No proposal or commitment behind it. To understand what you have today and what you'd need tomorrow." }
+    ]
+  },
+  "ctaFinal": {
+    "kicker": "Next step",
+    "headline": "Let's start with a conversation.",
+    "sub": "30 minutes. No proposal or contract behind it. A call to understand what you have today and what you'd need tomorrow.",
+    "cta": "Book a call"
+  },
+  "footer": {
+    "tagline": "Software with judgment.",
+    "contactHeading": "Contact",
+    "siteHeading": "Map",
+    "copyright": "© 2026 Wilvardo Ramírez · made with judgment"
+  }
+}

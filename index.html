@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <script>
+      // Anti-FOUC: fija el tema antes del primer pintado. Sin preferencia guardada, sigue al sistema.
+      (function () {
+        try {
+          var p = localStorage.getItem("wilvardo:theme");
+          var sys = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+          document.documentElement.setAttribute("data-theme", p === "light" || p === "dark" ? p : sys);
+        } catch (e) {}
+      })();
+    </script>
+    <meta name="theme-color" content="#0A0E16" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#F7F9FC" media="(prefers-color-scheme: light)" />
+    <title data-i18n="meta.title">Wilvardo Ramirez · Director de producto, consultor y desarrollador</title>
+    <meta
+      name="description"
+      data-i18n-attr="content:meta.description"
+      content="Una decada dirigiendo y construyendo desarrollo y diseno de producto de software. Carta de presentacion tecnica: capacidades, estandares y formas de colaborar."
+    />
+    <meta property="og:title" content="Wilvardo Ramirez · Software con criterio" />
+    <meta property="og:description" content="Director de producto, consultor tecnico y desarrollador. Capacidades, estandares y formas de colaborar." />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content="Wilvardo Ramírez" />
+    <meta property="og:url" content="https://wilvardo.com/" />
+    <meta property="og:image" content="https://wilvardo.com/og-default.webp" />
+    <meta property="og:image:alt" content="Wilvardo Ramírez — Software con criterio." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Wilvardo Ramírez · Software con criterio" />
+    <meta name="twitter:description" content="Director de producto, consultor técnico y desarrollador." />
+    <meta name="twitter:image" content="https://wilvardo.com/og-default.webp" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400..600&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="/isotipo.png" />
+    <link rel="apple-touch-icon" href="/isotipo.png" />
+  </head>
+  <body>
+    <a class="visually-hidden" href="#main">Saltar al contenido</a>
+
+    <header class="site-header" role="banner">
+      <div class="header-inner">
+        <a class="brand-link" href="#top" aria-label="Wilvardo — Inicio">
+          <img src="/isotipo.png" alt="" width="34" height="34" />
+          <span class="brand-wordmark">Wilvardo</span>
+          <span class="brand-meta" aria-hidden="true">/ ramirez</span>
+        </a>
+
+        <nav class="site-nav" aria-label="Navegacion principal">
+          <a href="#about" data-i18n="header.navAbout">Identidad</a>
+          <a href="#capabilities" data-i18n="header.navCaps">Capacidades</a>
+          <a href="#standards" data-i18n="header.navStandards">Cómo trabajo</a>
+          <a href="#services" data-i18n="header.navServices">Colaborar</a>
+          <a href="/blog/">Blog</a>
+        </nav>
+
+        <div class="header-actions">
+          <button class="lang-toggle" type="button" data-action="toggle-lang" aria-label="Cambiar idioma">EN</button>
+          <button class="icon-btn" type="button" data-action="toggle-theme" data-pref="system" aria-label="Tema: sistema. Pulsa para cambiar" title="Tema: sistema">
+            <svg data-icon="system" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none" /></svg>
+            <svg data-icon="light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" /></svg>
+            <svg data-icon="dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>
+          </button>
+          <a class="btn-primary header-cta" href="#cta" data-i18n="header.cta">Agenda una llamada</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- ============ HERO ============ -->
+      <section class="hero" id="top">
+        <canvas class="hero-canvas" aria-hidden="true"></canvas>
+        <div class="hero-grid-lines" aria-hidden="true"></div>
+        <div class="container hero-inner">
+          <div class="hero-copy">
+            <p class="kicker" data-scramble data-i18n="hero.kicker">DESARROLLADOR · CONSULTOR · DIRECTOR DE PRODUCTO</p>
+            <h1 class="hero-claim text-display">
+              <span class="hero-claim-line" data-i18n="hero.claim1">Construyo y dirijo</span>
+              <span class="hero-claim-line" data-i18n="hero.claim2">software con</span>
+              <span class="hero-claim-line accent" data-i18n="hero.claim3">criterio.</span>
+            </h1>
+            <p class="hero-sub text-lead" data-i18n="hero.sub">
+              Una década construyendo y dirigiendo producto y desarrollo de software en operación real. Esta es mi carta de presentación técnica.
+            </p>
+            <div class="hero-actions">
+              <a class="btn-primary btn-large" data-magnetic href="#cta" data-i18n="hero.ctaPrimary">Agenda una llamada</a>
+              <a class="hero-link-secondary" href="#capabilities" data-i18n="hero.ctaSecondary">Ver capacidades →</a>
+            </div>
+          </div>
+
+          <aside class="terminal" aria-label="Resumen profesional">
+            <div class="terminal-bar" aria-hidden="true">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              <span class="terminal-title">wilvardo — zsh</span>
+            </div>
+            <div class="terminal-body" data-typed>
+              <span class="t-line"><span class="t-prompt">$</span> whoami</span>
+              <span class="t-line t-out"><span class="t-key">Wilvardo Ramírez</span> — Director de Desarrollo y Diseño de Producto</span>
+              <span class="t-line"><span class="t-prompt">$</span> stack --core</span>
+              <span class="t-line t-out">TypeScript · Node/Adonis · Laravel · Nuxt · Angular</span>
+              <span class="t-line"><span class="t-prompt">$</span> status</span>
+              <span class="t-line t-out"><span class="t-ok">●</span> Disponible para consultoría y dirección técnica</span>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ============ MARQUEE / CONSOLA ============ -->
+      <section class="credentials-strip" aria-label="Credenciales">
+        <div class="marquee">
+          <div class="marquee-track" id="marquee-track">
+            <span class="credentials-item" data-i18n="credentials.items.0">10+ AÑOS DE SOFTWARE EN PRODUCCIÓN</span>
+            <span class="credentials-item" data-i18n="credentials.items.1">ARQUITECTURA HEXAGONAL · VERTICAL SLICING · SOLID</span>
+            <span class="credentials-item" data-i18n="credentials.items.2">TYPESCRIPT ESTRICTO · CERO ANY</span>
+            <span class="credentials-item" data-i18n="credentials.items.3">MEJORO PROCESOS DE DESARROLLO DE SOFTWARE</span>
+            <span class="credentials-item" data-i18n="credentials.items.4">POSTURA CRÍTICA SOBRE IA</span>
+            <span class="credentials-item" data-i18n="credentials.items.5">REVISO CADA AVANCE ANTES DE CADA DEPLOY</span>
+            <span class="credentials-item" aria-hidden="true" data-i18n="credentials.items.0">10+ AÑOS DE SOFTWARE EN PRODUCCIÓN</span>
+            <span class="credentials-item" aria-hidden="true" data-i18n="credentials.items.1">ARQUITECTURA HEXAGONAL · VERTICAL SLICING · SOLID</span>
+            <span class="credentials-item" aria-hidden="true" data-i18n="credentials.items.2">TYPESCRIPT ESTRICTO · CERO ANY</span>
+            <span class="credentials-item" aria-hidden="true" data-i18n="credentials.items.3">MEJORO PROCESOS DE DESARROLLO DE SOFTWARE</span>
+            <span class="credentials-item" aria-hidden="true" data-i18n="credentials.items.4">POSTURA CRÍTICA SOBRE IA</span>
+            <span class="credentials-item" aria-hidden="true" data-i18n="credentials.items.5">REVISO CADA AVANCE ANTES DE CADA DEPLOY</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 01 — IDENTIDAD ============ -->
+      <section class="section reveal" id="about">
+        <div class="container">
+          <p class="kicker"><span class="kicker-num">01</span> <span data-scramble data-i18n="about.kicker">Identidad</span></p>
+          <div class="about-grid">
+            <figure class="portrait-frame" aria-label="Foto de Wilvardo Ramírez">
+              <!--
+                FOTO: guarda el archivo en src/assets/ con nombre base "portrait"
+                (portrait.webp | portrait.jpg | portrait.jpeg | portrait.png).
+                El script initPortrait() lo detecta y lo muestra; si no existe, se ve el placeholder.
+              -->
+              <div class="portrait-media">
+                <img class="portrait-photo" alt="Wilvardo Ramírez, director de producto y desarrollador" width="720" height="900" />
+                <div class="portrait-placeholder">
+                  <span class="portrait-monogram" aria-hidden="true">WR</span>
+                </div>
+                <span class="portrait-tick portrait-tick--tl" aria-hidden="true"></span>
+                <span class="portrait-tick portrait-tick--tr" aria-hidden="true"></span>
+                <span class="portrait-tick portrait-tick--bl" aria-hidden="true"></span>
+                <span class="portrait-tick portrait-tick--br" aria-hidden="true"></span>
+              </div>
+              <figcaption class="portrait-caption">
+                <span class="t-mono" data-i18n="about.portraitCaption">Wilvardo Ramírez</span>
+              </figcaption>
+            </figure>
+
+            <div class="about-copy">
+              <h2 class="text-h1" data-i18n="about.headline">
+                Hace una década construyo y dirijo equipos y producto de software.
+              </h2>
+              <p class="text-lead" data-i18n="about.body1">
+                Soy analítico e investigador por naturaleza: antes de decidir, busco toda la información posible. Dirijo el desarrollo y el diseño de producto de software en operación real, donde la calidad pasa por mí: reviso cada avance antes de cada deploy.
+              </p>
+              <p class="text-body about-body2" data-i18n="about.body2">
+                Tengo una postura crítica y responsable sobre la IA: la uso como acelerador con criterio, nunca como sustituto del pensamiento. El código que entrego se entiende, se justifica y se puede mantener.
+              </p>
+              <ul class="about-credentials" aria-label="Credenciales">
+                <li class="pill" data-i18n="about.creds.0">Dirección de producto</li>
+                <li class="pill" data-i18n="about.creds.1">10+ años en producción</li>
+                <li class="pill" data-i18n="about.creds.2">Consultoría técnica</li>
+              </ul>
+              <a class="hero-link-secondary" href="https://linkedin.com/in/wilvardo" target="_blank" rel="noopener" data-i18n="about.link">
+                Perfil completo en LinkedIn →
+              </a>
+            </div>
+          </div>
+
+          <div class="stats-row reveal-stagger">
+            <div class="stat">
+              <div class="stat-figure counter" data-counter="10+">10+</div>
+              <p class="stat-label" data-i18n="about.stats.0">Años construyendo software en operación real.</p>
+            </div>
+            <div class="stat">
+              <div class="stat-figure counter" data-counter="3">3</div>
+              <p class="stat-label" data-i18n="about.stats.1">Frentes: desarrollador, consultor y director.</p>
+            </div>
+            <div class="stat">
+              <div class="stat-figure counter" data-counter="0">0</div>
+              <p class="stat-label" data-i18n-html="about.stats.2">Tipos <code>any</code>. TypeScript estricto, sin excepción.</p>
+            </div>
+            <div class="stat">
+              <div class="stat-figure counter" data-counter="100%">100%</div>
+              <p class="stat-label" data-i18n="about.stats.3">De los avances revisados antes de cada deploy.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 02 — CAPACIDADES ============ -->
+      <section class="section reveal" id="capabilities">
+        <div class="container">
+          <p class="kicker"><span class="kicker-num">02</span> <span data-scramble data-i18n="caps.kicker">Capacidades</span></p>
+          <h2 class="text-h1" data-i18n="caps.headline">Qué sé hacer, en concreto.</h2>
+          <p class="text-lead section-lead" data-i18n="caps.sub">
+            No es una lista de buzzwords. Es el inventario de lo que puedo diagnosticar, construir y dirigir hoy.
+          </p>
+
+          <div class="caps-grid reveal-stagger">
+            <article class="caps-card">
+              <header class="caps-card-head">
+                <span class="caps-tag t-mono">// 01</span>
+                <h3 data-i18n="caps.groups.0.title">Lenguajes &amp; stack</h3>
+              </header>
+              <p data-i18n="caps.groups.0.desc">El stack con el que entrego producto a diario.</p>
+              <ul class="tag-list">
+                <li class="tag" data-icon="typescript">TypeScript</li>
+                <li class="tag" data-icon="javascript">JavaScript</li>
+                <li class="tag" data-icon="node">Node.js</li>
+                <li class="tag" data-icon="adonis">Adonis.js</li>
+                <li class="tag" data-icon="laravel">Laravel</li>
+                <li class="tag" data-icon="nuxt">Nuxt</li>
+                <li class="tag" data-icon="angular">Angular</li>
+                <li class="tag" data-icon="mysql">MySQL</li>
+                <li class="tag" data-icon="mongodb">MongoDB</li>
+                <li class="tag" data-icon="sass">Sass/SCSS</li>
+              </ul>
+            </article>
+
+            <article class="caps-card">
+              <header class="caps-card-head">
+                <span class="caps-tag t-mono">// 02</span>
+                <h3 data-i18n="caps.groups.1.title">Arquitectura &amp; ingeniería</h3>
+              </header>
+              <p data-i18n="caps.groups.1.desc">Código que escala y se mantiene, cuidando siempre la UX y la UI.</p>
+              <ul class="tag-list">
+                <li class="tag">Hexagonal</li>
+                <li class="tag">Vertical slicing</li>
+                <li class="tag">SOLID</li>
+                <li class="tag" data-icon="openapi">REST + OpenAPI</li>
+                <li class="tag" data-icon="git">Git</li>
+                <li class="tag" data-icon="vite">Vite</li>
+                <li class="tag" data-icon="eslint">ESLint</li>
+                <li class="tag" data-icon="prettier">Prettier</li>
+                <li class="tag">UX / UI</li>
+                <li class="tag">Seguridad pre-deploy</li>
+              </ul>
+            </article>
+
+            <article class="caps-card">
+              <header class="caps-card-head">
+                <span class="caps-tag t-mono">// 03</span>
+                <h3 data-i18n="caps.groups.2.title">Producto, procesos &amp; dirección</h3>
+              </header>
+              <p data-i18n="caps.groups.2.desc">De la necesidad difusa al plan ejecutado: negocio, producto y gestión de talento.</p>
+              <ul class="tag-list">
+                <li class="tag">Visión de negocio</li>
+                <li class="tag">Discovery</li>
+                <li class="tag">Especificación</li>
+                <li class="tag">Scrum</li>
+                <li class="tag" data-icon="asana">Asana</li>
+                <li class="tag">Story points</li>
+                <li class="tag">QA gate</li>
+                <li class="tag">Gestión de talento</li>
+              </ul>
+            </article>
+
+            <article class="caps-card">
+              <header class="caps-card-head">
+                <span class="caps-tag t-mono">// 04</span>
+                <h3 data-i18n="caps.groups.3.title">IA con criterio</h3>
+              </header>
+              <p data-i18n="caps.groups.3.desc">La integro en tus procesos solo si es necesario. Siempre con revisión humana.</p>
+              <ul class="tag-list">
+                <li class="tag" data-icon="claude">Claude</li>
+                <li class="tag">Revisión humana</li>
+                <li class="tag">Control de deuda técnica</li>
+                <li class="tag">Integración responsable</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 03 — CÓMO TRABAJO ============ -->
+      <section class="section reveal" id="standards">
+        <div class="container">
+          <p class="kicker"><span class="kicker-num">03</span> <span data-scramble data-i18n="std.kicker">Cómo trabajo</span></p>
+          <div class="std-grid">
+            <div class="std-copy">
+              <h2 class="text-h1" data-i18n="std.headline">No entrego una línea que no entienda.</h2>
+              <p class="text-lead" data-i18n="std.body">
+                Estos son los principios que no negocio. Son la razón por la que un fundador puede dormir tranquilo con lo que sale a producción, y por la que un equipo dev mejora trabajando conmigo en lugar de acumular deuda.
+              </p>
+              <ul class="std-list">
+                <li>
+                  <strong data-i18n="std.items.0.t">Datos antes que código.</strong>
+                  <span data-i18n="std.items.0.d">El modelo de datos no se improvisa: se justifica.</span>
+                </li>
+                <li>
+                  <strong data-i18n="std.items.1.t">Nada entra sin estar planeado.</strong>
+                  <span data-i18n="std.items.1.d">Toda tarea se documenta y se estima antes de tocar el teclado.</span>
+                </li>
+                <li>
+                  <strong data-i18n="std.items.2.t">Refactor obligatorio.</strong>
+                  <span data-i18n="std.items.2.d">Funcionar no basta; una vez funciona, se limpia.</span>
+                </li>
+                <li>
+                  <strong data-i18n="std.items.3.t">Seguridad antes de cada deploy.</strong>
+                  <span data-i18n="std.items.3.d">Reviso huecos antes de liberar, no después del incidente.</span>
+                </li>
+              </ul>
+            </div>
+
+            <figure class="spec-block" aria-label="Estándares de ingeniería">
+              <figcaption class="spec-bar" aria-hidden="true">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                <span class="spec-title t-mono">estandares.config.ts</span>
+              </figcaption>
+              <pre class="spec-code"><code><span class="c-line"><span class="ln">1</span><span class="c-com">// innegociables</span></span>
+<span class="c-line"><span class="ln">2</span><span class="c-kw">const</span> <span class="c-var">wilvardo</span> = {</span>
+<span class="c-line"><span class="ln">3</span>  datos:        <span class="c-str">"modelo justificado, no improvisado"</span>,</span>
+<span class="c-line"><span class="ln">4</span>  arquitectura: <span class="c-str">"hexagonal · vertical slicing"</span>,</span>
+<span class="c-line"><span class="ln">5</span>  typescript:   <span class="c-str">"estricto · cero any"</span>,</span>
+<span class="c-line"><span class="ln">6</span>  errores:      <span class="c-str">"título · detalle · key"</span>,</span>
+<span class="c-line"><span class="ln">7</span>  ux:           <span class="c-str">"simple por fuera, rigurosa dentro"</span>,</span>
+<span class="c-line"><span class="ln">8</span>  calidad:      <span class="c-str">"refactor + seguridad pre-deploy"</span>,</span>
+<span class="c-line"><span class="ln">9</span>  ia:           <span class="c-str">"acelerador con criterio"</span>,</span>
+<span class="c-line"><span class="ln">10</span>} <span class="c-kw">as const</span>;</span></code></pre>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 04 — COLABORAR (3 MODOS) ============ -->
+      <section class="section reveal" id="services">
+        <div class="container">
+          <p class="kicker"><span class="kicker-num">04</span> <span data-scramble data-i18n="modes.kicker">Cómo colaboramos</span></p>
+          <h2 class="text-h1" data-i18n="modes.headline">Tres formas de sumar. Una conversación.</h2>
+          <p class="text-lead section-lead" data-i18n="modes.sub">
+            Según lo que necesites, entro como uno de los tres. A veces como los tres.
+          </p>
+
+          <div class="modes-grid reveal-stagger">
+            <article class="service-card">
+              <div class="service-card-top">
+                <span class="service-num t-mono">01</span>
+                <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M8 9l-4 3 4 3M16 9l4 3-4 3M13 6l-2 12" />
+                </svg>
+              </div>
+              <h3 data-i18n="modes.items.0.title">Desarrollador</h3>
+              <p class="service-claim" data-i18n="modes.items.0.claim">Implemento.</p>
+              <p data-i18n="modes.items.0.body">Habilidades técnicas fuertes en arquitectura y estándares, cuidando siempre la UX y la UI. Código limpio que tu equipo puede mantener cuando yo no esté.</p>
+              <ul class="service-pills">
+                <li class="pill" data-i18n="modes.items.0.pills.0">Arquitectura &amp; estándares</li>
+                <li class="pill" data-icon="typescript" data-i18n="modes.items.0.pills.1">Full-stack TS</li>
+                <li class="pill" data-i18n="modes.items.0.pills.2">UX / UI</li>
+              </ul>
+              <a class="card-link" href="#cta" data-i18n="modes.cardLink">Conversemos →</a>
+            </article>
+
+            <article class="service-card">
+              <div class="service-card-top">
+                <span class="service-num t-mono">02</span>
+                <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="11" cy="11" r="7" />
+                  <path d="M21 21l-4.3-4.3" />
+                </svg>
+              </div>
+              <h3 data-i18n="modes.items.1.title">Consultor técnico</h3>
+              <p class="service-claim" data-i18n="modes.items.1.claim">Mejoro tus procesos.</p>
+              <p data-i18n="modes.items.1.body">Diagnostico y mejoro tus procesos de desarrollo de software con visión de negocio. Estructura técnica acompañada del criterio de tu operación. Implemento IA con criterio en tu flujo, solo si de verdad suma.</p>
+              <ul class="service-pills">
+                <li class="pill" data-i18n="modes.items.1.pills.0">Procesos de desarrollo</li>
+                <li class="pill" data-i18n="modes.items.1.pills.1">Visión de negocio</li>
+                <li class="pill" data-icon="claude" data-i18n="modes.items.1.pills.2">IA con criterio</li>
+              </ul>
+              <a class="card-link" href="#cta" data-i18n="modes.cardLink">Conversemos →</a>
+            </article>
+
+            <article class="service-card">
+              <div class="service-card-top">
+                <span class="service-num t-mono">03</span>
+                <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M3 12h4l2-7 4 14 2-7h6" />
+                </svg>
+              </div>
+              <h3 data-i18n="modes.items.2.title">Director de producto y proyectos</h3>
+              <p class="service-claim" data-i18n="modes.items.2.claim">Planeo y dirijo.</p>
+              <p data-i18n="modes.items.2.body">Producto, planeación y ejecución: discovery, especificación, Scrum y project management. Gestiono equipo y talento para que el negocio y el desarrollo avancen juntos.</p>
+              <ul class="service-pills">
+                <li class="pill" data-i18n="modes.items.2.pills.0">Producto &amp; discovery</li>
+                <li class="pill" data-icon="asana" data-i18n="modes.items.2.pills.1">Scrum / PM</li>
+                <li class="pill" data-i18n="modes.items.2.pills.2">Gestión de talento</li>
+              </ul>
+              <a class="card-link" href="#cta" data-i18n="modes.cardLink">Conversemos →</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 05 — TRAYECTORIA ============ -->
+      <section class="section reveal" id="trajectory">
+        <div class="container">
+          <p class="kicker"><span class="kicker-num">05</span> <span data-scramble data-i18n="traj.kicker">Trayectoria</span></p>
+          <h2 class="text-h1" data-i18n="traj.headline">Una década de construir, fallar y volver a construir.</h2>
+          <ol class="timeline reveal-stagger">
+            <li class="timeline-item">
+              <span class="timeline-marker t-mono" aria-hidden="true">01</span>
+              <div class="timeline-body">
+                <h3 data-i18n="traj.items.0.t">Primer emprendimiento</h3>
+                <p data-i18n="traj.items.0.d">Una plataforma de e-learning para estudiantes. Primera empresa; primera lección dura.</p>
+              </div>
+            </li>
+            <li class="timeline-item">
+              <span class="timeline-marker t-mono" aria-hidden="true">02</span>
+              <div class="timeline-body">
+                <h3 data-i18n="traj.items.1.t">Software a la medida</h3>
+                <p data-i18n="traj.items.1.d">Desarrollo para PyMEs en múltiples giros. Aprendí que crecer sin estructura mata más rápido que no crecer.</p>
+              </div>
+            </li>
+            <li class="timeline-item">
+              <span class="timeline-marker t-mono" aria-hidden="true">03</span>
+              <div class="timeline-body">
+                <h3 data-i18n="traj.items.2.t">Plataforma financiera</h3>
+                <p data-i18n="traj.items.2.d">Sistema de créditos y evaluación de prospectos. Modelo de datos y arquitectura financiera sólidos.</p>
+              </div>
+            </li>
+            <li class="timeline-item is-current">
+              <span class="timeline-marker t-mono" aria-hidden="true">Hoy</span>
+              <div class="timeline-body">
+                <h3 data-i18n="traj.items.3.t">Dirección de producto — actualidad</h3>
+                <p data-i18n="traj.items.3.d">Dirijo el desarrollo y el diseño de producto de software bajo membresía, con clientes activos.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ============ 06 — FAQ ============ -->
+      <section class="section reveal" id="faq">
+        <div class="container container-narrow">
+          <p class="kicker"><span class="kicker-num">06</span> <span data-scramble data-i18n="faq.kicker">Preguntas</span></p>
+          <h2 class="text-h1" data-i18n="faq.headline">Lo que casi siempre me preguntan.</h2>
+          <div class="faq-list">
+            <details class="faq-item">
+              <summary>
+                <span data-i18n="faq.items.0.q">¿Programas o solo diriges?</span>
+                <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </summary>
+              <div class="faq-answer" data-i18n="faq.items.0.a">Ambos. Diagnostico, dirijo y, cuando aporta, implemento yo mismo.</div>
+            </details>
+            <details class="faq-item">
+              <summary>
+                <span data-i18n="faq.items.1.q">¿Con qué empresas trabajas?</span>
+                <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </summary>
+              <div class="faq-answer" data-i18n="faq.items.1.a">PyMEs mexicanas que ya tienen software y necesitan que rinda. También trabajo en remoto.</div>
+            </details>
+            <details class="faq-item">
+              <summary>
+                <span data-i18n="faq.items.2.q">¿Tienes un rol de tiempo completo además de la consultoría?</span>
+                <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </summary>
+              <div class="faq-answer" data-i18n="faq.items.2.a">Sí. Mi rol principal es de dirección de producto y desarrollo; la consultoría independiente es compatible y declarada, no compite con él.</div>
+            </details>
+            <details class="faq-item">
+              <summary>
+                <span data-i18n="faq.items.3.q">¿Cuál es tu postura sobre la IA?</span>
+                <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </summary>
+              <div class="faq-answer" data-i18n="faq.items.3.a">Acelerador con criterio. Todo código generado con IA se revisa, se entiende y se justifica antes de entregarse. Nunca sustituye el análisis.</div>
+            </details>
+            <details class="faq-item">
+              <summary>
+                <span data-i18n="faq.items.4.q">¿Cómo es la primera conversación?</span>
+                <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </summary>
+              <div class="faq-answer" data-i18n="faq.items.4.a">Treinta minutos por video. Sin propuesta ni compromiso detrás. Para entender qué tienes hoy y qué necesitarías mañana.</div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ CTA FINAL ============ -->
+      <section class="cta-final reveal" id="cta">
+        <span class="cta-iso" aria-hidden="true"></span>
+        <div class="container-narrow">
+          <p class="kicker kicker-center" data-scramble data-i18n="ctaFinal.kicker">Siguiente paso</p>
+          <h2 data-i18n="ctaFinal.headline">Empecemos por una conversación.</h2>
+          <p class="cta-sub" data-i18n="ctaFinal.sub">
+            30 minutos. Sin propuesta ni contrato detrás. Una llamada para entender qué tienes hoy y qué necesitarías mañana.
+          </p>
+          <a class="btn-primary btn-large" data-magnetic href="mailto:hola@wilvardo.com" data-i18n="ctaFinal.cta">Agenda una llamada</a>
+          <p class="cta-mail t-mono"><a href="mailto:hola@wilvardo.com">hola@wilvardo.com</a></p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <img src="/isotipo.png" alt="" width="30" height="30" />
+            <strong>Wilvardo Ramírez</strong>
+            <small data-i18n="footer.tagline">Software con criterio.</small>
+          </div>
+          <div class="footer-col">
+            <h4 data-i18n="footer.contactHeading">Contacto</h4>
+            <ul>
+              <li><a href="mailto:hola@wilvardo.com">hola@wilvardo.com</a></li>
+              <li><a href="https://linkedin.com/in/wilvardo" target="_blank" rel="noopener">LinkedIn</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4 data-i18n="footer.siteHeading">Mapa</h4>
+            <ul>
+              <li><a href="#about" data-i18n="header.navAbout">Identidad</a></li>
+              <li><a href="#capabilities" data-i18n="header.navCaps">Capacidades</a></li>
+              <li><a href="#services" data-i18n="header.navServices">Colaborar</a></li>
+              <li><a href="/blog/">Blog</a></li>
+              <li><a href="#cta" data-i18n="footer.contactHeading">Contacto</a></li>
+            </ul>
+          </div>
+        </div>
+        <p class="footer-copy t-mono" data-i18n="footer.copyright">
+          © 2026 Wilvardo Ramírez · hecho con criterio
+        </p>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/scripts/main.ts"></script>
+  </body>
+</html>

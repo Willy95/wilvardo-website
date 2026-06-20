@@ -1,0 +1,483 @@
+// Plantilla de entrada de blog (post). Comparte el design system "ingeniero preciso".
+// Medida de lectura ~760px; en pantallas anchas aparece la columna lateral (indice + compartir).
+
+// ============================================================
+// Layout de dos columnas
+// ============================================================
+.post {
+  padding: var(--space-9) 0 var(--space-8);
+}
+
+.post-layout {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 var(--space-5);
+}
+
+.post-col {
+  max-width: var(--container-narrow);
+  min-width: 0;
+  margin: 0 auto;
+}
+
+.post-rail {
+  display: none;
+}
+
+@media (min-width: 1040px) {
+  .post-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 232px;
+    gap: var(--space-8);
+    align-items: start;
+  }
+
+  .post-col {
+    margin: 0;
+  }
+
+  .post-rail {
+    display: block;
+    position: sticky;
+    top: var(--space-9);
+  }
+}
+
+// ============================================================
+// Cabecera del post
+// ============================================================
+.post-back {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  color: var(--color-accent-text);
+  display: inline-flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+
+  &:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+.post-kicker {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-5);
+
+  .pilar {
+    color: var(--color-accent-text);
+  }
+}
+
+.post-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(34px, 5vw, 56px);
+  line-height: 1.07;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  margin-bottom: var(--space-5);
+}
+
+.post-dek {
+  font-size: var(--text-lead);
+  line-height: var(--lh-lead);
+  color: var(--color-text-secondary);
+  max-width: 60ch;
+  margin-bottom: var(--space-6);
+}
+
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  color: var(--color-text-secondary);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-line);
+
+  .sep {
+    color: var(--color-line-strong);
+  }
+}
+
+// ---- Boton compartir (cabecera y rail) ----
+.share-btn,
+.rail-share {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-xs);
+  color: var(--color-text-secondary);
+  background: none;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-pill);
+  padding: 6px 13px;
+  cursor: pointer;
+  transition:
+    color var(--duration-fast) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard);
+
+  &:hover {
+    color: var(--color-accent-text);
+    border-color: var(--color-brand-primary);
+  }
+
+  svg {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+.share-btn {
+  margin-left: auto;
+}
+
+// ============================================================
+// Hero del post
+// ============================================================
+.post-hero {
+  margin: var(--space-7) 0 var(--space-8);
+}
+
+.post-hero-media {
+  position: relative;
+  aspect-ratio: 1200 / 630;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-line-strong);
+  overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 70% 10%, var(--color-surface-overlay), transparent 60%),
+    repeating-linear-gradient(0deg, transparent 0 27px, var(--color-line) 27px 28px),
+    repeating-linear-gradient(90deg, transparent 0 27px, var(--color-line) 27px 28px),
+    var(--color-surface-raised);
+
+  img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.post-hero-ph {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+
+  span {
+    font-family: var(--font-mono);
+    font-size: var(--text-mono-sm);
+    color: var(--color-text-secondary);
+  }
+
+  small {
+    display: block;
+    margin-top: 6px;
+    font-size: var(--text-mono-xs);
+    color: var(--color-text-secondary);
+  }
+}
+
+.post-hero-cap {
+  margin-top: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-xs);
+  color: var(--color-text-secondary);
+  letter-spacing: 0.04em;
+}
+
+// Marco de esquinas (reusa el lenguaje del retrato).
+.tick {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--color-brand-primary);
+
+  &.tl { top: 12px; left: 12px; border-right: 0; border-bottom: 0; }
+  &.tr { top: 12px; right: 12px; border-left: 0; border-bottom: 0; }
+  &.bl { bottom: 12px; left: 12px; border-right: 0; border-top: 0; }
+  &.br { bottom: 12px; right: 12px; border-left: 0; border-top: 0; }
+}
+
+// ============================================================
+// Cuerpo de lectura
+// ============================================================
+.post-body {
+  font-size: 18px; // un punto sobre el cuerpo base: la lectura larga lo agradece
+  line-height: 1.78;
+  color: var(--color-text-primary);
+
+  p {
+    margin: 0 0 var(--space-5);
+  }
+
+  .ph2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--text-h2);
+    line-height: var(--lh-h2);
+    letter-spacing: -0.01em;
+    margin: var(--space-9) 0 var(--space-4);
+    scroll-margin-top: var(--space-9);
+  }
+
+  strong {
+    font-weight: 600;
+    color: var(--color-text-primary);
+  }
+
+  em {
+    font-style: italic;
+  }
+
+  a {
+    color: var(--color-accent-text);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--color-accent-text) 45%, transparent);
+    text-underline-offset: 3px;
+    transition: text-decoration-color var(--duration-fast) var(--ease-standard);
+
+    &:hover {
+      text-decoration-color: var(--color-accent-text);
+    }
+  }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.86em;
+    background: var(--color-surface-muted);
+    color: var(--color-accent-text);
+    padding: 0.12em 0.42em;
+    border-radius: var(--radius-sm);
+  }
+}
+
+// Cita destacada (frase sentencia).
+.pullquote {
+  margin: var(--space-8) 0;
+  padding: var(--space-2) 0 var(--space-2) var(--space-6);
+  border-left: 2px solid var(--color-brand-primary);
+  border-radius: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--text-h3);
+  line-height: 1.35;
+  color: var(--color-text-primary);
+  letter-spacing: -0.01em;
+}
+
+// Referencias al pie del cuerpo.
+.post-refs {
+  margin-top: var(--space-8);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-line);
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-xs);
+  color: var(--color-text-secondary);
+  line-height: 1.9;
+
+  a {
+    color: var(--color-accent-text);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+}
+
+// ============================================================
+// Pie del post: tags, autor, navegacion
+// ============================================================
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-7);
+  list-style: none;
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--font-mono);
+    font-size: var(--text-mono-xs);
+    color: var(--color-text-secondary);
+    background: var(--color-surface-muted);
+    border: 1px solid var(--color-line);
+    padding: 5px 10px;
+    border-radius: var(--radius-sm);
+    transition:
+      border-color var(--duration-fast) var(--ease-standard),
+      color var(--duration-fast) var(--ease-standard);
+
+    &:hover {
+      border-color: var(--color-brand-primary);
+      color: var(--color-accent-text);
+    }
+  }
+
+  .hash {
+    color: var(--color-accent-text);
+  }
+}
+
+.post-author {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-8);
+  padding: var(--space-5);
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+
+  .iso {
+    position: relative;
+    overflow: hidden;
+    width: 46px;
+    height: 46px;
+    border-radius: 10px;
+    flex-shrink: 0;
+    background: var(--color-brand-primary);
+    display: grid;
+    place-items: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--color-text-on-brand);
+    font-size: 19px;
+
+    img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .who {
+    strong {
+      font-family: var(--font-display);
+      font-size: 16px;
+    }
+
+    p {
+      color: var(--color-text-secondary);
+      font-size: var(--text-body-sm);
+      margin-top: 2px;
+    }
+  }
+}
+
+.post-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  margin-top: var(--space-7);
+
+  a {
+    padding: var(--space-5);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface-raised);
+    transition:
+      border-color var(--duration-base) var(--ease-standard),
+      transform var(--duration-base) var(--ease-standard);
+
+    &:hover {
+      border-color: var(--color-brand-primary);
+      transform: translateY(-2px);
+    }
+  }
+
+  .lbl {
+    font-family: var(--font-mono);
+    font-size: var(--text-mono-xs);
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .ttl {
+    display: block;
+    margin-top: 6px;
+    font-family: var(--font-display);
+    font-weight: 500;
+    color: var(--color-text-primary);
+  }
+
+  .next {
+    text-align: right;
+  }
+
+  .disabled {
+    opacity: 0.45;
+    pointer-events: none;
+  }
+}
+
+@media (max-width: 680px) {
+  .post-nav {
+    grid-template-columns: 1fr;
+  }
+
+  .post-nav .next {
+    text-align: left;
+  }
+}
+
+// ============================================================
+// Columna lateral: indice (TOC con scroll-spy) + compartir
+// ============================================================
+.toc-title {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-3);
+}
+
+.toc ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-left: 1px solid var(--color-line);
+}
+
+.toc a {
+  display: block;
+  padding: 5px 0 5px var(--space-4);
+  margin-left: -1px;
+  border-left: 2px solid transparent;
+  font-size: var(--text-body-sm);
+  line-height: 1.4;
+  color: var(--color-text-secondary);
+  transition:
+    color var(--duration-fast) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard);
+
+  &:hover {
+    color: var(--color-accent-text);
+  }
+
+  &.is-active {
+    color: var(--color-accent-text);
+    border-left-color: var(--color-brand-primary);
+  }
+}
+
+.rail-share {
+  margin-top: var(--space-6);
+}

@@ -1,0 +1,762 @@
+// Entry point de estilos — orden importante.
+@use "tokens";
+@use "reset";
+@use "a11y";
+@use "typography";
+@use "components";
+@use "animations";
+@use "post";
+@use "blog";
+
+// ============================================================
+// Layout base
+// ============================================================
+main {
+  display: flex;
+  flex-direction: column;
+}
+
+// Hairline modular entre secciones de contenido.
+#capabilities,
+#standards,
+#services,
+#trajectory,
+#faq {
+  border-top: 1px solid var(--color-line);
+}
+
+.section-lead {
+  max-width: 60ch;
+  margin-top: var(--space-4);
+  margin-bottom: var(--space-7);
+}
+
+// ============================================================
+// Header
+// ============================================================
+.site-header {
+  position: sticky;
+  top: var(--space-3);
+  z-index: 100;
+  margin-top: var(--space-3);
+  padding: 0 var(--space-5);
+}
+
+.header-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  padding: var(--space-2) var(--space-3) var(--space-2) var(--space-4);
+  background: color-mix(in srgb, var(--color-surface-raised) 84%, transparent);
+  backdrop-filter: blur(14px) saturate(1.3);
+  -webkit-backdrop-filter: blur(14px) saturate(1.3);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-md);
+  transition: box-shadow var(--duration-base) var(--ease-standard);
+}
+
+.site-header.is-scrolled .header-inner {
+  box-shadow: var(--shadow-lg);
+}
+
+.brand-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.brand-wordmark {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 19px;
+  letter-spacing: -0.02em;
+}
+
+.brand-meta {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-xs);
+  color: var(--color-text-muted);
+}
+
+.site-nav {
+  display: flex;
+  gap: var(--space-6);
+  margin-left: auto;
+
+  a {
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--color-text-secondary);
+    transition: color var(--duration-fast) var(--ease-standard);
+
+    &:hover {
+      color: var(--color-text-primary);
+    }
+  }
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.lang-toggle {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-pill);
+  padding: 5px 11px;
+  transition:
+    color var(--duration-fast) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard);
+
+  &:hover {
+    color: var(--color-accent-text);
+    border-color: var(--color-brand-primary);
+  }
+}
+
+// Boton de tema: muestra solo el icono del modo activo (segun data-pref del boton).
+.icon-btn[data-action="toggle-theme"] [data-icon] {
+  display: none;
+}
+.icon-btn[data-pref="system"] [data-icon="system"],
+.icon-btn[data-pref="light"] [data-icon="light"],
+.icon-btn[data-pref="dark"] [data-icon="dark"] {
+  display: block;
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-pill);
+  color: var(--color-text-secondary);
+  transition:
+    color var(--duration-fast) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard);
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover {
+    color: var(--color-accent-text);
+    border-color: var(--color-brand-primary);
+  }
+}
+
+// ============================================================
+// Hero
+// ============================================================
+.hero {
+  position: relative;
+  min-height: clamp(580px, 90vh, 880px);
+  display: grid;
+  align-items: center;
+  overflow: hidden;
+  padding: var(--space-9) 0 var(--space-8);
+}
+
+.hero-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.hero-grid-lines {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--color-line) 0 1px,
+    transparent 1px var(--grid-unit)
+  );
+  opacity: 0.4;
+  mask-image: radial-gradient(130% 80% at 50% 0%, #000 25%, transparent 78%);
+  -webkit-mask-image: radial-gradient(130% 80% at 50% 0%, #000 25%, transparent 78%);
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1.18fr 0.82fr;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.hero-claim {
+  margin: var(--space-4) 0;
+  text-wrap: balance;
+}
+
+.hero-claim-line {
+  display: block;
+}
+
+.hero-sub {
+  max-width: 46ch;
+  margin-bottom: var(--space-6);
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  flex-wrap: wrap;
+}
+
+.hero-link-secondary {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  color: var(--color-text-secondary);
+  transition: color var(--duration-fast) var(--ease-standard);
+
+  &:hover {
+    color: var(--color-accent-text);
+  }
+}
+
+// ============================================================
+// Tira de credenciales (consola)
+// ============================================================
+.credentials-strip {
+  border-top: 1px solid var(--color-line);
+  border-bottom: 1px solid var(--color-line);
+  background: var(--color-surface-raised);
+  padding: var(--space-4) 0;
+
+  // El degradado de borde del marquee debe fundir con el fondo de la franja.
+  .marquee::before {
+    background: linear-gradient(to right, var(--color-surface-raised), transparent);
+  }
+  .marquee::after {
+    background: linear-gradient(to left, var(--color-surface-raised), transparent);
+  }
+}
+
+.credentials-item {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--color-text-secondary);
+  padding: 0 var(--space-5);
+  display: inline-flex;
+  align-items: center;
+
+  &::before {
+    content: "//";
+    color: var(--color-accent-text);
+    margin-right: var(--space-3);
+    opacity: 0.7;
+  }
+}
+
+// ============================================================
+// 01 — Identidad
+// ============================================================
+.about-grid {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: var(--space-8);
+  align-items: start;
+}
+
+.portrait-frame {
+  max-width: 380px;
+}
+
+.about-copy .text-h1 {
+  margin-bottom: var(--space-5);
+}
+
+.about-body2 {
+  margin-top: var(--space-4);
+  color: var(--color-text-secondary);
+}
+
+.about-credentials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-6) 0 var(--space-5);
+}
+
+.about-copy .hero-link-secondary {
+  display: inline-block;
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-5);
+  margin-top: var(--space-8);
+  padding-top: var(--space-7);
+  border-top: 1px solid var(--color-line);
+}
+
+.stat-figure {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(40px, 5vw, 60px);
+  line-height: 1;
+  color: var(--color-accent-text);
+  letter-spacing: -0.02em;
+}
+
+.stat-label {
+  margin-top: var(--space-3);
+  font-size: var(--text-body-sm);
+  color: var(--color-text-secondary);
+  max-width: 26ch;
+}
+
+// ============================================================
+// 02 — Capacidades
+// ============================================================
+.caps-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-5);
+}
+
+// ============================================================
+// 03 — Como trabajo
+// ============================================================
+.std-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+  align-items: center;
+}
+
+.std-copy .text-lead {
+  margin: var(--space-4) 0 var(--space-5);
+}
+
+.std-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.std-list li {
+  position: relative;
+  padding-left: var(--space-6);
+
+  &::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--color-accent-text);
+    font-family: var(--font-mono);
+  }
+
+  strong {
+    display: block;
+  }
+
+  span {
+    color: var(--color-text-secondary);
+    font-size: var(--text-body-sm);
+  }
+}
+
+// ============================================================
+// 04 — Colaborar (3 modos)
+// ============================================================
+.modes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+}
+
+// ============================================================
+// 05 — Trayectoria
+// ============================================================
+.timeline {
+  position: relative;
+  margin-top: var(--space-7);
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 31px;
+    top: 10px;
+    bottom: 44px;
+    width: 2px;
+    background: linear-gradient(var(--color-brand-primary), var(--color-line));
+    z-index: 0;
+  }
+}
+
+.timeline-item {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: var(--space-5);
+  padding-bottom: var(--space-6);
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+}
+
+.timeline-marker {
+  position: relative;
+  z-index: 1;
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  padding: 6px 0;
+  text-align: center;
+  height: fit-content;
+}
+
+.timeline-item.is-current .timeline-marker {
+  color: var(--color-text-on-brand);
+  background: var(--color-brand-primary);
+  border-color: var(--color-brand-primary);
+}
+
+.timeline-body {
+  padding-top: 2px;
+
+  h3 {
+    font-family: var(--font-display);
+    font-size: var(--text-h3);
+  }
+
+  p {
+    margin-top: var(--space-2);
+    color: var(--color-text-secondary);
+    font-size: var(--text-body-sm);
+    max-width: 64ch;
+  }
+}
+
+// ============================================================
+// 06 — FAQ
+// ============================================================
+.faq-list {
+  margin-top: var(--space-6);
+  border-top: 1px solid var(--color-line);
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--color-line);
+
+  summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-5) 0;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--text-h3);
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+  }
+
+  .chevron {
+    flex-shrink: 0;
+    color: var(--color-accent-text);
+    transition: transform var(--duration-base) var(--ease-standard);
+  }
+
+  &[open] .chevron {
+    transform: rotate(180deg);
+  }
+}
+
+.faq-answer {
+  padding: 0 0 var(--space-5);
+  color: var(--color-text-secondary);
+  max-width: 66ch;
+}
+
+// ============================================================
+// CTA final
+// ============================================================
+.cta-final {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border-top: 1px solid var(--color-line);
+  padding: var(--space-10) 0;
+  text-align: center;
+  background:
+    radial-gradient(90% 120% at 50% 0%, var(--color-surface-overlay), transparent 70%),
+    var(--color-surface-base);
+
+  h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--text-h1);
+    letter-spacing: -0.015em;
+    margin-bottom: var(--space-4);
+  }
+}
+
+// Isotipo en lineas como marca de agua de esquina (coloreado con el acento via mask).
+.cta-iso {
+  position: absolute;
+  z-index: 0;
+  bottom: -22%;
+  right: -7%;
+  height: 155%;
+  aspect-ratio: 1 / 1;
+  transform: rotate(-12deg);
+  transform-origin: center;
+  background-color: var(--color-brand-primary);
+  -webkit-mask: url("/iso-mask.png") no-repeat center / contain;
+  mask: url("/iso-mask.png") no-repeat center / contain;
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+@media (max-width: 680px) {
+  .cta-iso {
+    height: 115%;
+    right: -22%;
+    bottom: -8%;
+    opacity: 0.07;
+  }
+}
+
+.cta-final .container-narrow {
+  position: relative;
+  z-index: 1;
+}
+
+.cta-sub {
+  color: var(--color-text-secondary);
+  font-size: var(--text-lead);
+  max-width: 54ch;
+  margin: 0 auto var(--space-6);
+}
+
+.cta-mail {
+  margin-top: var(--space-5);
+  color: var(--color-text-muted);
+
+  a:hover {
+    color: var(--color-accent-text);
+  }
+}
+
+// ============================================================
+// Footer
+// ============================================================
+.site-footer {
+  border-top: 1px solid var(--color-line);
+  padding: var(--space-8) 0 var(--space-7);
+  background: var(--color-surface-raised);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: var(--space-6);
+}
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-width: 32ch;
+
+  strong {
+    font-family: var(--font-display);
+    font-size: 17px;
+  }
+
+  small {
+    color: var(--color-text-muted);
+    font-size: var(--text-body-sm);
+    line-height: 1.5;
+  }
+}
+
+.footer-col {
+  h4 {
+    font-family: var(--font-mono);
+    font-size: var(--text-mono-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-3);
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  a {
+    color: var(--color-text-secondary);
+    font-size: var(--text-body-sm);
+
+    &:hover {
+      color: var(--color-accent-text);
+    }
+  }
+}
+
+.footer-copy {
+  margin-top: var(--space-7);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-line);
+  color: var(--color-text-muted);
+  font-size: var(--text-mono-xs);
+}
+
+// ============================================================
+// Responsive
+// ============================================================
+@media (max-width: 980px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
+  }
+  .terminal {
+    max-width: 520px;
+  }
+  .std-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+  .portrait-frame {
+    max-width: 320px;
+  }
+  .modes-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 860px) {
+  .site-nav {
+    display: none;
+  }
+}
+
+@media (max-width: 680px) {
+  .caps-grid {
+    grid-template-columns: 1fr;
+  }
+  .stats-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-6) var(--space-4);
+  }
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+  .header-cta {
+    display: none;
+  }
+  .faq-item summary {
+    font-size: var(--text-lead);
+  }
+}
+
+@media (max-width: 420px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ============================================================
+// Cursor personalizado — flecha de marca
+// ============================================================
+html.cursor-custom,
+html.cursor-custom * {
+  cursor: none !important;
+}
+
+.cursor-arrow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
+  color: var(--color-accent-text);
+  will-change: transform;
+  transition: opacity var(--duration-base) var(--ease-standard);
+
+  svg {
+    display: block;
+    width: 24px;
+    height: 24px;
+    transform-origin: 3px 3px;
+    filter: drop-shadow(0 1px 1.5px rgba(0, 0, 0, 0.4));
+    transition:
+      transform var(--duration-fast) var(--ease-standard),
+      filter var(--duration-base) var(--ease-standard);
+  }
+}
+
+.cursor-arrow.is-hover svg {
+  transform: scale(1.28);
+  filter: drop-shadow(0 0 7px var(--color-brand-primary));
+}
+
+.cursor-arrow.is-down svg {
+  transform: scale(0.82);
+}
+
+.cursor-arrow.is-hidden {
+  opacity: 0;
+}
+
+// Estela difusa que sigue con retraso (desenfocada, no una segunda flecha nitida).
+.cursor-arrow--ghost {
+  z-index: 9998;
+  opacity: 0.32;
+
+  svg {
+    filter: blur(3.5px);
+    transform: scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-arrow--ghost {
+    display: none;
+  }
+}

@@ -1,0 +1,128 @@
+import { defineConfig, type Connect, type Plugin } from "vite";
+import { join, relative, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+import { readdirSync, statSync, writeFileSync } from "node:fs";
+
+/**
+ * Configuracion de Vite para el personal site de Wilvardo.
+ * - Sin frameworks de UI.
+ * - Multi-pagina (MPA): home, indice del blog y entradas de blog.
+ * - Code-splitting manual para Three.js (cargado solo cuando el hero entra al viewport).
+ */
+const root = fileURLToPath(new URL(".", import.meta.url));
+
+/** Dominio canonico del sitio (para sitemap y URLs absolutas). */
+const SITE_URL = "https://wilvardo.com";
+
+/**
+ * Redirige (301) las rutas "de carpeta" sin slash final a su version con slash,
+ * para que /blog y /blog/ (o /blog/<slug> y /blog/<slug>/) sean equivalentes.
+ * Se ignoran los internos de Vite y los archivos con extension.
+ */
+const trailingSlashRedirect = (): Plugin => {
+  const middleware: Connect.NextHandleFunction = (req, res, next) => {
+    const url = req.url ?? "/";
+    const [rawPath, query] = url.split("?");
+    const path = rawPath ?? "/";
+    const isInternal =
+      path.startsWith("/@") || path.startsWith("/src") || path.startsWith("/node_modules");
+
+    if (!isInternal && path !== "/" && !path.endsWith("/") && !path.includes(".")) {
+      res.statusCode = 301;
+      res.setHeader("Location", `${path}/${query ? `?${query}` : ""}`);
+      res.end();
+      return;
+    }
+    next();
+  };
+
+  return {
+    name: "trailing-slash-redirect",
+    configureServer(server) {
+      server.middlewares.use(middleware);
+    },
+    configurePreviewServer(server) {
+      server.middlewares.use(middleware);
+    },
+  };
+};
+
+/** Convierte una ruta de archivo HTML (relativa al outDir) en su URL canonica con slash. */
+const htmlToRoute = (file: string): string => {
+  const normalized = file.split("\\").join("/");
+  if (normalized === "index.html") return "/";
+  if (normalized.endsWith("/index.html")) {
+    return `/${normalized.slice(0, normalized.length - "index.html".length)}`;
+  }
+  return `/${normalized}`;
+};
+
+/** Recolecta recursivamente todos los .html dentro de un directorio. */
+const collectHtml = (dir: string, base: string, out: string[]): void => {
+  for (const name of readdirSync(dir)) {
+    const full = join(dir, name);
+    if (statSync(full).isDirectory()) collectHtml(full, base, out);
+    else if (name.endsWith(".html")) out.push(relative(base, full));
+  }
+};
+
+/**
+ * Genera sitemap.xml tras el build, escaneando todas las paginas HTML del outDir.
+ * Cada pagina o post nuevo aparece automaticamente, sin mantenerlo a mano.
+ */
+const sitemap = (): Plugin => {
+  let outDirAbs = "";
+  return {
+    name: "sitemap",
+    configResolved(config) {
+      outDirAbs = resolve(config.root, config.build.outDir);
+    },
+    closeBundle() {
+      const files: string[] = [];
+      collectHtml(outDirAbs, outDirAbs, files);
+
+      const today = new Date().toISOString().slice(0, 10);
+      const priorityFor = (route: string): string =>
+        route === "/" ? "1.0" : route === "/blog/" ? "0.9" : "0.8";
+
+      const urls = files
+        .map(htmlToRoute)
+        .sort()
+        .map(
+          (route) =>
+            `  <url>\n    <loc>${SITE_URL}${route}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>${priorityFor(route)}</priority>\n  </url>`,
+        )
+        .join("\n");
+
+      const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
+      writeFileSync(join(outDirAbs, "sitemap.xml"), xml, "utf8");
+    },
+  };
+};
+
+export default defineConfig({
+  base: "./",
+  plugins: [trailingSlashRedirect(), sitemap()],
+  build: {
+    target: "es2020",
+    cssCodeSplit: false,
+    sourcemap: false,
+    rollupOptions: {
+      input: {
+        main: resolve(root, "index.html"),
+        blog: resolve(root, "blog/index.html"),
+        "blog-programar-en-la-era-de-la-ia": resolve(root, "blog/programar-en-la-era-de-la-ia/index.html"),
+      },
+      output: {
+        manualChunks: {
+          three: ["three"],
+          gsap: ["gsap"],
+        },
+      },
+    },
+  },
+  server: {
+    port: 5173,
+    host: true,
+  },
+});
