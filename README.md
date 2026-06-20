@@ -142,6 +142,34 @@ npx lighthouse http://localhost:4173/blog/ --view --form-factor=mobile
 
 Los heroes de los posts deben ser WebP **< 200 KB** (la foto editorial sobria comprime muy bien).
 
+## Despliegue de la pagina 404 (Droplet + Nginx)
+
+El sitio se sirve estatico desde un Droplet de DigitalOcean con Nginx (DNS en
+Cloudflare, que deja pasar el 404 del origen sin tocarlo). `vite build` genera
+`dist/404.html`, pero Nginx no lo entrega solo: hay que declararlo en el `server`
+block y recargar.
+
+```nginx
+location / {
+    try_files $uri $uri/ =404;
+}
+
+error_page 404 /404.html;
+location = /404.html {
+    internal;
+}
+```
+
+Aplicar en el servidor y validar antes de recargar:
+
+```bash
+sudo nginx -t && sudo systemctl reload nginx
+```
+
+`error_page` conserva el status 404 real (no un 200 disfrazado), correcto para SEO.
+En local, `npm run preview` replica este comportamiento (rutas inexistentes
+devuelven la 404 con status 404).
+
 ## Pendientes conocidos
 
 - **i18n del blog:** el blog esta solo en espanol. Traducir los posts y activar el toggle de idioma cuando aplique.
