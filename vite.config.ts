@@ -1,7 +1,7 @@
 import { defineConfig, type Connect, type Plugin } from "vite";
 import { join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { readdirSync, statSync, writeFileSync } from "node:fs";
+import { readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 
 /**
  * Configuracion de Vite para el personal site de Wilvardo.
@@ -47,6 +47,63 @@ const trailingSlashRedirect = (): Plugin => {
   };
 };
 
+/**
+ * Sirve 404.html en rutas inexistentes, replicando lo que en produccion hace
+ * Nginx con `error_page 404 /404.html`. En dev reescribe la URL para que Vite
+ * sirva la pagina (status 200, solo previsualizacion); en preview entrega el
+ * archivo de dist con status 404 real.
+ */
+const notFoundFallback = (): Plugin => {
+  let outDirAbs = "";
+  let knownRoutes = new Set<string>();
+
+  /** Una ruta es candidata a 404 si no es interna, no es archivo, no es la raiz y no es una ruta conocida. */
+  const isFallbackTarget = (rawPath: string): boolean => {
+    const path = rawPath.split("?")[0] ?? "/";
+    const isInternal =
+      path.startsWith("/@") ||
+      path.startsWith("/src") ||
+      path.startsWith("/node_modules") ||
+      path.startsWith("/.vite");
+    if (isInternal || path.includes(".") || path === "/") return false;
+    const normalized = path.endsWith("/") ? path : `${path}/`;
+    return !knownRoutes.has(normalized);
+  };
+
+  return {
+    name: "not-found-fallback",
+    configResolved(config) {
+      outDirAbs = resolve(config.root, config.build.outDir);
+      const input = config.build.rollupOptions?.input;
+      const files =
+        input && typeof input === "object" ? Object.values(input as Record<string, string>) : [];
+      knownRoutes = new Set(files.map((abs) => htmlToRoute(relative(config.root, abs))));
+    },
+    configureServer(server) {
+      server.middlewares.use((req, _res, next) => {
+        if (isFallbackTarget(req.url ?? "/")) req.url = "/404.html";
+        next();
+      });
+    },
+    configurePreviewServer(server) {
+      server.middlewares.use((req, res, next) => {
+        if (!isFallbackTarget(req.url ?? "/")) {
+          next();
+          return;
+        }
+        try {
+          const html = readFileSync(join(outDirAbs, "404.html"), "utf8");
+          res.statusCode = 404;
+          res.setHeader("Content-Type", "text/html; charset=utf-8");
+          res.end(html);
+        } catch {
+          next();
+        }
+      });
+    },
+  };
+};
+
 /** Convierte una ruta de archivo HTML (relativa al outDir) en su URL canonica con slash. */
 const htmlToRoute = (file: string): string => {
   const normalized = file.split("\\").join("/");
@@ -86,6 +143,8 @@ const sitemap = (): Plugin => {
         route === "/" ? "1.0" : route === "/blog/" ? "0.9" : "0.8";
 
       const urls = files
+        .map((file) => file.split("\\").join("/"))
+        .filter((file) => !/(^|\/)[0-9]{3}\.html$/.test(file))
         .map(htmlToRoute)
         .sort()
         .map(
@@ -102,7 +161,7 @@ const sitemap = (): Plugin => {
 
 export default defineConfig({
   base: "./",
-  plugins: [trailingSlashRedirect(), sitemap()],
+  plugins: [trailingSlashRedirect(), notFoundFallback(), sitemap()],
   build: {
     target: "es2020",
     cssCodeSplit: false,
@@ -112,6 +171,7 @@ export default defineConfig({
         main: resolve(root, "index.html"),
         blog: resolve(root, "blog/index.html"),
         "blog-programar-en-la-era-de-la-ia": resolve(root, "blog/programar-en-la-era-de-la-ia/index.html"),
+        error: resolve(root, "404.html"),
       },
       output: {
         manualChunks: {
