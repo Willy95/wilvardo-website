@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <script>
+      // Anti-FOUC: fija el tema antes del primer pintado. Sin preferencia guardada, sigue al sistema.
+      (function () {
+        try {
+          var p = localStorage.getItem("wilvardo:theme");
+          var sys = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+          document.documentElement.setAttribute("data-theme", p === "light" || p === "dark" ? p : sys);
+        } catch (e) {}
+      })();
+    </script>
+    <meta name="theme-color" content="#0A0E16" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#F7F9FC" media="(prefers-color-scheme: light)" />
+
+    <title data-i18n="error.meta.title">404 · Ruta no encontrada — Wilvardo Ramírez</title>
+    <meta name="robots" content="noindex, follow" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400..600&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="/isotipo.png" />
+    <link rel="apple-touch-icon" href="/isotipo.png" />
+  </head>
+  <body>
+    <a class="visually-hidden" href="#main">Saltar al contenido</a>
+
+    <header class="site-header" role="banner">
+      <div class="header-inner">
+        <a class="brand-link" href="/" aria-label="Wilvardo — Inicio">
+          <img src="/isotipo.png" alt="" width="34" height="34" />
+          <span class="brand-wordmark">Wilvardo</span>
+          <span class="brand-meta" aria-hidden="true">/ ramirez</span>
+        </a>
+
+        <nav class="site-nav" aria-label="Navegacion principal">
+          <a href="/#about" data-i18n="header.navAbout">Identidad</a>
+          <a href="/#capabilities" data-i18n="header.navCaps">Capacidades</a>
+          <a href="/#standards" data-i18n="header.navStandards">Cómo trabajo</a>
+          <a href="/#services" data-i18n="header.navServices">Colaborar</a>
+          <a href="/blog/">Blog</a>
+        </nav>
+
+        <div class="header-actions">
+          <button class="lang-toggle" type="button" data-action="toggle-lang" aria-label="Cambiar idioma">EN</button>
+          <button class="icon-btn" type="button" data-action="toggle-theme" data-pref="system" aria-label="Tema: sistema. Pulsa para cambiar" title="Tema: sistema">
+            <svg data-icon="system" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none" /></svg>
+            <svg data-icon="light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" /></svg>
+            <svg data-icon="dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" class="error-page">
+      <aside class="terminal" data-error-terminal aria-label="Error 404, ruta no encontrada">
+        <div class="terminal-bar" aria-hidden="true">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          <span class="terminal-title">wilvardo — zsh</span>
+        </div>
+        <div class="terminal-body">
+          <span class="t-line" aria-hidden="true"><span class="t-prompt">$</span> cd <span class="error-path" data-error-path></span></span>
+          <span class="t-line t-out" data-error-shell aria-hidden="true" data-i18n="error.codes.404.shell">bash: cd: ruta no encontrada</span>
+
+          <p class="error-code" data-i18n="error.codes.404.code">404</p>
+          <h1 class="error-title" data-i18n="error.codes.404.title">Esta ruta no existe.</h1>
+          <p class="error-body" data-i18n="error.codes.404.body">El enlace está roto o la página se movió. Volvamos a terreno conocido.</p>
+
+          <span class="t-line" aria-hidden="true"><span class="t-prompt">$</span> <span class="error-cursor"></span></span>
+
+          <div class="error-actions">
+            <a class="btn-primary" href="/" data-i18n="error.actions.home">Volver al inicio</a>
+            <a class="btn-secondary" href="/blog/" data-i18n="error.actions.blog">Ir al blog</a>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <img src="/isotipo.png" alt="" width="30" height="30" />
+            <strong>Wilvardo Ramírez</strong>
+            <small data-i18n="footer.tagline">Software con criterio.</small>
+          </div>
+          <div class="footer-col">
+            <h4 data-i18n="footer.contactHeading">Contacto</h4>
+            <ul>
+              <li><a href="mailto:hola@wilvardo.com">hola@wilvardo.com</a></li>
+              <li><a href="https://linkedin.com/in/wilvardo" target="_blank" rel="noopener">LinkedIn</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4 data-i18n="footer.siteHeading">Mapa</h4>
+            <ul>
+              <li><a href="/#about" data-i18n="header.navAbout">Identidad</a></li>
+              <li><a href="/#capabilities" data-i18n="header.navCaps">Capacidades</a></li>
+              <li><a href="/#services" data-i18n="header.navServices">Colaborar</a></li>
+              <li><a href="/blog/">Blog</a></li>
+            </ul>
+          </div>
+        </div>
+        <p class="footer-copy t-mono" data-i18n="footer.copyright">
+          © 2026 Wilvardo Ramírez · hecho con criterio
+        </p>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/scripts/error-main.ts"></script>
+  </body>
+</html>
