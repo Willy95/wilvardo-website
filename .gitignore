@@ -6,3 +6,4 @@ dist
 *.log
 .vite
 vite.config.ts.timestamp-*
+docs/
