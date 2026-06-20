@@ -124,6 +124,33 @@ const collectHtml = (dir: string, base: string, out: string[]): void => {
 };
 
 /**
+ * Nginx sirve 404.html en CUALQUIER ruta fallida (error_page), pero el navegador
+ * resuelve las rutas relativas contra la URL de la barra, no contra /404.html. Con
+ * base "./" eso rompe los assets en rutas profundas. Reescribimos las referencias
+ * relativas de 404.html a absolutas para que carguen desde la raiz del dominio
+ * sin importar la profundidad de la ruta fallida.
+ */
+const absolutizeErrorAssets = (): Plugin => {
+  let outDirAbs = "";
+  return {
+    name: "absolutize-error-assets",
+    configResolved(config) {
+      outDirAbs = resolve(config.root, config.build.outDir);
+    },
+    closeBundle() {
+      const file = join(outDirAbs, "404.html");
+      try {
+        const html = readFileSync(file, "utf8");
+        const fixed = html.replace(/(src|href)="\.\//g, '$1="/');
+        if (fixed !== html) writeFileSync(file, fixed, "utf8");
+      } catch {
+        // si 404.html no existe en el build, no hay nada que reescribir
+      }
+    },
+  };
+};
+
+/**
  * Genera sitemap.xml tras el build, escaneando todas las paginas HTML del outDir.
  * Cada pagina o post nuevo aparece automaticamente, sin mantenerlo a mano.
  */
@@ -161,7 +188,7 @@ const sitemap = (): Plugin => {
 
 export default defineConfig({
   base: "./",
-  plugins: [trailingSlashRedirect(), notFoundFallback(), sitemap()],
+  plugins: [trailingSlashRedirect(), notFoundFallback(), sitemap(), absolutizeErrorAssets()],
   build: {
     target: "es2020",
     cssCodeSplit: false,
