@@ -82,6 +82,12 @@
       { "t": "Security before every deploy.", "d": "I check for gaps before releasing, not after the incident." }
     ]
   },
+  "blogHome": {
+    "kicker": "Writing",
+    "headline": "What I think, written down.",
+    "sub": "Essays and notes on engineering, product leadership and using AI without handing over the thinking.",
+    "viewAll": "See all articles →"
+  },
   "modes": {
     "kicker": "Ways to work together",
     "headline": "Three ways to help. One conversation.",

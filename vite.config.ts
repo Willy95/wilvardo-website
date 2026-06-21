@@ -2,6 +2,7 @@ import { defineConfig, type Connect, type Plugin } from "vite";
 import { join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { renderHomeCards, renderBlogGrid, renderBlogFilters } from "./src/build/render-cards";
 
 /**
  * Configuracion de Vite para el personal site de Wilvardo.
@@ -186,9 +187,34 @@ const sitemap = (): Plugin => {
   };
 };
 
+/**
+ * Inyecta en tiempo de build (y en dev) las tarjetas de blog desde el manifiesto
+ * unico `src/data/posts.ts`, reemplazando marcadores HTML por el markup renderizado.
+ * Asi el home y el indice del blog comparten una sola fuente de verdad sin JS en
+ * cliente: el HTML sale estatico, indexable y sin parpadeo.
+ *   - <!-- posts:home -->    -> ultimos publicados (teaser del home)
+ *   - <!-- posts:grid -->    -> rejilla completa del indice del blog
+ *   - <!-- posts:filters --> -> botones de filtro con conteos por pilar
+ */
+const injectPosts = (): Plugin => ({
+  name: "inject-posts",
+  transformIndexHtml(html) {
+    return html
+      .replace("<!-- posts:home -->", () => renderHomeCards())
+      .replace("<!-- posts:grid -->", () => renderBlogGrid())
+      .replace("<!-- posts:filters -->", () => renderBlogFilters());
+  },
+});
+
 export default defineConfig({
   base: "./",
-  plugins: [trailingSlashRedirect(), notFoundFallback(), sitemap(), absolutizeErrorAssets()],
+  plugins: [
+    trailingSlashRedirect(),
+    notFoundFallback(),
+    sitemap(),
+    absolutizeErrorAssets(),
+    injectPosts(),
+  ],
   build: {
     target: "es2020",
     cssCodeSplit: false,

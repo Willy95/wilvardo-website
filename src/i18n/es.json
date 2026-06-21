@@ -82,6 +82,12 @@
       { "t": "Seguridad antes de cada deploy.", "d": "Reviso huecos antes de liberar, no después del incidente." }
     ]
   },
+  "blogHome": {
+    "kicker": "Escribo",
+    "headline": "Lo que pienso, por escrito.",
+    "sub": "Ensayos y notas sobre ingeniería, dirección de producto y el uso de la IA sin entregarle el pensamiento.",
+    "viewAll": "Ver todos los artículos →"
+  },
   "modes": {
     "kicker": "Cómo colaboramos",
     "headline": "Tres formas de sumar. Una conversación.",

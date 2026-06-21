@@ -229,3 +229,15 @@
     aspect-ratio: 16 / 10;
   }
 }
+
+// ---- Teaser del blog en el home ----
+// Pocas tarjetas: que llenen el ancho sin huecos y sin el padding inferior del indice.
+.blog-grid--home {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  padding-bottom: 0;
+}
+
+.blog-home-link {
+  display: inline-block;
+  margin-top: var(--space-6);
+}

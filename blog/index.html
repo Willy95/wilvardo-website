@@ -105,113 +105,11 @@
 
       <div class="container">
         <div class="filters" role="group" aria-label="Filtrar por pilar">
-          <button class="filter" type="button" data-filter="all" aria-pressed="true">Todos <span class="count">10</span></button>
-          <button class="filter" type="button" data-filter="ia" aria-pressed="false">IA con criterio <span class="count">2</span></button>
-          <button class="filter" type="button" data-filter="ing" aria-pressed="false">Ingeniería <span class="count">4</span></button>
-          <button class="filter" type="button" data-filter="dir" aria-pressed="false">Dirección y producto <span class="count">2</span></button>
-          <button class="filter" type="button" data-filter="ux" aria-pressed="false">UX y oficio <span class="count">2</span></button>
+          <!-- posts:filters -->
         </div>
 
         <section id="posts" class="blog-grid" aria-label="Artículos">
-          <article class="card is-featured" data-pilar="ing">
-            <div class="card-thumb"><img src="/blog/el-modelo-de-datos/el-modelo-de-datos-hero.webp" alt="Diagrama entidad-relación dibujado a mano sobre papel." width="1200" height="800" decoding="async" /><span class="card-badge">Nuevo</span></div>
-            <div class="card-body">
-              <p class="card-meta"><span class="pilar">Ingeniería</span></p>
-              <h2><a class="card-cover-link" href="/blog/el-modelo-de-datos/">El modelo de datos: la decisión más cara de improvisar</a></h2>
-              <p>Lo barato hoy se vuelve carísimo cuando ya hay datos en producción.</p>
-              <span class="card-cta">Leer →</span>
-            </div>
-          </article>
-
-          <article class="card" data-pilar="ia">
-            <div class="card-thumb"><img src="/blog/programar-en-la-era-de-la-ia/programar-en-la-era-de-la-ia-hero.webp" alt="Manos sosteniendo a contraluz una hoja impresa." loading="lazy" width="1200" height="800" decoding="async" /></div>
-            <div class="card-body">
-              <p class="card-meta"><span class="pilar">IA con criterio</span></p>
-              <h2><a class="card-cover-link" href="/blog/programar-en-la-era-de-la-ia/">Programar en la era de la IA: por qué el criterio es el diferenciador</a></h2>
-              <p>El criterio es lo que la IA no escribe por ti. El manifiesto que abre el blog.</p>
-              <span class="card-cta">Leer →</span>
-            </div>
-          </article>
-
-          <article class="card is-soon" data-pilar="ing">
-            <div class="card-thumb"><img src="/blog/placeholder-card.webp" alt="" loading="lazy" width="1200" height="800" decoding="async" /><span class="card-badge soon">Próximo</span></div>
-            <div class="card-body">
-              <p class="card-meta"><span class="pilar">Ingeniería</span></p>
-              <h2>Arquitectura hexagonal + vertical slicing en un API real</h2>
-              <p>Cómo estructuro un API Node/Adonis que escala y se mantiene.</p>
-              <span class="card-cta">Próximamente</span>
-            </div>
-          </article>
-
-          <article class="card is-soon" data-pilar="ia">
-            <div class="card-thumb"><img src="/blog/placeholder-card.webp" alt="" loading="lazy" width="1200" height="800" decoding="async" /><span class="card-badge soon">Próximo</span></div>
-            <div class="card-body">
-              <p class="card-meta"><span class="pilar">IA con criterio</span></p>
-              <h2>La deuda técnica que la IA acumula sin que la veas</h2>
-              <p>El riesgo del que nadie en tu equipo habla.</p>
-              <span class="card-cta">Próximamente</span>
-            </div>
-          </article>
-
-          <article class="card is-soon" data-pilar="ing">
-            <div class="card-thumb"><img src="/blog/placeholder-card.webp" alt="" loading="lazy" width="1200" height="800" decoding="async" /><span class="card-badge soon">Próximo</span></div>
-            <div class="card-body">
-              <p class="card-meta"><span class="pilar">Ingeniería</span></p>
-              <h2>Cero <code>any</code>: lo que TypeScript estricto te obliga a entender</h2>
-              <p>Prohibir any no es purismo: es disciplina de pensamiento.</p>
-              <span class="card-cta">Próximamente</span>
-            </div>
-          </article>
-
-          <article class="card is-soon" data-pilar="ing">
-            <div class="card-thumb"><img src="/blog/placeholder-card.webp" alt="" loading="lazy" width="1200" height="800" decoding="async" /><span class="card-badge soon">Próximo</span></div>
-            <div class="card-body">
-              <p class="card-meta"><span class="pilar">Ingeniería</span></p>
-              <h2>Errores de API que no odies: título, detalle y key</h2>
-              <p>Un estándar de errores REST que tu frontend agradece.</p>
-              <span class="card-cta">Próximamente</span>
-            </div>
-          </article>
-
-          <article class="card is-soon" data-pilar="dir">
-            <div class="card-thumb"><img src="/blog/placeholder-card.webp" alt="" loading="lazy" width="1200" height="800" decoding="async" /><span class="card-badge soon">Próximo</span></div>
-            <div class="card-body">
-              <p class="card-meta"><span class="pilar">Dirección y producto</span></p>
-              <h2>Scrum de libro vs. el que sí funciona en equipo chico</h2>
-              <p>La certificación enseña ceremonias; la operación enseña qué tirar.</p>
-              <span class="card-cta">Próximamente</span>
-            </div>
-          </article>
-
-          <article class="card is-soon" data-pilar="ux">
-            <div class="card-thumb"><img src="/blog/placeholder-card.webp" alt="" loading="lazy" width="1200" height="800" decoding="async" /><span class="card-badge soon">Próximo</span></div>
-            <div class="card-body">
-              <p class="card-meta"><span class="pilar">UX y oficio</span></p>
-              <h2>Interfaces bonitas no son lujo: la UX como prioridad</h2>
-              <p>La experiencia gana sobre la lista de features.</p>
-              <span class="card-cta">Próximamente</span>
-            </div>
-          </article>
-
-          <article class="card is-soon" data-pilar="dir">
-            <div class="card-thumb"><img src="/blog/placeholder-card.webp" alt="" loading="lazy" width="1200" height="800" decoding="async" /><span class="card-badge soon">Próximo</span></div>
-            <div class="card-body">
-              <p class="card-meta"><span class="pilar">Dirección y producto</span></p>
-              <h2>Control de calidad antes del deploy: el filtro que no se delega</h2>
-              <p>Dónde pongo el ojo humano sin volverme cuello de botella.</p>
-              <span class="card-cta">Próximamente</span>
-            </div>
-          </article>
-
-          <article class="card is-soon" data-pilar="ux">
-            <div class="card-thumb"><img src="/blog/placeholder-card.webp" alt="" loading="lazy" width="1200" height="800" decoding="async" /><span class="card-badge soon">Próximo</span></div>
-            <div class="card-body">
-              <p class="card-meta"><span class="pilar">UX y oficio</span></p>
-              <h2>Cuatro proyectos fallidos: lo que aprendí sobre construir software</h2>
-              <p>Crecer sin estructura mata más rápido que no crecer.</p>
-              <span class="card-cta">Próximamente</span>
-            </div>
-          </article>
+          <!-- posts:grid -->
         </section>
       </div>
     </main>
