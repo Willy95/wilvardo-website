@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <script>
+      (function () {
+        try {
+          var p = localStorage.getItem("wilvardo:theme");
+          var sys = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+          document.documentElement.setAttribute("data-theme", p === "light" || p === "dark" ? p : sys);
+        } catch (e) {}
+      })();
+    </script>
+    <meta name="theme-color" content="#0A0E16" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#F7F9FC" media="(prefers-color-scheme: light)" />
+
+    <title>Ágil de verdad: Scrum implementado en un equipo chico</title>
+    <meta name="description" content="Scrum real en equipo chico: qué ceremonias tirar y cuáles conservar. Historias de usuario, story points y estimación sí; daily y retro de calendario, no." />
+    <meta name="keywords" content="scrum, agil, equipo pequeño, ceremonias scrum, historias de usuario, story points, estimación, daily, retrospectiva, planeación de sprint, gestión de equipos de desarrollo, dirección de producto" />
+    <meta name="author" content="Wilvardo Ramírez" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://wilvardo.com/blog/agil-de-verdad-scrum-equipo-chico/" />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content="Wilvardo Ramírez" />
+    <meta property="og:title" content="Ágil de verdad: Scrum implementado en un equipo chico" />
+    <meta property="og:description" content="La certificación enseña las ceremonias; la operación enseña cuáles tirar. Lo que sostiene a un equipo pequeño, y lo que solo se hace por inercia." />
+    <meta property="og:url" content="https://wilvardo.com/blog/agil-de-verdad-scrum-equipo-chico/" />
+    <meta property="og:image" content="https://wilvardo.com/blog/agil-de-verdad-scrum-equipo-chico/agil-de-verdad-scrum-equipo-chico-hero.webp" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Tablero físico minimalista con notas en blanco y negro, a contraluz." />
+    <meta property="article:published_time" content="2026-06-23" />
+    <meta property="article:author" content="Wilvardo Ramírez" />
+    <meta property="article:section" content="Dirección y producto" />
+    <meta property="article:tag" content="scrum" />
+    <meta property="article:tag" content="agil" />
+    <meta property="article:tag" content="gestión de equipos" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Ágil de verdad: Scrum implementado en un equipo chico" />
+    <meta name="twitter:description" content="La certificación enseña las ceremonias; la operación enseña cuáles tirar. Lo que sostiene a un equipo pequeño, y lo que solo se hace por inercia." />
+    <meta name="twitter:image" content="https://wilvardo.com/blog/agil-de-verdad-scrum-equipo-chico/agil-de-verdad-scrum-equipo-chico-hero.webp" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400..600&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="/isotipo.png" />
+    <link rel="apple-touch-icon" href="/isotipo.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Ágil de verdad: Scrum implementado en un equipo chico",
+        "description": "Scrum real en equipo chico: qué ceremonias tirar y cuáles conservar. Historias de usuario, story points y estimación sí; daily y retro de calendario, no.",
+        "datePublished": "2026-06-23",
+        "dateModified": "2026-06-23",
+        "inLanguage": "es",
+        "author": { "@type": "Person", "name": "Wilvardo Ramírez", "url": "https://wilvardo.com" },
+        "publisher": { "@type": "Person", "name": "Wilvardo Ramírez" },
+        "image": "https://wilvardo.com/blog/agil-de-verdad-scrum-equipo-chico/agil-de-verdad-scrum-equipo-chico-hero.webp",
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://wilvardo.com/blog/agil-de-verdad-scrum-equipo-chico/" },
+        "keywords": "scrum, agil, equipo pequeño, ceremonias scrum, historias de usuario, story points, estimación, planeación de sprint, gestión de equipos de desarrollo",
+        "articleSection": "Dirección y producto"
+      }
+    </script>
+  </head>
+  <body>
+    <a class="visually-hidden" href="#main">Saltar al contenido</a>
+
+    <header class="site-header" role="banner">
+      <div class="header-inner">
+        <button class="nav-toggle" type="button" data-action="toggle-nav" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-nav">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12h6" /><path d="M12 9v6" /><path d="M6 19a2 2 0 0 1 -2 -2v-4l-1 -1l1 -1v-4a2 2 0 0 1 2 -2" /><path d="M18 19a2 2 0 0 0 2 -2v-4l1 -1l-1 -1v-4a2 2 0 0 0 -2 -2" /></svg>
+        </button>
+        <a class="brand-link" href="/" aria-label="Wilvardo Ramírez — Inicio">
+          <img src="/isotipo.png" alt="" width="34" height="34" />
+          <span class="brand-wordmark">Wilvardo</span>
+          <span class="brand-meta" aria-hidden="true">/ criterio</span>
+        </a>
+
+        <nav class="site-nav" aria-label="Navegación principal">
+          <a href="/#about">Identidad</a>
+          <a href="/#capabilities">Capacidades</a>
+          <a href="/#standards">Cómo trabajo</a>
+          <a href="/blog/" aria-current="page">Blog</a>
+        </nav>
+
+        <div class="header-actions">
+          <button class="icon-btn" type="button" data-action="toggle-theme" data-pref="system" aria-label="Tema: sistema. Pulsa para cambiar" title="Tema: sistema">
+            <svg data-icon="system" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none" /></svg>
+            <svg data-icon="light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" /></svg>
+            <svg data-icon="dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>
+          </button>
+          <a class="btn-primary header-cta" href="/#cta">Agenda una llamada</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="mobile-nav" id="mobile-nav" data-open="false" aria-hidden="true">
+      <div class="mobile-nav__scrim" data-action="close-nav"></div>
+      <nav class="mobile-nav__panel" aria-label="Navegación móvil">
+        <button class="mobile-nav__close" type="button" data-action="close-nav" aria-label="Cerrar menú">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>
+        </button>
+        <a href="/#about">Identidad</a>
+        <a href="/#capabilities">Capacidades</a>
+        <a href="/#standards">Cómo trabajo</a>
+        <a href="/blog/" aria-current="page">Blog</a>
+        <a class="btn-primary mobile-nav__cta" href="/#cta">Agenda una llamada</a>
+        <div class="mobile-nav__actions">
+          <button class="icon-btn" type="button" data-action="toggle-theme" data-pref="system" aria-label="Tema: sistema. Pulsa para cambiar" title="Tema: sistema">
+            <svg data-icon="system" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none" /></svg>
+            <svg data-icon="light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" /></svg>
+            <svg data-icon="dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>
+          </button>
+        </div>
+      </nav>
+    </div>
+
+    <main id="main">
+      <article class="post">
+        <div class="post-layout">
+          <div class="post-col">
+            <header class="post-head">
+              <a class="post-back" href="/blog/">← Regresar</a>
+              <p class="post-kicker"><span class="pilar">Dirección y producto</span></p>
+              <h1 class="post-title">Ágil de verdad: Scrum implementado en un equipo chico</h1>
+              <p class="post-dek">La certificación te enseña las ceremonias; la operación te enseña cuáles tirar. Lo que de verdad sostiene a un equipo pequeño, y lo que solo se hace por inercia.</p>
+              <div class="post-meta">
+                <time datetime="2026-06-23">23 jun 2026</time>
+                <span class="sep" aria-hidden="true">·</span>
+                <span>7 min de lectura</span>
+                <span class="sep" aria-hidden="true">·</span>
+                <span>Wilvardo Ramírez</span>
+                <button class="share-btn" type="button" data-share aria-label="Compartir este artículo">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4" /></svg>
+                  <span class="share-label">Compartir</span>
+                </button>
+              </div>
+            </header>
+
+            <figure class="post-hero">
+              <div class="post-hero-media">
+                <img src="/blog/agil-de-verdad-scrum-equipo-chico/agil-de-verdad-scrum-equipo-chico-hero.webp" alt="Tablero físico minimalista con notas en blanco y negro, a contraluz." width="1200" height="630" fetchpriority="high" decoding="async" onerror="this.remove()" />
+                <span class="tick tl"></span><span class="tick tr"></span><span class="tick bl"></span><span class="tick br"></span>
+              </div>
+            </figure>
+
+            <div class="post-body">
+<p>He visto equipos de cuatro personas con más ceremonias que una corte. Ágil no es hacer todos los rituales; es quedarte solo con los que te dan información.</p>
+<p>El certificado enseña la liturgia completa: daily, planning, refinement, review, retrospectiva, cada una con su duración y su facilitador. La operación enseña lo que ningún curso pone por escrito: cuál de esas ceremonias sirve cuando el equipo cabe en una mesa, y cuál se hace solo para sentir que se está siendo ágil. <strong>Ágil no es la cantidad de rituales que cumples; es la calidad de la información que cada uno te devuelve.</strong> Lo que sigue es lo que de verdad sostiene a un equipo pequeño, y lo que conviene dejar de hacer aunque el manual lo pida.</p>
+<h2 class="ph2" id="sec-no-aporta">Lo que no aporta en un equipo chico</h2>
+<p>La mayoría de las ceremonias de Scrum se diseñaron para un problema de escala: coordinar a mucha gente que no se ve todo el día. En un equipo de cuatro, ese problema no existe. Y cuando aplicas la solución de un problema que no tienes, el ritual no organiza nada: solo consume la hora que podía ser de trabajo.</p>
+<p>El daily de pie es el primer sospechoso. En un equipo grande es el único momento en que personas que trabajan en frentes distintos se enteran de en qué anda el resto. En un equipo de cuatro que ya comparte canal, contexto y, muchas veces, pantalla, repetir cada mañana "ayer hice, hoy haré, me bloquea" es teatro: la información que el daily existe para mover ya se movió sola por otro lado. Lo que queda es la formalidad de recitar un estado que todos conocen.</p>
+<p>La retrospectiva de calendario tiene el mismo vicio. La idea es buena —parar a ver qué mejorar— pero amarrarla a un viernes cada dos semanas la vacía: llega la fecha, no hay nada que doliera de verdad y se inventan mejoras de relleno. La reflexión útil no obedece a un calendario; aparece cuando algo se rompió, cuando una entrega se atrasó, cuando una decisión salió cara. Ahí hay que parar a revisar, no el segundo viernes del sprint porque toca.</p>
+<p>Y sin embargo estas ceremonias se mantienen. No por útiles: por inercia y por miedo. <strong>Una ceremonia vacía sobrevive porque quitarla se siente como dejar de ser profesional.</strong> Quien la sostiene confunde el rito con el método: cree que si suelta el daily suelta la disciplina, cuando solo está soltando una reunión que no informaba nada. El proceso se volvió identidad, y nadie quiere tocar su identidad. Por eso la pregunta correcta no es "¿esta ceremonia está en Scrum?", sino otra más incómoda: ¿qué decisión cambia con lo que sale de aquí? Si la respuesta es ninguna, la ceremonia no es ágil. Es burocracia con buena prensa.</p>
+<h2 class="ph2" id="sec-se-sostiene">Lo que sí se sostiene</h2>
+<p>Tirar ceremonias no es tirar estructura, es lo contrario: quitas el rito vacío para que se vea la estructura que de verdad carga el peso. Y hay una parte de Scrum que en un equipo chico no solo aguanta, sino que se vuelve más necesaria.</p>
+<p>Lo primero es la historia de usuario. No como formalidad de tablero, sino como contrato: qué se va a construir, para quién y con qué criterios se da por terminado. Nada entra a desarrollo sin estar escrito así. Una historia bien planteada evita la conversación más cara del software: el "yo entendí otra cosa". Quien la escribe se obliga a entender el problema antes de que el equipo se obligue a resolverlo.</p>
+<p>Después la estimación, donde van juntas dos cosas que suelen confundirse: story points y horas. El story point mide complejidad relativa —qué tan difícil es algo frente a otra cosa que ya hicimos—; la hora aterriza esa complejidad en el calendario real. Una mide el tamaño del problema; la otra, el tiempo que ocupa de la semana. <strong>Estimar no es adivinar cuándo termina algo; es obligarte a entenderlo lo suficiente para ponerle número.</strong> Si una tarea no se puede estimar, no faltan datos: falta entenderla, y esa es la señal de analizarla más antes de asignarla.</p>
+<p>Y la planeación que se respeta. No es sagrada por ceremonia, sino por consecuencia: un plan que se rompe a media semana por lo primero que llega no era un plan, era una lista de deseos. Eso no es rigidez —los planes se ajustan— sino ajustarlos con criterio y no por el impulso del momento.</p>
+<p>Estas tres cosas tienen algo en común: ninguna es una reunión. Son artefactos de pensamiento, y sobreviven al recorte porque no se hacen para sentirse ágil, sino para no construir a ciegas.</p>
+<figure class="post-figure">
+  <svg class="figure-svg" viewBox="0 0 680 232" role="img" aria-labelledby="fig-scrum-t fig-scrum-d" xmlns="http://www.w3.org/2000/svg">
+    <title id="fig-scrum-t">Lo que se tira y lo que se sostiene de Scrum en un equipo chico</title>
+    <desc id="fig-scrum-d">A la izquierda, ceremonias que en un equipo pequeno se mantienen por inercia (daily diario, retrospectiva de calendario); a la derecha, lo que sostiene el trabajo (historias de usuario, story points con horas, una planeacion que se respeta).</desc>
+    <defs><filter id="fz-s" x="-8%" y="-15%" width="116%" height="140%"><feDropShadow dx="0" dy="5" stdDeviation="9" flood-color="#000000" flood-opacity="0.15" /></filter></defs>
+    <g filter="url(#fz-s)"><rect x="20" y="28" width="306" height="186" rx="14" fill="var(--color-surface-raised)" stroke="var(--color-line)" /></g>
+    <circle cx="48" cy="56" r="13" fill="#C9921E" fill-opacity="0.16" /><path d="M43 51 l10 10 M53 51 l-10 10" stroke="#C9921E" stroke-width="2.1" stroke-linecap="round" />
+    <text x="70" y="61" font-family="Space Grotesk, sans-serif" font-weight="600" font-size="15" fill="var(--color-text-primary)">Se tira por inercia</text>
+    <line x1="20" y1="84" x2="326" y2="84" stroke="var(--color-line)" />
+    <path d="M30 109 l3 3 l5 -6" fill="none" stroke="var(--color-line-strong)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" opacity="0" />
+    <line x1="30" y1="112" x2="39" y2="112" stroke="var(--color-line-strong)" stroke-width="2" /><text x="48" y="117" font-family="Inter, sans-serif" font-size="14" fill="var(--color-text-secondary)">Daily diario (todos ya saben)</text>
+    <line x1="30" y1="142" x2="39" y2="142" stroke="var(--color-line-strong)" stroke-width="2" /><text x="48" y="147" font-family="Inter, sans-serif" font-size="14" fill="var(--color-text-secondary)">Retro de calendario</text>
+    <line x1="30" y1="172" x2="39" y2="172" stroke="var(--color-line-strong)" stroke-width="2" /><text x="48" y="177" font-family="Inter, sans-serif" font-size="14" fill="var(--color-text-secondary)">Todo rito sin decisión</text>
+    <g filter="url(#fz-s)"><rect x="354" y="28" width="306" height="186" rx="14" fill="var(--color-surface-raised)" stroke="var(--color-line)" /></g>
+    <circle cx="382" cy="56" r="13" fill="var(--color-brand-primary)" fill-opacity="0.18" /><path d="M376 56 l4 4 l8 -9" fill="none" stroke="var(--color-accent-text)" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" />
+    <text x="404" y="61" font-family="Space Grotesk, sans-serif" font-weight="600" font-size="15" fill="var(--color-text-primary)">Se sostiene</text>
+    <line x1="354" y1="84" x2="660" y2="84" stroke="var(--color-line)" />
+    <path d="M376 109 l3 3 l5 -6" fill="none" stroke="var(--color-accent-text)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" /><text x="392" y="117" font-family="Inter, sans-serif" font-size="14" fill="var(--color-text-primary)">Historias de usuario</text>
+    <path d="M376 139 l3 3 l5 -6" fill="none" stroke="var(--color-accent-text)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" /><text x="392" y="147" font-family="Inter, sans-serif" font-size="14" fill="var(--color-text-primary)">Story points + horas</text>
+    <path d="M376 169 l3 3 l5 -6" fill="none" stroke="var(--color-accent-text)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" /><text x="392" y="177" font-family="Inter, sans-serif" font-size="14" fill="var(--color-text-primary)">Planeación que se respeta</text>
+  </svg>
+  <figcaption>La navaja que decide cada lado: ¿qué decisión cambia con esto? Si ninguna, se tira; si ordena el trabajo, se sostiene.</figcaption>
+</figure>
+<h2 class="ph2" id="sec-debatir">Asignar y dejar que te debatan</h2>
+<p>Hay un punto del proceso donde se decide si tienes un equipo o tienes ejecutores: el momento de asignar.</p>
+<p>El flujo hasta ahí es de quien dirige: analizar el problema, investigarlo, armar el plan, ponerle story points y horas, escribir la historia, asignarla. Pero el plan no baja como orden: baja con una condición explícita. El desarrollador tiene apertura total para debatirme, y si tiene razón, ajusto el plan. No es cortesía; es la parte más útil del proceso.</p>
+<p>Quien va a construir algo ve detalles que quien lo planeó no alcanza a ver desde arriba: el rincón del código donde se va a complicar, la dependencia que no se consideró, la forma más simple de resolver lo que se estimó difícil. Callar eso con un "así está planeado" tira justo el conocimiento que haría salir mejor el trabajo. Un plan que no se puede debatir no es firme; es frágil, y nadie se atreve a tocarlo.</p>
+<p>Esto solo funciona si el debate cambia decisiones de verdad. Si el equipo sabe que puede debatir pero que igual se hará lo de siempre, aprende rápido a callarse.</p>
+<blockquote class="pullquote">La autoridad de quien dirige no se gasta cuando cede ante un buen argumento. Se gasta cuando se aferra a uno malo por no soltarlo a tiempo.</blockquote>
+<p>Dirigir no es tener siempre la razón; es montar el proceso para que la mejor razón gane, venga de quien venga.</p>
+<h2 class="ph2" id="sec-estructura">Estructura sin burocracia</h2>
+<p>Queda el equilibrio más difícil de calibrar, porque las dos orillas tienen nombre de virtud. De un lado, la velocidad que improvisa y deja todo sin rastro. Del otro, el proceso que documenta tanto que ya nadie construye. Ágil de verdad vive en la tensión entre los dos, y sostenerse ahí es una decisión diaria, no un ajuste que se hace una vez.</p>
+<p>La regla con la que resuelvo es documentar lo justo: lo suficiente para que otra persona —o yo en seis meses— entienda por qué algo se hizo así, y ni una línea más. La historia de usuario se escribe porque define el trabajo; la estimación se registra porque ordena la semana; el documento que nadie va a volver a abrir no se escribe, porque mantenerlo cuesta tiempo real y no devuelve nada. <strong>Cada artefacto del proceso se gana su lugar respondiendo lo mismo que las ceremonias: ¿qué decisión mejora porque esto existe?</strong></p>
+<p>Documentar de menos deja al equipo sin memoria: repite errores que ya había resuelto porque nadie anotó cómo. Documentar de más lo deja sin tiempo: las horas se van en mantener papeles en vez de producto. El punto donde la estructura sostiene la velocidad en lugar de pelear con ella no está en el manual: depende del tamaño del equipo, de su madurez, del producto. Por eso no se copia. Se calibra.</p>
+<h2 class="ph2" id="sec-quitar">El criterio es saber qué quitar</h2>
+<p>Ágil de manual y ágil real no son lo mismo, y confundirlos cuesta caro. El primero te da una lista de prácticas y te pide cumplirlas. El segundo te da un objetivo —entregar valor sin construir a ciegas— y te deja la responsabilidad de descubrir qué prácticas lo sirven en tu contexto y cuáles solo lo decoran.</p>
+<p>Adoptar todas las ceremonias es lo fácil: vienen en un paquete y nadie te cuestiona por seguirlas. Lo difícil, y lo que distingue a quien dirige con criterio, es saber qué quitar sin perder lo que importa. Quitar una ceremonia no relaja el proceso; muchas veces es lo que lo vuelve serio, porque obliga a quedarte solo con lo que justifica su costo. La estructura no se mide por cuántas cosas haces, sino por cuántas siguen vivas porque, si las quitaras, algo dejaría de funcionar.</p>
+<p>Eso es lo que el certificado no enseña y la operación sí: no la liturgia completa, sino el juicio para podarla. Lo demás es hacer reuniones bien vestidas y llamarlo metodología.</p>
+            </div>
+
+            <footer class="post-foot">
+              <ul class="post-tags" aria-label="Temas del artículo">
+                <li><a href="/blog/tema/scrum/"><span class="hash" aria-hidden="true">#</span>scrum</a></li>
+                <li><a href="/blog/tema/agil/"><span class="hash" aria-hidden="true">#</span>agil</a></li>
+                <li><a href="/blog/tema/gestion-de-equipos/"><span class="hash" aria-hidden="true">#</span>gestion-de-equipos</a></li>
+                <li><a href="/blog/tema/direccion-de-producto/"><span class="hash" aria-hidden="true">#</span>direccion-de-producto</a></li>
+              </ul>
+
+              <div class="post-author">
+                <span class="iso" aria-hidden="true"><img src="/portrait.webp" alt="" width="46" height="46" onerror="this.remove()" /><span class="iso-mono">W</span></span>
+                <div class="who">
+                  <strong>Wilvardo Ramírez</strong>
+                  <p>Director de desarrollo y diseño de producto.</p>
+                </div>
+              </div>
+
+              <nav class="post-nav" aria-label="Más del blog">
+                <a class="prev" href="/blog/la-ux-como-prioridad/"><span class="lbl">← Anterior</span><span class="ttl">La UX como prioridad</span></a>
+                <a class="disabled" href="#" aria-disabled="true"><span class="lbl">Siguiente →</span><span class="ttl">Es el más reciente</span></a>
+              </nav>
+            </footer>
+          </div>
+
+          <aside class="post-rail" aria-label="Índice y acciones del artículo">
+            <nav class="toc" aria-label="Contenido del artículo">
+              <p class="toc-title">En este artículo</p>
+              <ul>
+                <li><a href="#sec-no-aporta">Lo que no aporta en un equipo chico</a></li>
+                <li><a href="#sec-se-sostiene">Lo que sí se sostiene</a></li>
+                <li><a href="#sec-debatir">Asignar y dejar que te debatan</a></li>
+                <li><a href="#sec-estructura">Estructura sin burocracia</a></li>
+                <li><a href="#sec-quitar">El criterio es saber qué quitar</a></li>
+              </ul>
+            </nav>
+            <button class="rail-share" type="button" data-share aria-label="Compartir este artículo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4" /></svg>
+              <span class="share-label">Compartir</span>
+            </button>
+          </aside>
+        </div>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <img src="/isotipo.png" alt="" width="30" height="30" />
+            <strong>Wilvardo Ramírez</strong>
+            <small>Software con criterio.</small>
+          </div>
+          <div class="footer-col">
+            <h4>Contacto</h4>
+            <ul>
+              <li><a href="mailto:hola@wilvardo.com">hola@wilvardo.com</a></li>
+              <li><a href="https://www.linkedin.com/in/wilvardo-ramirez-colunga-319209b1" target="_blank" rel="noopener">LinkedIn</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Sitio</h4>
+            <ul>
+              <li><a href="/#about">Identidad</a></li>
+              <li><a href="/blog/">Blog</a></li>
+              <li><a href="/#cta">Contacto</a></li>
+            </ul>
+          </div>
+        </div>
+        <p class="footer-copy t-mono">© 2026 Wilvardo Ramírez · hecho con criterio</p>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/scripts/blog-main.ts"></script>
+  </body>
+</html>

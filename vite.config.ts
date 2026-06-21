@@ -353,6 +353,8 @@ export default defineConfig({
         "blog-programar-en-la-era-de-la-ia": resolve(root, "blog/programar-en-la-era-de-la-ia/index.html"),
         "blog-el-modelo-de-datos": resolve(root, "blog/el-modelo-de-datos/index.html"),
         "blog-arquitectura-hexagonal-y-vertical-slicing": resolve(root, "blog/arquitectura-hexagonal-y-vertical-slicing/index.html"),
+        "blog-la-ux-como-prioridad": resolve(root, "blog/la-ux-como-prioridad/index.html"),
+        "blog-agil-de-verdad-scrum-equipo-chico": resolve(root, "blog/agil-de-verdad-scrum-equipo-chico/index.html"),
         error: resolve(root, "404.html"),
       },
       output: {

@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <script>
+      (function () {
+        try {
+          var p = localStorage.getItem("wilvardo:theme");
+          var sys = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+          document.documentElement.setAttribute("data-theme", p === "light" || p === "dark" ? p : sys);
+        } catch (e) {}
+      })();
+    </script>
+    <meta name="theme-color" content="#0A0E16" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#F7F9FC" media="(prefers-color-scheme: light)" />
+
+    <title>Interfaces bonitas no son lujo: la UX como prioridad</title>
+    <meta name="description" content="La UX no es estética ni un lujo: es decisión de negocio. La experiencia de usuario retiene más que la lista de features y se decide desde el discovery." />
+    <meta name="keywords" content="ux, experiencia de usuario, diseño de producto, interfaz de usuario, retención de usuarios, estados de carga, manejo de errores, jerarquía visual, decisión de negocio, frontend desacoplado" />
+    <meta name="author" content="Wilvardo Ramírez" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://wilvardo.com/blog/la-ux-como-prioridad/" />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content="Wilvardo Ramírez" />
+    <meta property="og:title" content="Interfaces bonitas no son lujo: la UX como prioridad" />
+    <meta property="og:description" content="La experiencia gana sobre la lista de funciones: un producto simple y cuidado le gana a uno completo pero incómodo." />
+    <meta property="og:url" content="https://wilvardo.com/blog/la-ux-como-prioridad/" />
+    <meta property="og:image" content="https://wilvardo.com/blog/la-ux-como-prioridad/la-ux-como-prioridad-hero.webp" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Wireframe de una interfaz web dibujado a mano sobre papel." />
+    <meta property="article:published_time" content="2026-06-22" />
+    <meta property="article:author" content="Wilvardo Ramírez" />
+    <meta property="article:section" content="UX y oficio" />
+    <meta property="article:tag" content="ux" />
+    <meta property="article:tag" content="experiencia de usuario" />
+    <meta property="article:tag" content="diseño de producto" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Interfaces bonitas no son lujo: la UX como prioridad" />
+    <meta name="twitter:description" content="La experiencia gana sobre la lista de funciones: un producto simple y cuidado le gana a uno completo pero incómodo." />
+    <meta name="twitter:image" content="https://wilvardo.com/blog/la-ux-como-prioridad/la-ux-como-prioridad-hero.webp" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400..600&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="/isotipo.png" />
+    <link rel="apple-touch-icon" href="/isotipo.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Interfaces bonitas no son lujo: la UX como prioridad",
+        "description": "La UX no es estética ni un lujo: es decisión de negocio. La experiencia de usuario retiene más que la lista de features y se decide desde el discovery.",
+        "datePublished": "2026-06-22",
+        "dateModified": "2026-06-22",
+        "inLanguage": "es",
+        "author": { "@type": "Person", "name": "Wilvardo Ramírez", "url": "https://wilvardo.com" },
+        "publisher": { "@type": "Person", "name": "Wilvardo Ramírez" },
+        "image": "https://wilvardo.com/blog/la-ux-como-prioridad/la-ux-como-prioridad-hero.webp",
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://wilvardo.com/blog/la-ux-como-prioridad/" },
+        "keywords": "ux, experiencia de usuario, diseño de producto, interfaz de usuario, retención de usuarios, jerarquía visual",
+        "articleSection": "UX y oficio"
+      }
+    </script>
+  </head>
+  <body>
+    <a class="visually-hidden" href="#main">Saltar al contenido</a>
+
+    <header class="site-header" role="banner">
+      <div class="header-inner">
+        <button class="nav-toggle" type="button" data-action="toggle-nav" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-nav">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12h6" /><path d="M12 9v6" /><path d="M6 19a2 2 0 0 1 -2 -2v-4l-1 -1l1 -1v-4a2 2 0 0 1 2 -2" /><path d="M18 19a2 2 0 0 0 2 -2v-4l1 -1l-1 -1v-4a2 2 0 0 0 -2 -2" /></svg>
+        </button>
+        <a class="brand-link" href="/" aria-label="Wilvardo Ramírez — Inicio">
+          <img src="/isotipo.png" alt="" width="34" height="34" />
+          <span class="brand-wordmark">Wilvardo</span>
+          <span class="brand-meta" aria-hidden="true">/ criterio</span>
+        </a>
+
+        <nav class="site-nav" aria-label="Navegación principal">
+          <a href="/#about">Identidad</a>
+          <a href="/#capabilities">Capacidades</a>
+          <a href="/#standards">Cómo trabajo</a>
+          <a href="/blog/" aria-current="page">Blog</a>
+        </nav>
+
+        <div class="header-actions">
+          <button class="icon-btn" type="button" data-action="toggle-theme" data-pref="system" aria-label="Tema: sistema. Pulsa para cambiar" title="Tema: sistema">
+            <svg data-icon="system" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none" /></svg>
+            <svg data-icon="light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" /></svg>
+            <svg data-icon="dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>
+          </button>
+          <a class="btn-primary header-cta" href="/#cta">Agenda una llamada</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="mobile-nav" id="mobile-nav" data-open="false" aria-hidden="true">
+      <div class="mobile-nav__scrim" data-action="close-nav"></div>
+      <nav class="mobile-nav__panel" aria-label="Navegación móvil">
+        <button class="mobile-nav__close" type="button" data-action="close-nav" aria-label="Cerrar menú">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>
+        </button>
+        <a href="/#about">Identidad</a>
+        <a href="/#capabilities">Capacidades</a>
+        <a href="/#standards">Cómo trabajo</a>
+        <a href="/blog/" aria-current="page">Blog</a>
+        <a class="btn-primary mobile-nav__cta" href="/#cta">Agenda una llamada</a>
+        <div class="mobile-nav__actions">
+          <button class="icon-btn" type="button" data-action="toggle-theme" data-pref="system" aria-label="Tema: sistema. Pulsa para cambiar" title="Tema: sistema">
+            <svg data-icon="system" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none" /></svg>
+            <svg data-icon="light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" /></svg>
+            <svg data-icon="dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>
+          </button>
+        </div>
+      </nav>
+    </div>
+
+    <main id="main">
+      <article class="post">
+        <div class="post-layout">
+          <div class="post-col">
+            <header class="post-head">
+              <a class="post-back" href="/blog/">← Regresar</a>
+              <p class="post-kicker"><span class="pilar">UX y oficio</span></p>
+              <h1 class="post-title">Interfaces bonitas no son lujo: la UX como prioridad</h1>
+              <p class="post-dek">La experiencia gana sobre la lista de funciones: por qué un producto simple y cuidado le gana a uno completo pero incómodo.</p>
+              <div class="post-meta">
+                <time datetime="2026-06-22">22 jun 2026</time>
+                <span class="sep" aria-hidden="true">·</span>
+                <span>6 min de lectura</span>
+                <span class="sep" aria-hidden="true">·</span>
+                <span>Wilvardo Ramírez</span>
+                <button class="share-btn" type="button" data-share aria-label="Compartir este artículo">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4" /></svg>
+                  <span class="share-label">Compartir</span>
+                </button>
+              </div>
+            </header>
+
+            <figure class="post-hero">
+              <div class="post-hero-media">
+                <img src="/blog/la-ux-como-prioridad/la-ux-como-prioridad-hero.webp" alt="Wireframe de una interfaz web dibujado a mano sobre papel." width="1200" height="630" fetchpriority="high" decoding="async" onerror="this.remove()" />
+                <span class="tick tl"></span><span class="tick tr"></span><span class="tick bl"></span><span class="tick br"></span>
+              </div>
+            </figure>
+
+            <div class="post-body">
+<p>Una funcionalidad que no se entiende no sirve, aunque funcione.</p>
+<p>Nadie abandona un producto porque le faltó una feature. Lo abandona porque usarlo cansa. Y eso casi nunca está en el roadmap. Por eso la experiencia gana sobre la lista de funciones. Un producto completo pero incómodo pierde contra uno simple y cuidado, y lo pierde despacio, sin que nadie levante un ticket que lo explique.</p>
+<h2 class="ph2" id="sec-mito">El mito del completo pero feo</h2>
+<p>Hay una creencia cómoda en el desarrollo: que más funciones es más valor, que si el producto hace más cosas que el del competidor, gana. Es falso, y se nota tarde.</p>
+<p>El valor no se acumula sumando funciones. Una pantalla con veinte opciones no vale el doble que una con diez. Vale menos, porque cada opción que agregas es una decisión más que le impones al usuario. Llega un punto en que el producto hace de todo y no se entiende nada: la lista de características creció y la capacidad de usarlo se encogió.</p>
+<p>Lo he visto repetirse. Un sistema que en el papel le gana a todos —más módulos, más reportes, más configuraciones— y que en la práctica nadie quiere abrir. No porque le falte algo. Porque sobra fricción en todo. El completo pero feo se defiende solo: quien lo construyó señala cada cosa que hace y tiene razón en los hechos. Se equivoca en lo único que importa. <strong>Tener una función y poder usarla sin esfuerzo no son lo mismo.</strong></p>
+<h2 class="ph2" id="sec-negocio">La UX es decisión de negocio, no estética</h2>
+<p>Aquí está el malentendido que cuesta dinero: tratar la experiencia como acabado, como la capa de pintura que se pone al final si sobra tiempo. Esa idea cuesta clientes que nadie cuenta, porque no se van quejándose, se van en silencio.</p>
+<p>La experiencia del usuario es la prioridad máxima, y no por gusto estético: es donde se decide si alguien se queda. Funcionalidad simple más interfaz cuidada es lo que retiene. No la cantidad de cosas que el producto puede hacer: la facilidad con la que la persona logra lo que vino a hacer. Retener es negocio. Lo demás es presupuesto que ya gastaste y no estás cobrando.</p>
+<p>Por eso cuido la experiencia desde donde no se suele mirar: la arquitectura. Trabajo con el procesamiento desacoplado de la interfaz. El frontend pide lo que necesita y lo muestra; el trabajo pesado lo hace el API. Si el cliente carga lógica que no le toca, el usuario espera de más, y quien espera de más se cansa. <strong>El rendimiento es parte de la experiencia, no un detalle aparte de ella.</strong> Una pantalla que tarda no se siente lenta, se siente incómoda. Y el que espera no distingue una cosa de la otra.</p>
+<p>La UX es la decisión de a quién le toca el esfuerzo: al sistema o a la persona. Cada vez que se lo pasas al usuario, el negocio pagó algo que no aparece en ninguna factura.</p>
+<h2 class="ph2" id="sec-cosmetico">Lo que parece cosmético y mueve la aguja</h2>
+<p>Las decisiones que más cambian la experiencia casi nunca son las que se enseñan en una demo. Se ven menores en una junta; se sienten enormes en uso.</p>
+<p>Los estados de carga, por ejemplo. Una pantalla que no avisa que está trabajando se siente rota aunque funcione perfecto: el usuario no sabe si esperar o si ya falló. Un estado de carga pensado no es un adorno, es la diferencia entre "está cargando" y "esto se trabó". Misma latencia, dos experiencias opuestas.</p>
+<figure class="post-figure">
+  <svg class="figure-svg" viewBox="0 0 680 240" role="img" aria-labelledby="fig-load-t fig-load-d" xmlns="http://www.w3.org/2000/svg">
+    <title id="fig-load-t">Sin aviso de carga frente a un estado de carga claro</title>
+    <desc id="fig-load-d">A la izquierda una pantalla que no indica que trabaja y parece rota; a la derecha la misma espera con un esqueleto de carga y un indicador que comunican que el contenido viene en camino.</desc>
+    <defs>
+      <filter id="fz-shadow" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#000000" flood-opacity="0.18" /></filter>
+    </defs>
+    <text x="22" y="19" font-family="JetBrains Mono, monospace" font-size="11.5" letter-spacing="0.06em" fill="var(--color-text-secondary)">SIN AVISO</text>
+    <g filter="url(#fz-shadow)"><rect x="22" y="30" width="296" height="184" rx="14" fill="var(--color-surface-raised)" stroke="var(--color-line)" /></g>
+    <circle cx="44" cy="52" r="3.5" fill="var(--color-line-strong)" /><circle cx="56" cy="52" r="3.5" fill="var(--color-line-strong)" /><circle cx="68" cy="52" r="3.5" fill="var(--color-line-strong)" />
+    <line x1="22" y1="70" x2="318" y2="70" stroke="var(--color-line)" />
+    <text x="170" y="138" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="600" font-size="38" fill="var(--color-line-strong)">?</text>
+    <text x="170" y="170" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" fill="var(--color-text-secondary)">¿cargando… o se rompió?</text>
+    <text x="362" y="19" font-family="JetBrains Mono, monospace" font-size="11.5" letter-spacing="0.06em" fill="var(--color-accent-text)">CON ESTADO DE CARGA</text>
+    <g filter="url(#fz-shadow)"><rect x="362" y="30" width="296" height="184" rx="14" fill="var(--color-surface-raised)" stroke="var(--color-line)" /></g>
+    <circle cx="384" cy="52" r="3.5" fill="var(--color-line-strong)" /><circle cx="396" cy="52" r="3.5" fill="var(--color-line-strong)" /><circle cx="408" cy="52" r="3.5" fill="var(--color-brand-primary)" />
+    <line x1="362" y1="70" x2="658" y2="70" stroke="var(--color-line)" />
+    <rect x="386" y="92" width="176" height="13" rx="6.5" fill="var(--color-surface-muted)" />
+    <rect x="386" y="116" width="248" height="13" rx="6.5" fill="var(--color-surface-muted)" />
+    <rect x="386" y="140" width="148" height="13" rx="6.5" fill="var(--color-surface-muted)" />
+    <circle cx="393" cy="186" r="9" fill="none" stroke="var(--color-line)" stroke-width="3" />
+    <path d="M393 177 a9 9 0 0 1 9 9" fill="none" stroke="var(--color-accent-text)" stroke-width="3" stroke-linecap="round" />
+    <text x="413" y="191" font-family="Inter, sans-serif" font-size="13" fill="var(--color-text-secondary)">Cargando…</text>
+  </svg>
+  <figcaption>El mismo tiempo de espera, dos lecturas opuestas: sin señal el usuario duda si esperar; con un estado de carga sabe que el sistema trabaja.</figcaption>
+</figure>
+<p>Los errores son el otro lugar donde se gana o se pierde la confianza. Un error que dice "algo salió mal" abandona al usuario justo cuando más perdido está. Por eso el API debería de responder cada error con título, detalle y key: para que la interfaz tenga con qué decir algo útil sin adivinar. El error claro no es cortesía: es respeto por la persona del otro lado, que necesita saber qué hacer, no enterarse de que el sistema se rindió.</p>
+<figure class="post-figure">
+  <svg class="figure-svg" viewBox="0 0 680 372" role="img" aria-labelledby="fig-err-t fig-err-d" xmlns="http://www.w3.org/2000/svg">
+    <title id="fig-err-t">El mismo aviso de conflicto, comunicado de tres formas</title>
+    <desc id="fig-err-d">El mismo error (un correo ya registrado, un conflicto) presentado de tres maneras: exponiendo el SQL crudo, con un texto genérico que no orienta, y con un título legible y su detalle. Las dos primeras se deben evitar; la tercera es la correcta. La key viaja aparte para el frontend y no se muestra al usuario.</desc>
+    <defs>
+      <filter id="fz-sh" x="-8%" y="-20%" width="116%" height="150%"><feDropShadow dx="0" dy="5" stdDeviation="9" flood-color="#000000" flood-opacity="0.16" /></filter>
+    </defs>
+    <text x="24" y="15" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing="0.06em" fill="var(--color-text-secondary)">ERROR DE SQL EXPUESTO</text>
+    <g filter="url(#fz-sh)"><rect x="22" y="22" width="636" height="86" rx="13" fill="#C9921E" fill-opacity="0.08" stroke="#C9921E" stroke-opacity="0.30" /></g>
+    <rect x="22" y="22" width="5" height="86" rx="2.5" fill="#C9921E" />
+    <circle cx="58" cy="65" r="15" fill="#C9921E" fill-opacity="0.16" />
+    <text x="58" y="71" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="17" fill="#C9921E">!</text>
+    <text x="86" y="56" font-family="JetBrains Mono, monospace" font-size="12.5" fill="var(--color-text-primary)">SQLException: duplicate key value violates</text>
+    <text x="86" y="76" font-family="JetBrains Mono, monospace" font-size="12.5" fill="var(--color-text-primary)">unique constraint "customers_email_key"</text>
+    <text x="86" y="96" font-family="Inter, sans-serif" font-size="12" fill="var(--color-text-secondary)">filtra la base de datos · inseguro · ilegible</text>
+    <circle cx="628" cy="42" r="12" fill="#E5534B" fill-opacity="0.14" /><path d="M623 37 l10 10 M633 37 l-10 10" stroke="#E5534B" stroke-width="2" stroke-linecap="round" />
+    <text x="24" y="140" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing="0.06em" fill="var(--color-text-secondary)">GENÉRICO</text>
+    <g filter="url(#fz-sh)"><rect x="22" y="147" width="636" height="74" rx="13" fill="#C9921E" fill-opacity="0.08" stroke="#C9921E" stroke-opacity="0.30" /></g>
+    <rect x="22" y="147" width="5" height="74" rx="2.5" fill="#C9921E" />
+    <circle cx="58" cy="184" r="15" fill="#C9921E" fill-opacity="0.16" />
+    <text x="58" y="190" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="17" fill="#C9921E">!</text>
+    <text x="86" y="180" font-family="Inter, sans-serif" font-size="15" fill="var(--color-text-primary)">Algo salió mal.</text>
+    <text x="86" y="201" font-family="Inter, sans-serif" font-size="12.5" fill="var(--color-text-secondary)">…no dice qué pasó ni qué hacer</text>
+    <circle cx="628" cy="165" r="12" fill="#E5534B" fill-opacity="0.14" /><path d="M623 160 l10 10 M633 160 l-10 10" stroke="#E5534B" stroke-width="2" stroke-linecap="round" />
+    <text x="24" y="253" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing="0.06em" fill="var(--color-text-secondary)">TÍTULO Y DETALLE</text>
+    <g filter="url(#fz-sh)"><rect x="22" y="260" width="636" height="80" rx="13" fill="#C9921E" fill-opacity="0.08" stroke="#C9921E" stroke-opacity="0.30" /></g>
+    <rect x="22" y="260" width="5" height="80" rx="2.5" fill="#C9921E" />
+    <circle cx="58" cy="300" r="15" fill="#C9921E" fill-opacity="0.16" />
+    <text x="58" y="306" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="17" fill="#C9921E">!</text>
+    <text x="86" y="293" font-family="Space Grotesk, sans-serif" font-weight="600" font-size="16" fill="var(--color-text-primary)">Correo ya registrado</text>
+    <text x="86" y="315" font-family="Inter, sans-serif" font-size="13" fill="var(--color-text-secondary)">Ya existe un cliente con ese correo.</text>
+    <circle cx="628" cy="280" r="12" fill="var(--color-brand-primary)" fill-opacity="0.20" /><path d="M622 280 l4.5 4.5 l8 -9" fill="none" stroke="var(--color-accent-text)" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" />
+    <text x="27" y="362" font-family="JetBrains Mono, monospace" font-size="11.5" fill="var(--color-text-secondary)">— el front recibe aparte la key estable (correo-ya-registrado); el usuario no la ve</text>
+  </svg>
+  <figcaption>El mismo aviso de conflicto, tres formas de darlo: exponer el SQL es inseguro e ilegible (Lo he visto más veces de las que debería); el genérico no orienta; con título y detalle el usuario sabe qué pasó. La key viaja para el frontend, nunca a la pantalla.</figcaption>
+</figure>
+<p>Y la jerarquía visual, que parece puro diseño y es pura función. Cuando todo pesa igual en la pantalla, nada guía: el usuario tiene que leerlo todo para encontrar lo que importa. Una jerarquía bien puesta decide por él qué mirar primero. Eso no es decoración, es quitarle trabajo mental a quien usa el producto. Lo mismo con la coherencia: iconografía que sigue una sola línea, idioma que se adapta a quien entra, tema claro u oscuro según lo prefiera. Ninguna de esas cosas vende sola; juntas son la diferencia entre un producto que se siente pensado y uno armado a pedazos. Lo cosmético, visto de cerca, casi nunca lo es.</p>
+<h2 class="ph2" id="sec-discovery">La UX entra en el discovery, no al final</h2>
+<p>El error más caro con la experiencia es de calendario: dejarla para el final.</p>
+<p>La experiencia no se pega encima de un producto terminado: se decide al mismo tiempo que se decide qué va a hacer. Cuando analizo una funcionalidad, antes de pensar en cómo se programa, pienso en cómo se va a usar. Qué información necesita ver la persona y en qué orden. Qué pasa mientras espera. Qué pasa cuando algo falla. Esas preguntas no son del final del proyecto: son de la primera conversación, porque condicionan el modelo de datos, la forma del API y la pantalla a la vez.</p>
+<p>Meterla tarde tiene un costo que no se ve hasta que pega. Rediseñar un flujo cuando el backend ya asumió otro es tocar tres capas para arreglar una. La experiencia que se piensa al inicio cuesta una conversación; la que se corrige al final cuesta un rework que alguien va a tener que justificar.</p>
+<blockquote class="pullquote">La UX no es una etapa del proyecto. Es una pregunta que se hace en todas.</blockquote>
+<p>Por eso no separo diseñar el producto de construirlo. Partir en dos momentos qué hace algo y cómo se siente usarlo es lo que produce productos que funcionan en la documentación y pelean con quien los usa.</p>
+<p>La experiencia del usuario es donde el criterio deja de ser interno y se vuelve visible. Todo lo demás —el modelo de datos, la arquitectura, el rigor del código— el usuario nunca lo ve. Lo único que toca es la superficie, y la superficie no miente: delata si abajo hubo decisiones pensadas o cosas resueltas a las prisas. Es la única parte del criterio que el usuario llega a ver. Cuidar la experiencia no es pulir el final, es respetar a quien va a vivir del otro lado de cada decisión que tomaste mucho antes.</p>
+            </div>
+
+            <footer class="post-foot">
+              <ul class="post-tags" aria-label="Temas del artículo">
+                <li><a href="/blog/tema/ux/"><span class="hash" aria-hidden="true">#</span>ux</a></li>
+                <li><a href="/blog/tema/diseno-de-producto/"><span class="hash" aria-hidden="true">#</span>diseno-de-producto</a></li>
+                <li><a href="/blog/tema/experiencia-de-usuario/"><span class="hash" aria-hidden="true">#</span>experiencia-de-usuario</a></li>
+                <li><a href="/blog/tema/retencion/"><span class="hash" aria-hidden="true">#</span>retencion</a></li>
+              </ul>
+
+              <div class="post-author">
+                <span class="iso" aria-hidden="true"><img src="/portrait.webp" alt="" width="46" height="46" onerror="this.remove()" /><span class="iso-mono">W</span></span>
+                <div class="who">
+                  <strong>Wilvardo Ramírez</strong>
+                  <p>Director de desarrollo y diseño de producto.</p>
+                </div>
+              </div>
+
+              <nav class="post-nav" aria-label="Más del blog">
+                <a class="prev" href="/blog/arquitectura-hexagonal-y-vertical-slicing/"><span class="lbl">← Anterior</span><span class="ttl">Arquitectura hexagonal</span></a>
+                <a class="next" href="/blog/agil-de-verdad-scrum-equipo-chico/"><span class="lbl">Siguiente →</span><span class="ttl">Scrum en equipo chico</span></a>
+              </nav>
+            </footer>
+          </div>
+
+          <aside class="post-rail" aria-label="Índice y acciones del artículo">
+            <nav class="toc" aria-label="Contenido del artículo">
+              <p class="toc-title">En este artículo</p>
+              <ul>
+                <li><a href="#sec-mito">El mito del completo pero feo</a></li>
+                <li><a href="#sec-negocio">La UX es decisión de negocio</a></li>
+                <li><a href="#sec-cosmetico">Lo que parece cosmético y mueve la aguja</a></li>
+                <li><a href="#sec-discovery">La UX entra en el discovery</a></li>
+              </ul>
+            </nav>
+            <button class="rail-share" type="button" data-share aria-label="Compartir este artículo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4" /></svg>
+              <span class="share-label">Compartir</span>
+            </button>
+          </aside>
+        </div>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <img src="/isotipo.png" alt="" width="30" height="30" />
+            <strong>Wilvardo Ramírez</strong>
+            <small>Software con criterio.</small>
+          </div>
+          <div class="footer-col">
+            <h4>Contacto</h4>
+            <ul>
+              <li><a href="mailto:hola@wilvardo.com">hola@wilvardo.com</a></li>
+              <li><a href="https://www.linkedin.com/in/wilvardo-ramirez-colunga-319209b1" target="_blank" rel="noopener">LinkedIn</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Sitio</h4>
+            <ul>
+              <li><a href="/#about">Identidad</a></li>
+              <li><a href="/blog/">Blog</a></li>
+              <li><a href="/#cta">Contacto</a></li>
+            </ul>
+          </div>
+        </div>
+        <p class="footer-copy t-mono">© 2026 Wilvardo Ramírez · hecho con criterio</p>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/scripts/blog-main.ts"></script>
+  </body>
+</html>
