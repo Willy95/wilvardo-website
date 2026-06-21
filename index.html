@@ -47,6 +47,9 @@
 
     <header class="site-header" role="banner">
       <div class="header-inner">
+        <button class="nav-toggle" type="button" data-action="toggle-nav" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-nav">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12h6" /><path d="M12 9v6" /><path d="M6 19a2 2 0 0 1 -2 -2v-4l-1 -1l1 -1v-4a2 2 0 0 1 2 -2" /><path d="M18 19a2 2 0 0 0 2 -2v-4l1 -1l-1 -1v-4a2 2 0 0 0 -2 -2" /></svg>
+        </button>
         <a class="brand-link" href="#top" aria-label="Wilvardo — Inicio">
           <img src="/isotipo.png" alt="" width="34" height="34" />
           <span class="brand-wordmark">Wilvardo</span>
@@ -72,6 +75,29 @@
         </div>
       </div>
     </header>
+
+    <div class="mobile-nav" id="mobile-nav" data-open="false" aria-hidden="true">
+      <div class="mobile-nav__scrim" data-action="close-nav"></div>
+      <nav class="mobile-nav__panel" aria-label="Navegación móvil">
+        <button class="mobile-nav__close" type="button" data-action="close-nav" aria-label="Cerrar menú">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>
+        </button>
+        <a href="#about" data-i18n="header.navAbout">Identidad</a>
+        <a href="#capabilities" data-i18n="header.navCaps">Capacidades</a>
+        <a href="#standards" data-i18n="header.navStandards">Cómo trabajo</a>
+        <a href="#services" data-i18n="header.navServices">Colaborar</a>
+        <a href="/blog/">Blog</a>
+        <a class="btn-primary mobile-nav__cta" href="#cta" data-i18n="header.cta">Agenda una llamada</a>
+        <div class="mobile-nav__actions">
+          <button class="icon-btn" type="button" data-action="toggle-theme" data-pref="system" aria-label="Tema: sistema. Pulsa para cambiar" title="Tema: sistema">
+            <svg data-icon="system" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none" /></svg>
+            <svg data-icon="light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" /></svg>
+            <svg data-icon="dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>
+          </button>
+          <button class="lang-toggle" type="button" data-action="toggle-lang" aria-label="Cambiar idioma">EN</button>
+        </div>
+      </nav>
+    </div>
 
     <main id="main">
       <!-- ============ HERO ============ -->

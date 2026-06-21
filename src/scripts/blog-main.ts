@@ -9,10 +9,12 @@ import { initHeaderScrollState } from "./motion";
 import { initCursor } from "./cursor";
 import { initPost } from "./post";
 import { initBlogFilters } from "./blog";
+import { initMobileNav } from "./mobile-nav";
 
 const boot = (): void => {
   initTheme();
   initHeaderScrollState();
+  initMobileNav();
   initCursor();
   initPost();
   initBlogFilters();

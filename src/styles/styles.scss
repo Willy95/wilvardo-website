@@ -158,6 +158,153 @@ main {
 }
 
 // ============================================================
+// Navegacion movil (drawer)
+// ============================================================
+// Boton hamburguesa: oculto en escritorio, visible solo en el media query movil.
+.nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-pill);
+  color: var(--color-text-secondary);
+  transition:
+    color var(--duration-fast) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard);
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  &:hover {
+    color: var(--color-accent-text);
+    border-color: var(--color-brand-primary);
+  }
+}
+
+// Contenedor del drawer: fuera del flujo, oculto del todo en escritorio.
+.mobile-nav {
+  display: none;
+}
+
+.mobile-nav__scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(6, 9, 15, 0.55); // overlay oscuro fijo, legible en claro y oscuro
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-base) var(--ease-standard);
+}
+
+.mobile-nav__panel {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 210;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: min(82vw, 320px);
+  height: 100dvh;
+  padding: var(--space-8) var(--space-6) var(--space-6);
+  background: color-mix(in srgb, var(--color-surface-raised) 94%, transparent);
+  backdrop-filter: blur(18px) saturate(1.3);
+  -webkit-backdrop-filter: blur(18px) saturate(1.3);
+  border-right: 1px solid var(--color-line);
+  box-shadow: var(--shadow-lg);
+  transform: translateX(-100%);
+  transition: transform var(--duration-base) var(--ease-emphasis);
+  overflow-y: auto;
+
+  // Links de navegacion (excluye el CTA, que conserva su estilo de boton).
+  a:not(.btn-primary) {
+    font-family: var(--font-body);
+    font-size: var(--text-lead);
+    color: var(--color-text-secondary);
+    padding: var(--space-2) 0;
+    transition: color var(--duration-fast) var(--ease-standard);
+
+    &:hover {
+      color: var(--color-text-primary);
+    }
+    &[aria-current="page"] {
+      color: var(--color-accent-text);
+    }
+  }
+
+  .mobile-nav__cta {
+    margin-top: var(--space-4);
+  }
+}
+
+// Fila de controles (tema / idioma) al pie del panel.
+.mobile-nav__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-line);
+}
+
+// Boton de cierre dentro del panel (el hamburguesa queda tapado al abrir).
+.mobile-nav__close {
+  align-self: flex-end;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  margin-bottom: var(--space-2);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-pill);
+  color: var(--color-text-secondary);
+  transition:
+    color var(--duration-fast) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard);
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover {
+    color: var(--color-accent-text);
+    border-color: var(--color-brand-primary);
+  }
+}
+
+.mobile-nav[data-open="true"] {
+  .mobile-nav__scrim {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .mobile-nav__panel {
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 860px) {
+  .nav-toggle {
+    display: inline-flex;
+    order: 1; // lo lleva al extremo derecho; con space-between la marca queda a la izquierda
+  }
+  .mobile-nav {
+    display: block;
+  }
+  .header-inner {
+    gap: var(--space-3);
+  }
+  // El header se reduce a marca + hamburguesa; tema, idioma y CTA viven en el drawer.
+  .header-actions {
+    display: none;
+  }
+}
+
+// ============================================================
 // Hero
 // ============================================================
 .hero {

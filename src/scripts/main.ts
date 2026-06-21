@@ -17,6 +17,7 @@ import {
   initTechIcons,
 } from "./interactions";
 import { initCursor } from "./cursor";
+import { initMobileNav } from "./mobile-nav";
 
 const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -50,6 +51,7 @@ const boot = (): void => {
   initI18n();
   initTheme();
   initHeaderScrollState();
+  initMobileNav();
   revealHeroClaim();
   initRevealObserver();
   initCounters();

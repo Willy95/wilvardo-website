@@ -9,11 +9,13 @@ import { initTheme } from "./theme";
 import { initHeaderScrollState } from "./motion";
 import { initCursor } from "./cursor";
 import { initErrorTerminal } from "./error";
+import { initMobileNav } from "./mobile-nav";
 
 const boot = (): void => {
   initI18n();
   initTheme();
   initHeaderScrollState();
+  initMobileNav();
   initCursor();
   initErrorTerminal();
 };
