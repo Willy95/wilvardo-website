@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <script>
+      (function () {
+        try {
+          var p = localStorage.getItem("wilvardo:theme");
+          var sys = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+          document.documentElement.setAttribute("data-theme", p === "light" || p === "dark" ? p : sys);
+        } catch (e) {}
+      })();
+    </script>
+    <meta name="theme-color" content="#0A0E16" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#F7F9FC" media="(prefers-color-scheme: light)" />
+
+    <title>El modelo de datos: la decisión más cara de improvisar</title>
+    <meta name="description" content="Un mal modelo de datos es barato de crear y carísimo de revertir: una tabla mal puesta hoy es una migración a medianoche en seis meses. Datos antes que código." />
+    <meta name="keywords" content="modelo de datos, base de datos, modelado de datos, deuda técnica, migración de datos, arquitectura de software, esquema de base de datos" />
+    <meta name="author" content="Wilvardo Ramírez" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://wilvardo.com/blog/el-modelo-de-datos/" />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content="Wilvardo · Criterio" />
+    <meta property="og:title" content="El modelo de datos: la decisión más cara de improvisar" />
+    <meta property="og:description" content="Un mal modelo de datos es barato de crear y carísimo de revertir. Datos antes que código." />
+    <meta property="og:url" content="https://wilvardo.com/blog/el-modelo-de-datos/" />
+    <meta property="og:image" content="https://wilvardo.com/blog/el-modelo-de-datos/el-modelo-de-datos-hero.webp" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Diagrama entidad-relación dibujado a mano sobre papel, en un escritorio en penumbra." />
+    <meta property="article:published_time" content="2026-06-20" />
+    <meta property="article:author" content="Wilvardo Ramírez" />
+    <meta property="article:section" content="Ingeniería" />
+    <meta property="article:tag" content="modelo de datos" />
+    <meta property="article:tag" content="base de datos" />
+    <meta property="article:tag" content="deuda técnica" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="El modelo de datos: la decisión más cara de improvisar" />
+    <meta name="twitter:description" content="Un mal modelo de datos es barato de crear y carísimo de revertir. Datos antes que código." />
+    <meta name="twitter:image" content="https://wilvardo.com/blog/el-modelo-de-datos/el-modelo-de-datos-hero.webp" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400..600&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="/isotipo.png" />
+    <link rel="apple-touch-icon" href="/isotipo.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "El modelo de datos: la decisión más cara de improvisar",
+        "description": "Un mal modelo de datos es barato de crear y carísimo de revertir: una tabla mal puesta hoy es una migración a medianoche en seis meses. Datos antes que código.",
+        "datePublished": "2026-06-20",
+        "dateModified": "2026-06-20",
+        "inLanguage": "es",
+        "author": { "@type": "Person", "name": "Wilvardo Ramírez", "url": "https://wilvardo.com" },
+        "publisher": { "@type": "Person", "name": "Wilvardo Ramírez" },
+        "image": "https://wilvardo.com/blog/el-modelo-de-datos/el-modelo-de-datos-hero.webp",
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://wilvardo.com/blog/el-modelo-de-datos/" },
+        "keywords": "modelo de datos, base de datos, modelado de datos, deuda técnica, migración de datos, arquitectura de software",
+        "articleSection": "Ingeniería"
+      }
+    </script>
+  </head>
+  <body>
+    <a class="visually-hidden" href="#main">Saltar al contenido</a>
+
+    <header class="site-header" role="banner">
+      <div class="header-inner">
+        <a class="brand-link" href="/" aria-label="Wilvardo Ramírez — Inicio">
+          <img src="/isotipo.png" alt="" width="34" height="34" />
+          <span class="brand-wordmark">Wilvardo</span>
+          <span class="brand-meta" aria-hidden="true">/ criterio</span>
+        </a>
+
+        <nav class="site-nav" aria-label="Navegación principal">
+          <a href="/#about">Identidad</a>
+          <a href="/#capabilities">Capacidades</a>
+          <a href="/#standards">Cómo trabajo</a>
+          <a href="/blog/" aria-current="page">Blog</a>
+        </nav>
+
+        <div class="header-actions">
+          <button class="icon-btn" type="button" data-action="toggle-theme" data-pref="system" aria-label="Tema: sistema. Pulsa para cambiar" title="Tema: sistema">
+            <svg data-icon="system" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none" /></svg>
+            <svg data-icon="light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" /></svg>
+            <svg data-icon="dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>
+          </button>
+          <a class="btn-primary header-cta" href="/#cta">Agenda una llamada</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <article class="post">
+        <div class="post-layout">
+          <div class="post-col">
+            <header class="post-head">
+              <a class="post-back" href="/blog/">← Regresar</a>
+              <p class="post-kicker"><span class="pilar">Ingeniería</span></p>
+              <h1 class="post-title">El modelo de datos: la decisión más cara de improvisar</h1>
+              <p class="post-dek">Casi ningún proyecto que heredé con problemas graves tenía un problema de código: tenía un modelo de datos que el código intentaba tapar.</p>
+              <div class="post-meta">
+                <time datetime="2026-06-20">20 jun 2026</time>
+                <span class="sep" aria-hidden="true">·</span>
+                <span>6 min de lectura</span>
+                <span class="sep" aria-hidden="true">·</span>
+                <span>Wilvardo Ramírez</span>
+                <button class="share-btn" type="button" data-share aria-label="Compartir este artículo">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4" /></svg>
+                  <span class="share-label">Compartir</span>
+                </button>
+              </div>
+            </header>
+
+            <figure class="post-hero">
+              <div class="post-hero-media">
+                <img src="/blog/el-modelo-de-datos/el-modelo-de-datos-hero.webp" alt="Diagrama entidad-relación dibujado a mano sobre papel, en un escritorio en penumbra." width="1200" height="630" fetchpriority="high" decoding="async" onerror="this.remove()" />
+                <span class="tick tl"></span><span class="tick tr"></span><span class="tick bl"></span><span class="tick br"></span>
+              </div>
+            </figure>
+
+            <div class="post-body">
+              <p>Tengo una regla de la que casi no me bajo: <strong>datos antes que código.</strong> No es una preferencia de estilo. Es el orden en que decido, y la razón por la que reviso un esquema antes de construir encima.</p>
+              <p>Casi todos los proyectos que heredé con problemas graves no tenían un problema de código. Tenían un problema de modelo de datos que el código intentaba tapar. Y el código, por más limpio que estuviera, nunca alcanzaba a tapar lo suficiente.</p>
+
+              <h2 class="ph2" id="sec-costo">El costo compuesto de un mal esquema</h2>
+              <p>Un mal modelo de datos es la decisión más barata de tomar y la más cara de revertir. Esa asimetría es lo que lo vuelve peligroso.</p>
+              <p>El primer mes, un esquema mal pensado no se nota. Las tablas existen, las consultas responden, la demo funciona. Nadie te dice nada porque todavía no hay nada que duela. El sistema está vacío o casi vacío, y un sistema vacío perdona cualquier diseño.</p>
+              <p>El problema llega a los seis meses, cuando ya hay datos vivos en producción. Para entonces la tabla que pusiste mal tiene cien mil registros, tres reportes que dependen de ella y dos integraciones que la consumen. Ya no puedes cambiarla con un <code>ALTER</code> y seguir. Tienes que migrar. Y migrar con datos reales no es reescribir un archivo: es mover información de clientes sin perder un solo registro, sin romper lo que ya consume esa tabla, sin un minuto de caída que el negocio no perdona.</p>
+              <p>Esa es la trampa de la deuda de datos. No se ve cuando se contrae. Se ve cuando ya creció con interés, cuando moverla cuesta diez veces lo que habría costado pensarla bien al principio.</p>
+              <blockquote class="pullquote">La deuda de código la pagas refactorizando un módulo. La deuda de datos, con una migración en producción de madrugada y el respaldo como única red.</blockquote>
+
+              <h2 class="ph2" id="sec-preguntas">Las preguntas antes de la primera tabla</h2>
+              <p>Por eso, antes de crear la primera tabla, no abro el editor. Me hago preguntas. El modelo no se improvisa: se justifica, y justificarlo es contestar a tiempo lo que el código no perdona después.</p>
+              <p>Primero, las cardinalidades reales. No las que suenan bien en la reunión, las que pasan de verdad. ¿Un cliente tiene un domicilio o varios? ¿Una factura pertenece a un proyecto o puede repartirse entre dos? La respuesta cómoda casi siempre es "uno", y casi siempre la realidad es "depende". Modelar la relación equivocada es el error que más caro se cobra después, porque cambiarla implica partir o fusionar tablas con datos adentro.</p>
+              <p>Segundo, cuál es la fuente de verdad. Si un mismo dato vive en dos lugares, tarde o temprano los dos lugares no coinciden, y cuando no coinciden alguien tiene que decidir cuál manda. Esa decisión se toma al diseñar, no cuando ya hay una discrepancia y un cliente reclamando.</p>
+              <p>Tercero, qué se borra de verdad y qué es histórico. Una cosa es eliminar y otra es archivar. Un pago no se borra: se cancela y se conserva. Confundir esos dos verbos al diseñar es lo que te obliga, meses después, a inventar un campo de "estatus" a la fuerza para recuperar lo que nunca debiste perder.</p>
+              <p>Cuarto, qué estados existen y cuáles transiciones son válidas. La mayoría de las entidades de un sistema no son cosas: son procesos. Tienen un ciclo de vida. Si no lo modelas explícito, el ciclo de vida termina viviendo disperso en condicionales por todo el código, y nadie puede decirte con certeza en qué estados puede estar algo.</p>
+              <p>Ninguna de estas preguntas es sobre tecnología. Son sobre el negocio. Por eso el modelo de datos no lo define quien teclea más rápido: lo define quien entiende qué se está representando.</p>
+
+              <h2 class="ph2" id="sec-senales">Señales de que improvisaste la base de datos</h2>
+              <p>Hay síntomas que delatan un esquema que nadie pensó. Los reconozco rápido porque los he visto repetirse en sistemas heredados.</p>
+              <p>El primero es el campo cajón de sastre. Una columna llamada "observaciones", "datos extra" o "varios" donde se mete lo que no se supo dónde poner. Cada uno de esos campos es una pregunta que no se contestó al diseñar, congelada como texto libre que nadie puede consultar después.</p>
+              <p>El segundo es el JSON que esconde una relación. Guardar un arreglo de objetos dentro de una columna porque modelarlo como tabla daba flojera. A veces el JSON es la decisión correcta. Pero cuando ahí adentro hay entidades con identidad propia —que vas a buscar, filtrar o contar— ese JSON es una tabla que no quisiste crear, y lo vas a pagar el día que necesites cruzarla.</p>
+              <p>El tercero es el booleano que en realidad era un estado. Un campo <code>activo</code> que con el tiempo necesita distinguir entre activo, suspendido, en revisión y dado de baja. Empezó como sí o no porque parecía suficiente. Nunca lo fue. Y migrar un booleano a un catálogo de estados, con datos vivos, es exactamente el tipo de dolor que se evita preguntando "¿esto es binario o es un ciclo?" antes de crearlo.</p>
+              <p>El cuarto es la duplicación sin fuente de verdad. El mismo nombre de cliente escrito en tres tablas. El precio copiado en lugar de referenciado. Funciona hasta que algo cambia en un lugar y no en los otros dos, y entonces el sistema empieza a contradecirse a sí mismo.</p>
+              <p>Ninguno de estos errores es de programación. Todos son de modelado. Y todos se ven baratos el día que se cometen.</p>
+
+              <h2 class="ph2" id="sec-frontend">Cuando el frontend pelea con tus datos</h2>
+              <p>Hay una señal que tardé en aprender a leer, y hoy es de las primeras que reviso: cuando el frontend sufre demasiado, el problema casi nunca está en el frontend.</p>
+              <p>Trabajo con el procesamiento desacoplado de la interfaz a propósito. El frontend debería pedir lo que necesita y mostrarlo. Punto. Cuando en cambio veo a un desarrollador haciendo malabares para armar una pantalla —tres consultas para juntar lo que debería venir junto, transformaciones raras en el cliente para reordenar lo que el servidor entregó deforme, lógica de negocio colándose donde solo debería haber presentación— no pienso que el desarrollador lo hizo mal. Pienso que abajo hay un modelo que no le está dando lo que necesita.</p>
+              <p>Una consulta imposible suele ser una relación mal modelada. Un render con malabares suele ser un dato mal estructurado en origen. La interfaz es el lugar donde se hace visible un problema que nació en la base de datos. Es el síntoma, no la enfermedad.</p>
+              <p>Por eso, cuando la UI pelea, no parcho la UI. Bajo a revisar el esquema. El frontend desacoplado es un objetivo correcto, pero solo se cumple si los datos de abajo están bien pensados. Sobre un modelo improvisado, "desacoplar" es solo mudar el desorden de una capa a otra.</p>
+              <p>El modelo de datos es la decisión más cara de revertir de todo el sistema. Por eso es la primera que justifico, no la última. No es burocracia ni perfeccionismo: es no dejar para dentro de seis meses —ya con datos de clientes encima— una decisión que hoy cuesta una conversación.</p>
+              <p>Decidir bien la base de datos antes de escribir la primera línea encima no es lentitud. Es criterio. Es ver el costo que todavía no llega y pagarlo barato, cuando aún se puede.</p>
+            </div>
+
+            <footer class="post-foot">
+              <ul class="post-tags" aria-label="Temas del artículo">
+                <li><a href="/blog/tema/modelo-de-datos/"><span class="hash" aria-hidden="true">#</span>modelo-de-datos</a></li>
+                <li><a href="/blog/tema/base-de-datos/"><span class="hash" aria-hidden="true">#</span>base-de-datos</a></li>
+                <li><a href="/blog/tema/deuda-tecnica/"><span class="hash" aria-hidden="true">#</span>deuda-tecnica</a></li>
+                <li><a href="/blog/tema/arquitectura/"><span class="hash" aria-hidden="true">#</span>arquitectura</a></li>
+              </ul>
+
+              <div class="post-author">
+                <span class="iso" aria-hidden="true"><img src="/portrait.webp" alt="" width="46" height="46" onerror="this.remove()" /><span class="iso-mono">W</span></span>
+                <div class="who">
+                  <strong>Wilvardo Ramírez</strong>
+                  <p>Director de desarrollo y diseño de producto.</p>
+                </div>
+              </div>
+
+              <nav class="post-nav" aria-label="Más del blog">
+                <a class="prev" href="/blog/programar-en-la-era-de-la-ia/"><span class="lbl">← Anterior</span><span class="ttl">Programar en la era de la IA</span></a>
+                <a class="disabled" href="#" aria-disabled="true"><span class="lbl">Siguiente →</span><span class="ttl">Es el más reciente</span></a>
+              </nav>
+            </footer>
+          </div>
+
+          <aside class="post-rail" aria-label="Índice y acciones del artículo">
+            <nav class="toc" aria-label="Contenido del artículo">
+              <p class="toc-title">En este artículo</p>
+              <ul>
+                <li><a href="#sec-costo">El costo compuesto de un mal esquema</a></li>
+                <li><a href="#sec-preguntas">Las preguntas antes de la primera tabla</a></li>
+                <li><a href="#sec-senales">Señales de que improvisaste</a></li>
+                <li><a href="#sec-frontend">Cuando el frontend pelea con tus datos</a></li>
+              </ul>
+            </nav>
+            <button class="rail-share" type="button" data-share aria-label="Compartir este artículo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4" /></svg>
+              <span class="share-label">Compartir</span>
+            </button>
+          </aside>
+        </div>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <img src="/isotipo.png" alt="" width="30" height="30" />
+            <strong>Wilvardo Ramírez</strong>
+            <small>Software con criterio.</small>
+          </div>
+          <div class="footer-col">
+            <h4>Contacto</h4>
+            <ul>
+              <li><a href="mailto:hola@wilvardo.com">hola@wilvardo.com</a></li>
+              <li><a href="https://linkedin.com/in/wilvardo" target="_blank" rel="noopener">LinkedIn</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Sitio</h4>
+            <ul>
+              <li><a href="/#about">Identidad</a></li>
+              <li><a href="/blog/">Blog</a></li>
+              <li><a href="/#cta">Contacto</a></li>
+            </ul>
+          </div>
+        </div>
+        <p class="footer-copy t-mono">© 2026 Wilvardo Ramírez · hecho con criterio</p>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/scripts/blog-main.ts"></script>
+  </body>
+</html>

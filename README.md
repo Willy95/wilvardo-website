@@ -64,7 +64,7 @@ Sin libreria. Textos en `src/i18n/{es,en}.json`, aplicados con `data-i18n="path"
 
 ### SEO y compartir
 
-- **Open Graph / Twitter**: todas las paginas usan **siempre** la misma tarjeta de marca `public/og-default.webp` (1200x630) como `og:image`. No se genera OG por post.
+- **Open Graph / Twitter**: cada **post** usa su propio **hero** (1200x630) como `og:image` y `twitter:image` (y el mismo en el JSON-LD `image`), con su `og:image:alt`. Las paginas **sin hero** (home, indice del blog, 404) usan la tarjeta de marca `public/og-default.webp`.
 - **`sitemap.xml`**: generado en el build (ver plugin).
 - **`public/robots.txt`**: permite todo y apunta al sitemap.
 - Cada pagina lleva meta description, canonical (con slash), OG, Twitter Card; los posts ademas JSON-LD `BlogPosting`.
@@ -83,7 +83,7 @@ blog/
 public/
   portrait.webp            Foto del home
   isotipo.png              Isotipo / favicon
-  og-default.webp          Tarjeta OG de marca (fija, todas las paginas)
+  og-default.webp          Tarjeta OG para paginas sin hero (home, indice, 404)
   robots.txt               Apunta al sitemap
   blog/
     placeholder-card.webp  Imagen generica para cards sin hero
@@ -118,7 +118,7 @@ vite.config.ts             MPA + plugins (trailing slash, sitemap)
 
 1. Crear `blog/<slug>/index.html` (copiar una entrada existente como plantilla y actualizar `title`, meta description, `canonical`, `og:url`, JSON-LD, kicker del pilar, `h1`, dek, fecha, contenido y el indice lateral). El `<slug>` deriva del titulo.
 2. Agregar su entry en `vite.config.ts` -> `build.rollupOptions.input`: `"blog-<slug>": resolve(root, "blog/<slug>/index.html")`.
-3. Guardar el hero en `public/blog/<slug>/<slug>-hero.webp` y referenciarlo con ruta absoluta en el `<img>` del hero. El `og:image` se queda en `og-default.webp`.
+3. Guardar el hero en `public/blog/<slug>/<slug>-hero.webp` (WebP 1200x630, <200 KB) y referenciarlo en el `<img>` del hero. Usar **ese mismo hero** (URL absoluta) en `og:image`, `twitter:image` y el JSON-LD `image`, con `og:image:width/height` y `og:image:alt`. `og-default.webp` queda solo para paginas sin hero.
 4. En `blog/index.html`, pasar la card del post de "Proximo" a publicada: enlazar el `h2` con `<a class="card-cover-link" href="/blog/<slug>/">`, poner el hero en `.card-thumb` y quitar `is-soon`.
 5. `npm run build`: el `sitemap.xml` incluye el nuevo post automaticamente.
 

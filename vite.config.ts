@@ -198,6 +198,7 @@ export default defineConfig({
         main: resolve(root, "index.html"),
         blog: resolve(root, "blog/index.html"),
         "blog-programar-en-la-era-de-la-ia": resolve(root, "blog/programar-en-la-era-de-la-ia/index.html"),
+        "blog-el-modelo-de-datos": resolve(root, "blog/el-modelo-de-datos/index.html"),
         error: resolve(root, "404.html"),
       },
       output: {
