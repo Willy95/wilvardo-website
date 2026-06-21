@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <script>
+      (function () {
+        try {
+          var p = localStorage.getItem("wilvardo:theme");
+          var sys = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+          document.documentElement.setAttribute("data-theme", p === "light" || p === "dark" ? p : sys);
+        } catch (e) {}
+      })();
+    </script>
+    <meta name="theme-color" content="#0A0E16" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#F7F9FC" media="(prefers-color-scheme: light)" />
+
+    <title>Arquitectura hexagonal + vertical slicing en un API real</title>
+    <meta name="description" content="Arquitectura hexagonal y vertical slicing en un API con TypeScript: una rebanada completa, del dominio a las rutas, por caso de uso y no por capa técnica." />
+    <meta name="keywords" content="arquitectura hexagonal, vertical slicing, puertos y adaptadores, inversión de dependencias, api rest, typescript, node, caso de uso, manejo de errores api, clean architecture" />
+    <meta name="author" content="Wilvardo Ramírez" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://wilvardo.com/blog/arquitectura-hexagonal-y-vertical-slicing/" />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content="Wilvardo Ramírez" />
+    <meta property="og:title" content="Arquitectura hexagonal + vertical slicing en un API real" />
+    <meta property="og:description" content="Una rebanada completa, del dominio a las rutas: el código por caso de uso, no por capa técnica." />
+    <meta property="og:url" content="https://wilvardo.com/blog/arquitectura-hexagonal-y-vertical-slicing/" />
+    <meta property="og:image" content="https://wilvardo.com/blog/arquitectura-hexagonal-y-vertical-slicing/arquitectura-hexagonal-y-vertical-slicing-hero.webp" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Diagrama técnico de una arquitectura hexagonal cruzada por franjas verticales." />
+    <meta property="article:published_time" content="2026-06-21" />
+    <meta property="article:author" content="Wilvardo Ramírez" />
+    <meta property="article:section" content="Ingeniería" />
+    <meta property="article:tag" content="arquitectura hexagonal" />
+    <meta property="article:tag" content="vertical slicing" />
+    <meta property="article:tag" content="typescript" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Arquitectura hexagonal + vertical slicing en un API real" />
+    <meta name="twitter:description" content="Una rebanada completa, del dominio a las rutas: el código por caso de uso, no por capa técnica." />
+    <meta name="twitter:image" content="https://wilvardo.com/blog/arquitectura-hexagonal-y-vertical-slicing/arquitectura-hexagonal-y-vertical-slicing-hero.webp" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400..600&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="/isotipo.png" />
+    <link rel="apple-touch-icon" href="/isotipo.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Arquitectura hexagonal + vertical slicing en un API real",
+        "description": "Arquitectura hexagonal y vertical slicing en un API con TypeScript: una rebanada completa, del dominio a las rutas, por caso de uso y no por capa técnica.",
+        "datePublished": "2026-06-21",
+        "dateModified": "2026-06-21",
+        "inLanguage": "es",
+        "author": { "@type": "Person", "name": "Wilvardo Ramírez", "url": "https://wilvardo.com" },
+        "publisher": { "@type": "Person", "name": "Wilvardo Ramírez" },
+        "image": "https://wilvardo.com/blog/arquitectura-hexagonal-y-vertical-slicing/arquitectura-hexagonal-y-vertical-slicing-hero.webp",
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://wilvardo.com/blog/arquitectura-hexagonal-y-vertical-slicing/" },
+        "keywords": "arquitectura hexagonal, vertical slicing, puertos y adaptadores, inversión de dependencias, api rest, typescript",
+        "articleSection": "Ingeniería"
+      }
+    </script>
+  </head>
+  <body>
+    <a class="visually-hidden" href="#main">Saltar al contenido</a>
+
+    <header class="site-header" role="banner">
+      <div class="header-inner">
+        <button class="nav-toggle" type="button" data-action="toggle-nav" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-nav">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12h6" /><path d="M12 9v6" /><path d="M6 19a2 2 0 0 1 -2 -2v-4l-1 -1l1 -1v-4a2 2 0 0 1 2 -2" /><path d="M18 19a2 2 0 0 0 2 -2v-4l1 -1l-1 -1v-4a2 2 0 0 0 -2 -2" /></svg>
+        </button>
+        <a class="brand-link" href="/" aria-label="Wilvardo Ramírez — Inicio">
+          <img src="/isotipo.png" alt="" width="34" height="34" />
+          <span class="brand-wordmark">Wilvardo</span>
+          <span class="brand-meta" aria-hidden="true">/ criterio</span>
+        </a>
+
+        <nav class="site-nav" aria-label="Navegación principal">
+          <a href="/#about">Identidad</a>
+          <a href="/#capabilities">Capacidades</a>
+          <a href="/#standards">Cómo trabajo</a>
+          <a href="/blog/" aria-current="page">Blog</a>
+        </nav>
+
+        <div class="header-actions">
+          <button class="icon-btn" type="button" data-action="toggle-theme" data-pref="system" aria-label="Tema: sistema. Pulsa para cambiar" title="Tema: sistema">
+            <svg data-icon="system" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none" /></svg>
+            <svg data-icon="light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" /></svg>
+            <svg data-icon="dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>
+          </button>
+          <a class="btn-primary header-cta" href="/#cta">Agenda una llamada</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="mobile-nav" id="mobile-nav" data-open="false" aria-hidden="true">
+      <div class="mobile-nav__scrim" data-action="close-nav"></div>
+      <nav class="mobile-nav__panel" aria-label="Navegación móvil">
+        <button class="mobile-nav__close" type="button" data-action="close-nav" aria-label="Cerrar menú">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>
+        </button>
+        <a href="/#about">Identidad</a>
+        <a href="/#capabilities">Capacidades</a>
+        <a href="/#standards">Cómo trabajo</a>
+        <a href="/blog/" aria-current="page">Blog</a>
+        <a class="btn-primary mobile-nav__cta" href="/#cta">Agenda una llamada</a>
+        <div class="mobile-nav__actions">
+          <button class="icon-btn" type="button" data-action="toggle-theme" data-pref="system" aria-label="Tema: sistema. Pulsa para cambiar" title="Tema: sistema">
+            <svg data-icon="system" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none" /></svg>
+            <svg data-icon="light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" /></svg>
+            <svg data-icon="dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>
+          </button>
+        </div>
+      </nav>
+    </div>
+
+    <main id="main">
+      <article class="post">
+        <div class="post-layout">
+          <div class="post-col">
+            <header class="post-head">
+              <a class="post-back" href="/blog/">← Regresar</a>
+              <p class="post-kicker"><span class="pilar">Ingeniería</span></p>
+              <h1 class="post-title">Arquitectura hexagonal + vertical slicing en un API real</h1>
+              <p class="post-dek">Cómo estructuro un API para que crezca sin volverse opaca: un caso de uso de punta a punta, sin teoría de más.</p>
+              <div class="post-meta">
+                <time datetime="2026-06-21">21 jun 2026</time>
+                <span class="sep" aria-hidden="true">·</span>
+                <span>9 min de lectura</span>
+                <span class="sep" aria-hidden="true">·</span>
+                <span>Wilvardo Ramírez</span>
+                <button class="share-btn" type="button" data-share aria-label="Compartir este artículo">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4" /></svg>
+                  <span class="share-label">Compartir</span>
+                </button>
+              </div>
+            </header>
+
+            <figure class="post-hero">
+              <div class="post-hero-media">
+                <img src="/blog/arquitectura-hexagonal-y-vertical-slicing/arquitectura-hexagonal-y-vertical-slicing-hero.webp" alt="Diagrama técnico de una arquitectura hexagonal cruzada por franjas verticales." width="1200" height="630" fetchpriority="high" decoding="async" onerror="this.remove()" />
+                <span class="tick tl"></span><span class="tick tr"></span><span class="tick bl"></span><span class="tick br"></span>
+              </div>
+            </figure>
+
+            <div class="post-body">
+<p>La arquitectura por capas tradicional te ordena el código hasta que el proyecto crece. Entonces te das cuenta de que ordené las carpetas, no las decisiones.</p>
+<p>Una estructura puede verse impecable —<code>controllers</code>, <code>services</code>, <code>models</code>, cada cosa en su cajón— y aun así no decirte nada sobre qué hace el sistema. Ordenas por tecnología y pierdes la intención. Este tutorial trata de cómo estructuro un API para que crezca sin volverse opaca: un caso de uso de punta a punta, sin teoría de más. El caso será registrar un cliente. Limpio, de negocio, sin autenticación ni nada que distraiga del patrón. El patrón es el protagonista.</p>
+<h2 class="ph2" id="sec-capas">El problema de las capas cuando el dominio crece</h2>
+<p>La arquitectura en capas agrupa por tipo técnico. Todos los controladores juntos. Todos los servicios juntos. Todos los modelos juntos. El primer mes es cómodo: sabes dónde va cada archivo nuevo.</p>
+<p>El problema aparece cuando el dominio crece. Para entender una sola funcionalidad —registrar un cliente— tienes que abrir el controlador en una carpeta, el servicio en otra, el modelo en una tercera y el repositorio en una cuarta. La lógica de una intención está repartida en cuatro lugares por una razón puramente técnica: cada archivo es de un "tipo". Nada de eso te dice qué hace el sistema.</p>
+<p>Y el acoplamiento corre por la capa equivocada. Tu servicio importa directo la implementación de la base de datos. El dominio sabe que hay MySQL abajo. Cambiar de motor, o probar la lógica sin tocar la base, deja de ser una decisión y se vuelve una cirugía. <strong>Las capas técnicas ordenan los archivos por lo que son, no por lo que hacen.</strong> Y un sistema se mantiene por lo que hace.</p>
+<h2 class="ph2" id="sec-frase">Hexagonal + vertical slicing en una frase</h2>
+<p>Lo resumo así: <strong>organiza el código por caso de uso y aísla el dominio de la infraestructura.</strong></p>
+<p>Vertical slicing es la primera mitad. En lugar de cortar el sistema en capas horizontales por tecnología, lo cortas en rebanadas verticales por intención. Cada rebanada —registrar un cliente, emitir una factura, cancelar un pedido— contiene todo lo suyo junto. Abres una carpeta y ves la funcionalidad completa, no un fragmento.</p>
+<p>Hexagonal es la segunda. El dominio —las reglas del negocio— vive en el centro y no conoce el mundo exterior. No sabe si los datos llegan por HTTP ni si se guardan en MySQL o en memoria. Habla con el exterior a través de puertos: interfaces que el dominio define y que la infraestructura implementa. La base de datos y el framework son detalles enchufables, no cimientos. Por eso el dominio depende de una interfaz, nunca de una implementación. Esa inversión es la que mantiene el centro limpio.</p>
+<h2 class="ph2" id="sec-estructura">La estructura de carpetas (una carpeta por caso de uso)</h2>
+<p>Así se ve en disco. Una carpeta por caso de uso, con sus capas adentro:</p>
+<pre><code>src/
+  customers/
+    register-customer/
+      domain/
+        customer.entity.ts                   # entidad de dominio
+        customer-repository.port.ts          # puerto (interfaz)
+        email-already-registered.error.ts    # error del dominio
+      application/
+        register-customer.dto.ts             # datos de entrada
+        register-customer.use-case.ts        # orquesta el caso de uso
+      infrastructure/
+        in-memory-customer.repository.ts     # adaptador del puerto
+        customer.controller.ts               # traduce HTTP &lt;-&gt; caso de uso
+        register-customer.routes.ts          # rutas de este caso de uso
+  shared/
+    errors/
+      app.error.ts                           # clase base de errores
+    http/
+      http-handler.ts                        # contrato de handler HTTP
+  router.ts                                  # importa las rutas de cada caso
+</code></pre>
+<p>Mira el orden de dependencias: <code>domain</code> no importa nada de afuera. <code>application</code> importa de <code>domain</code>. <code>infrastructure</code> importa de ambos. Las flechas apuntan siempre hacia el centro, nunca al revés. Esa regla —que las dependencias solo apunten hacia adentro— es lo que hace que el patrón aguante cuando agregas la rebanada veinte.</p>
+<p>Y un detalle que no es cosmético: un archivo de rutas por caso de uso, todos importados en el router principal. El router no concentra lógica. Solo ensambla. Cuando agregas una funcionalidad, agregas una carpeta y enchufas su archivo de rutas. No tocas el resto.</p>
+<h2 class="ph2" id="sec-rebanada">La rebanada completa, con código</h2>
+<p>Vamos de adentro hacia afuera. Primero el dominio, luego el caso de uso, después el puerto y su adaptador, y al final el controlador y las rutas. Mismos nombres, mismos archivos.</p>
+<p>El stack es Node con TypeScript llano, sin framework. Es a propósito: si el patrón depende de Express o de Adonis, no es el patrón, es el framework. Esto se traslada a cualquiera de los dos cambiando solo la capa HTTP.</p>
+<p>Arrancamos por la entidad. Es el corazón de la rebanada: representa un cliente y protege sus propias reglas. No sabe que existe una base de datos.</p>
+<pre><code class="language-ts">// src/customers/register-customer/domain/customer.entity.ts
+
+/** Datos mínimos para construir un cliente válido. */
+export interface CustomerProps {
+  readonly id: string;
+  readonly name: string;
+  readonly email: string;
+}
+
+/**
+ * Entidad de dominio. Garantiza que un cliente nunca exista
+ * en un estado inválido: si se construye, es válido.
+ */
+export class Customer {
+  private constructor(private readonly props: CustomerProps) {}
+
+  /** Crea un cliente validando sus invariantes de negocio. */
+  static create(props: CustomerProps): Customer {
+    if (props.name.trim().length === 0) {
+      throw new Error(&quot;El nombre del cliente es obligatorio.&quot;);
+    }
+    if (!Customer.isEmail(props.email)) {
+      throw new Error(&quot;El correo del cliente no es válido.&quot;);
+    }
+    return new Customer({ ...props, email: props.email.toLowerCase() });
+  }
+
+  private static isEmail(value: string): boolean {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+  }
+
+  get id(): string {
+    return this.props.id;
+  }
+
+  get email(): string {
+    return this.props.email;
+  }
+
+  /** Representación serializable para la capa de salida. */
+  toPrimitives(): CustomerProps {
+    return { ...this.props };
+  }
+}
+</code></pre>
+<p>Sigue el puerto: la interfaz que el caso de uso necesita para persistir. El dominio la define; el dominio decide qué necesita del mundo. Quién la implemente es problema de la infraestructura.</p>
+<pre><code class="language-ts">// src/customers/register-customer/domain/customer-repository.port.ts
+import { Customer } from &quot;./customer.entity&quot;;
+
+/**
+ * Puerto de persistencia. El dominio depende de esta interfaz,
+ * no de ninguna base de datos concreta.
+ */
+export interface CustomerRepository {
+  /** Devuelve el cliente con ese correo, o null si no existe. */
+  findByEmail(email: string): Promise&lt;Customer | null&gt;;
+  /** Persiste un cliente nuevo. */
+  save(customer: Customer): Promise&lt;void&gt;;
+}
+</code></pre>
+<p>Y el error de dominio. Que un correo ya esté registrado es una regla del negocio, no un fallo técnico. Por eso vive aquí, no en el controlador.</p>
+<pre><code class="language-ts">// src/customers/register-customer/domain/email-already-registered.error.ts
+import { AppError } from &quot;../../../shared/errors/app.error&quot;;
+
+/** El correo ya pertenece a otro cliente. Conflicto de negocio. */
+export class EmailAlreadyRegisteredError extends AppError {
+  constructor(email: string) {
+    super({
+      title: &quot;Correo ya registrado&quot;,
+      detail: `Ya existe un cliente con el correo ${email}.`,
+      status: 409,
+    });
+  }
+}
+</code></pre>
+<p>Ahora el caso de uso. Orquesta: recibe datos, consulta el puerto, aplica la regla, persiste. No sabe de HTTP ni de SQL. Depende de la interfaz <code>CustomerRepository</code>, que le inyectan por el constructor. Esa inyección es la inversión de dependencias en acto.</p>
+<pre><code class="language-ts">// src/customers/register-customer/application/register-customer.dto.ts
+
+/** Datos de entrada del caso de uso. Planos, sin lógica. */
+export interface RegisterCustomerDto {
+  readonly name: string;
+  readonly email: string;
+}
+</code></pre>
+<pre><code class="language-ts">// src/customers/register-customer/application/register-customer.use-case.ts
+import { randomUUID } from &quot;node:crypto&quot;;
+import { Customer } from &quot;../domain/customer.entity&quot;;
+import { CustomerRepository } from &quot;../domain/customer-repository.port&quot;;
+import { EmailAlreadyRegisteredError } from &quot;../domain/email-already-registered.error&quot;;
+import { RegisterCustomerDto } from &quot;./register-customer.dto&quot;;
+
+/** Caso de uso: registrar un cliente nuevo. */
+export class RegisterCustomerUseCase {
+  // Depende del puerto, no de la implementación.
+  constructor(private readonly customers: CustomerRepository) {}
+
+  /** Devuelve el id del cliente creado. */
+  async execute(dto: RegisterCustomerDto): Promise&lt;{ id: string }&gt; {
+    const existing = await this.customers.findByEmail(dto.email);
+    if (existing !== null) {
+      throw new EmailAlreadyRegisteredError(dto.email);
+    }
+
+    const customer = Customer.create({
+      id: randomUUID(),
+      name: dto.name,
+      email: dto.email,
+    });
+
+    await this.customers.save(customer);
+    return { id: customer.id };
+  }
+}
+</code></pre>
+<p>Falta el adaptador: una implementación concreta del puerto. Aquí es en memoria para que el ejemplo corra sin base de datos. El día que quieras MySQL, escribes <code>mysql-customer.repository.ts</code> con la misma interfaz y no cambia nada más. Eso es enchufar un detalle.</p>
+<pre><code class="language-ts">// src/customers/register-customer/infrastructure/in-memory-customer.repository.ts
+import { Customer } from &quot;../domain/customer.entity&quot;;
+import { CustomerRepository } from &quot;../domain/customer-repository.port&quot;;
+
+/** Adaptador en memoria. Útil para pruebas y para arrancar. */
+export class InMemoryCustomerRepository implements CustomerRepository {
+  private readonly store = new Map&lt;string, Customer&gt;();
+
+  async findByEmail(email: string): Promise&lt;Customer | null&gt; {
+    const key = email.toLowerCase();
+    return this.store.get(key) ?? null;
+  }
+
+  async save(customer: Customer): Promise&lt;void&gt; {
+    this.store.set(customer.email, customer);
+  }
+}
+</code></pre>
+<p>Llegamos al controlador. Es delgado a propósito: traduce HTTP hacia el caso de uso y mapea el resultado —o el error— a una respuesta REST. Nada más. Para no atarlo a ningún framework, defino un contrato de handler explícito; es portable a Express, Adonis u otro framework, adaptando solo este borde.</p>
+<pre><code class="language-ts">// src/shared/http/http-handler.ts
+
+/** Petición HTTP mínima, agnóstica del framework. */
+export interface HttpRequest {
+  readonly body: unknown; // sin tipar aún: se valida en el borde
+}
+
+/** Respuesta HTTP mínima, agnóstica del framework. */
+export interface HttpResponse {
+  status: number;
+  body: unknown;
+}
+
+/** Contrato de un handler HTTP. */
+export type HttpHandler = (req: HttpRequest) =&gt; Promise&lt;HttpResponse&gt;;
+</code></pre>
+<p>El <code>body</code> entra como <code>unknown</code>, no como <code>any</code>. La diferencia importa: <code>unknown</code> me obliga a validar antes de usarlo. Ese estrechamiento es el borde donde lo no confiable se vuelve confiable.</p>
+<pre><code class="language-ts">// src/customers/register-customer/infrastructure/customer.controller.ts
+import { HttpHandler, HttpRequest, HttpResponse } from &quot;../../../shared/http/http-handler&quot;;
+import { AppError } from &quot;../../../shared/errors/app.error&quot;;
+import { RegisterCustomerUseCase } from &quot;../application/register-customer.use-case&quot;;
+import { RegisterCustomerDto } from &quot;../application/register-customer.dto&quot;;
+
+/** Construye el handler de &quot;registrar cliente&quot; con su caso de uso inyectado. */
+export function makeRegisterCustomerController(
+  useCase: RegisterCustomerUseCase,
+): HttpHandler {
+  return async (req: HttpRequest): Promise&lt;HttpResponse&gt; =&gt; {
+    try {
+      const dto = parseBody(req.body);
+      const result = await useCase.execute(dto);
+      return { status: 201, body: result };
+    } catch (error: unknown) {
+      return toHttpError(error);
+    }
+  };
+}
+
+/** Valida el cuerpo crudo y lo convierte en el DTO tipado. */
+function parseBody(body: unknown): RegisterCustomerDto {
+  if (typeof body !== &quot;object&quot; || body === null) {
+    throw new AppError({ title: &quot;Cuerpo inválido&quot;, detail: &quot;Se esperaba un objeto.&quot;, status: 400 });
+  }
+  const { name, email } = body as Record&lt;string, unknown&gt;;
+  if (typeof name !== &quot;string&quot; || typeof email !== &quot;string&quot;) {
+    throw new AppError({ title: &quot;Campos inválidos&quot;, detail: &quot;name y email deben ser texto.&quot;, status: 400 });
+  }
+  return { name, email };
+}
+
+/** Mapea cualquier error a la forma REST. Lo conocido, con su estado; lo demás, 500. */
+function toHttpError(error: unknown): HttpResponse {
+  if (error instanceof AppError) {
+    return { status: error.status, body: error.toResponse() };
+  }
+  return {
+    status: 500,
+    body: { title: &quot;Error interno&quot;, detail: &quot;Algo salió mal.&quot;, key: &quot;error-interno&quot; },
+  };
+}
+</code></pre>
+<p>Y las rutas de este caso de uso, en su propio archivo. Aquí se arma la rebanada: se instancia el adaptador, se inyecta al caso de uso, se construye el handler. El cableado vive en el borde, no en el dominio.</p>
+<pre><code class="language-ts">// src/customers/register-customer/infrastructure/register-customer.routes.ts
+import { InMemoryCustomerRepository } from &quot;./in-memory-customer.repository&quot;;
+import { RegisterCustomerUseCase } from &quot;../application/register-customer.use-case&quot;;
+import { makeRegisterCustomerController } from &quot;./customer.controller&quot;;
+
+const repository = new InMemoryCustomerRepository();
+const useCase = new RegisterCustomerUseCase(repository);
+const handler = makeRegisterCustomerController(useCase);
+
+/** Una ruta = un método, una ruta y su handler. El router las ensambla. */
+export const registerCustomerRoutes = [
+  { method: &quot;POST&quot; as const, path: &quot;/customers&quot;, handler },
+];
+</code></pre>
+<p>El router principal solo junta las rebanadas. No conoce ningún caso de uso por dentro:</p>
+<pre><code class="language-ts">// src/router.ts
+import { registerCustomerRoutes } from &quot;./customers/register-customer/infrastructure/register-customer.routes&quot;;
+
+/** Tabla de rutas del API. Cada caso de uso aporta las suyas. */
+export const routes = [
+  ...registerCustomerRoutes,
+  // ...siguientes casos de uso
+];
+</code></pre>
+<h2 class="ph2" id="sec-errores">Los errores: título, detalle y key (y por qué el controlador es delgado)</h2>
+<p>Toda respuesta de error de mi API tiene la misma forma: <code>title</code>, <code>detail</code> y <code>key</code>. El título es legible. El detalle explica el caso puntual. La key es el slug del título: un identificador estable que el frontend puede usar para decidir qué hacer sin parsear texto que mañana cambia.</p>
+<p>La clase base concentra esa forma una sola vez:</p>
+<pre><code class="language-ts">// src/shared/errors/app.error.ts
+
+/** Forma estándar de un error de API: title, detail, key. */
+export interface ErrorResponse {
+  readonly title: string;
+  readonly detail: string;
+  readonly key: string;
+}
+
+interface AppErrorProps {
+  readonly title: string;
+  readonly detail: string;
+  readonly status: number;
+}
+
+/** Error base de la aplicación. La key se deriva del título. */
+export class AppError extends Error {
+  readonly title: string;
+  readonly detail: string;
+  readonly status: number;
+
+  constructor(props: AppErrorProps) {
+    super(props.detail);
+    this.title = props.title;
+    this.detail = props.detail;
+    this.status = props.status;
+  }
+
+  /** Convierte el título en slug: &quot;Correo ya registrado&quot; -&gt; &quot;correo-ya-registrado&quot;. */
+  get key(): string {
+    return this.title
+      .toLowerCase()
+      .normalize(&quot;NFD&quot;)
+      .replace(/[\u0300-\u036f]/g, &quot;&quot;) // quita acentos (marcas combinantes)
+      .replace(/[^a-z0-9]+/g, &quot;-&quot;)
+      .replace(/(^-|-$)/g, &quot;&quot;);
+  }
+
+  /** Cuerpo listo para la respuesta REST. */
+  toResponse(): ErrorResponse {
+    return { title: this.title, detail: this.detail, key: this.key };
+  }
+}
+</code></pre>
+<p>Fíjate dónde nace <code>EmailAlreadyRegisteredError</code>: en el dominio, no en el controlador. La regla "no puede haber dos clientes con el mismo correo" es del negocio. El controlador no la conoce; solo sabe que un <code>AppError</code> trae su propio estado y su propia forma, y lo traduce a HTTP.</p>
+<p>Por eso el controlador es delgado. Cada vez que un controlador engorda —validaciones de negocio, decisiones, consultas— es señal de lógica que se filtró desde el dominio. Un controlador delgado no es elegancia. Es la prueba de que el dominio quedó del lado correcto. Si la regla vive en el centro, se puede probar sin levantar un servidor y reusar desde otra entrada —una cola, un cron— sin copiar nada.</p>
+<h2 class="ph2" id="sec-replica">Tu turno: replica el patrón</h2>
+<p>Toma un caso de uso tuyo. No "clientes": el siguiente que de verdad tengas que construir. Emitir una factura, cancelar una suscripción, mover un pedido de estado. Replica la rebanada completa: entidad y puerto en el dominio, caso de uso y DTO en aplicación, adaptador y controlador y rutas en infraestructura. Enchufa su archivo de rutas al router y no toques nada más.</p>
+<p>Cuando termines, revísalo contra esta lista. Si algo falla, la rebanada está mal cortada:</p>
+<ul>
+<li>¿El dominio importa algo de <code>infrastructure</code>? Si sí, apuntaste una dependencia hacia el lado equivocado.</li>
+<li>¿El caso de uso menciona HTTP, SQL o el nombre de tu base de datos? Si sí, se filtró infraestructura al centro.</li>
+<li>¿Podrías cambiar de base de datos escribiendo solo un adaptador nuevo, sin tocar dominio ni caso de uso?</li>
+<li>¿El controlador toma alguna decisión de negocio, o solo traduce y mapea errores?</li>
+<li>¿Cada error sale con <code>title</code>, <code>detail</code> y <code>key</code>, y la <code>key</code> es el slug del título?</li>
+<li>¿Agregar el siguiente caso de uso es crear una carpeta y enchufar sus rutas, sin abrir las demás?</li>
+</ul>
+<p>Si las seis salen limpias, cortaste bien. Si una falla, ya sabes exactamente dónde está la fuga: el checklist te apunta a la capa.</p>
+<p>Cortar el código en rebanadas no es una decisión estética. Es decidir, de antemano, dónde podrá doler el cambio y dónde no. El vertical slicing no ordena archivos: ordena decisiones, y mantener una decisión sale siempre más barato que mantener una carpeta. Eso es criterio: no la forma del árbol, sino saber por qué cada cosa quedó donde quedó —y poder explicarlo cuando alguien, en seis meses, te lo pregunte.</p>
+            </div>
+
+            <footer class="post-foot">
+              <ul class="post-tags" aria-label="Temas del artículo">
+                <li><a href="/blog/tema/arquitectura-hexagonal/"><span class="hash" aria-hidden="true">#</span>arquitectura-hexagonal</a></li>
+                <li><a href="/blog/tema/vertical-slicing/"><span class="hash" aria-hidden="true">#</span>vertical-slicing</a></li>
+                <li><a href="/blog/tema/typescript/"><span class="hash" aria-hidden="true">#</span>typescript</a></li>
+                <li><a href="/blog/tema/api-rest/"><span class="hash" aria-hidden="true">#</span>api-rest</a></li>
+              </ul>
+
+              <div class="post-author">
+                <span class="iso" aria-hidden="true"><img src="/portrait.webp" alt="" width="46" height="46" onerror="this.remove()" /><span class="iso-mono">W</span></span>
+                <div class="who">
+                  <strong>Wilvardo Ramírez</strong>
+                  <p>Director de desarrollo y diseño de producto.</p>
+                </div>
+              </div>
+
+              <nav class="post-nav" aria-label="Más del blog">
+                <a class="prev" href="/blog/el-modelo-de-datos/"><span class="lbl">← Anterior</span><span class="ttl">El modelo de datos</span></a>
+                <a class="disabled" href="#" aria-disabled="true"><span class="lbl">Siguiente →</span><span class="ttl">Es el más reciente</span></a>
+              </nav>
+            </footer>
+          </div>
+
+          <aside class="post-rail" aria-label="Índice y acciones del artículo">
+            <nav class="toc" aria-label="Contenido del artículo">
+              <p class="toc-title">En este artículo</p>
+              <ul>
+                <li><a href="#sec-capas">El problema de las capas</a></li>
+                <li><a href="#sec-frase">Hexagonal y vertical slicing en una frase</a></li>
+                <li><a href="#sec-estructura">La estructura de carpetas</a></li>
+                <li><a href="#sec-rebanada">La rebanada completa, con código</a></li>
+                <li><a href="#sec-errores">Los errores: título, detalle y key</a></li>
+                <li><a href="#sec-replica">Tu turno: replica el patrón</a></li>
+              </ul>
+            </nav>
+            <button class="rail-share" type="button" data-share aria-label="Compartir este artículo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4" /></svg>
+              <span class="share-label">Compartir</span>
+            </button>
+          </aside>
+        </div>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <img src="/isotipo.png" alt="" width="30" height="30" />
+            <strong>Wilvardo Ramírez</strong>
+            <small>Software con criterio.</small>
+          </div>
+          <div class="footer-col">
+            <h4>Contacto</h4>
+            <ul>
+              <li><a href="mailto:hola@wilvardo.com">hola@wilvardo.com</a></li>
+              <li><a href="https://www.linkedin.com/in/wilvardo-ramirez-colunga-319209b1" target="_blank" rel="noopener">LinkedIn</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Sitio</h4>
+            <ul>
+              <li><a href="/#about">Identidad</a></li>
+              <li><a href="/blog/">Blog</a></li>
+              <li><a href="/#cta">Contacto</a></li>
+            </ul>
+          </div>
+        </div>
+        <p class="footer-copy t-mono">© 2026 Wilvardo Ramírez · hecho con criterio</p>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/scripts/blog-main.ts"></script>
+  </body>
+</html>

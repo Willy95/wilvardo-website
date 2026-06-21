@@ -262,6 +262,119 @@
     padding: 0.12em 0.42em;
     border-radius: var(--radius-sm);
   }
+
+  // Bloques de código (tutoriales). Shiki resalta en build con tema dual; el
+  // contenedor da el cromo tipo editor con barra de nombre de archivo.
+  .code-block {
+    margin: var(--space-6) 0;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--color-surface-raised);
+  }
+
+  .code-file {
+    font-family: var(--font-mono);
+    font-size: var(--text-mono-xs);
+    color: var(--color-text-secondary);
+    padding: 9px var(--space-5);
+    border-bottom: 1px solid var(--color-line);
+    background: var(--color-surface-muted);
+    letter-spacing: 0.02em;
+  }
+
+  pre.shiki {
+    margin: 0;
+    padding: var(--space-4) var(--space-5);
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    line-height: 1.7;
+    background: transparent !important;
+    -webkit-overflow-scrolling: touch;
+
+    code {
+      background: none;
+      padding: 0;
+      border-radius: 0;
+      font-size: inherit;
+      font-family: inherit;
+    }
+  }
+
+  // Tema dual de Shiki: claro por defecto, oscuro cuando el tema lo pide.
+  .shiki,
+  .shiki span {
+    color: var(--shiki-light);
+  }
+
+  html[data-theme="dark"] & {
+    .shiki,
+    .shiki span {
+      color: var(--shiki-dark);
+    }
+  }
+
+  // Árbol de archivos (bloque sin lenguaje): mapa legible con jerarquía y buen
+  // contraste en ambos temas (usa los tokens de marca, no los de Shiki).
+  pre.tree {
+    margin: 0;
+    padding: var(--space-4) var(--space-5);
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--color-text-primary);
+    background: transparent;
+    -webkit-overflow-scrolling: touch;
+
+    code {
+      background: none;
+      padding: 0;
+      border-radius: 0;
+      font-size: inherit;
+      font-family: inherit;
+      color: inherit;
+    }
+
+    .tree-dir {
+      color: var(--color-accent-text);
+      font-weight: 600;
+    }
+
+    .tree-file {
+      color: var(--color-text-primary);
+    }
+
+    .tree-comment {
+      color: var(--color-text-secondary);
+    }
+
+    // Líneas guía del árbol (conectores ├── │ └──): visibles pero sin competir.
+    .tree-line {
+      color: var(--color-line-strong);
+    }
+  }
+
+  // Listas del cuerpo (p. ej. checklists de tutorial): el reset quita viñetas,
+  // aquí se restauran con sangría.
+  ul,
+  ol {
+    margin: 0 0 var(--space-5);
+    padding-left: var(--space-5);
+  }
+
+  ul {
+    list-style: disc;
+  }
+
+  ol {
+    list-style: decimal;
+  }
+
+  li {
+    margin: 0 0 var(--space-2);
+  }
 }
 
 // Cita destacada (frase sentencia).

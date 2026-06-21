@@ -206,6 +206,132 @@ const injectPosts = (): Plugin => ({
   },
 });
 
+/** Des-escapa entidades HTML del codigo (markdown las escapo al hornear el post). */
+const decodeHtml = (s: string): string =>
+  s
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&amp;/g, "&");
+
+/** Escapa texto plano para insertarlo en HTML (nombre de archivo de la barra). */
+const escapeHtml = (s: string): string =>
+  s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+type CodeToHtml = (typeof import("shiki"))["codeToHtml"];
+
+/**
+ * Renderiza un bloque sin lenguaje (arbol de archivos) como mapa legible: preserva la
+ * sangria y la alineacion, pinta las carpetas (terminan en `/`) con el acento, los
+ * archivos con texto fuerte y los comentarios `#` atenuados pero legibles. Buen
+ * contraste en claro y oscuro (usa los tokens del tema, no los de Shiki).
+ */
+const renderFileTree = (code: string): string => {
+  // Cada nivel del arbol fuente son 2 espacios. Reconstruimos los conectores
+  // tipo `tree` (├── │ └──) calculando, por linea, si es el ultimo hijo y si
+  // cada ancestro sigue teniendo ramas debajo.
+  const rows = code
+    .split("\n")
+    .filter((l) => l.trim().length > 0)
+    .map((line) => {
+      const m = line.match(/^(.*?)(\s{2,})(#.*)$/);
+      const left = m ? m[1] : line;
+      const comment = m ? m[3] : "";
+      const lead = left.match(/^(\s*)(.*)$/);
+      const depth = Math.floor((lead?.[1].length ?? 0) / 2);
+      const name = (lead?.[2] ?? "").trimEnd();
+      return { depth, name, comment };
+    });
+  const n = rows.length;
+  const isLast = (i: number): boolean => {
+    const d = rows[i].depth;
+    for (let j = i + 1; j < n; j++) {
+      if (rows[j].depth < d) return true;
+      if (rows[j].depth === d) return false;
+    }
+    return true;
+  };
+  const guideOf = (i: number): string => {
+    const d = rows[i].depth;
+    let prefix = "";
+    for (let a = 1; a < d; a++) {
+      let cont = false;
+      for (let j = i + 1; j < n; j++) {
+        const dj = rows[j].depth;
+        if (dj <= a) {
+          cont = dj === a;
+          break;
+        }
+      }
+      prefix += cont ? "│   " : "    ";
+    }
+    return prefix + (d >= 1 ? (isLast(i) ? "└── " : "├── ") : "");
+  };
+  const guides = rows.map((_, i) => guideOf(i));
+  const leftLen = rows.map((r, i) => guides[i].length + r.name.length);
+  const maxLeft = Math.max(...rows.map((r, i) => (r.comment ? leftLen[i] : 0)), 0);
+  const body = rows
+    .map((r, i) => {
+      const guideHtml = guides[i] ? `<span class="tree-line">${escapeHtml(guides[i])}</span>` : "";
+      const nameHtml = `<span class="${r.name.endsWith("/") ? "tree-dir" : "tree-file"}">${escapeHtml(r.name)}</span>`;
+      let commentHtml = "";
+      if (r.comment) {
+        const pad = " ".repeat(Math.max(2, maxLeft - leftLen[i] + 2));
+        commentHtml = pad + `<span class="tree-comment">${escapeHtml(r.comment)}</span>`;
+      }
+      return guideHtml + nameHtml + commentHtml;
+    })
+    .join("\n");
+  return `<pre class="tree"><code>${body}</code></pre>`;
+};
+
+/**
+ * Resalta en build los bloques `<pre><code>` con Shiki, tema dual claro/oscuro via
+ * variables CSS (sin JS en cliente: el HTML sale ya coloreado e indexable). Si la
+ * primera linea del bloque es `// ruta`, la usa como barra de archivo (estetica IDE).
+ * Los bloques sin lenguaje declarado se tratan como arbol de archivos.
+ */
+const highlightCode = (): Plugin => {
+  let codeToHtml: CodeToHtml | null = null;
+  return {
+    name: "highlight-code",
+    async transformIndexHtml(html) {
+      if (!html.includes("<pre><code")) return html;
+      if (!codeToHtml) codeToHtml = (await import("shiki")).codeToHtml;
+
+      const re = /<pre><code(?: class="language-([\w-]+)")?>([\s\S]*?)<\/code><\/pre>/g;
+      const matches = [...html.matchAll(re)];
+      let out = html;
+
+      for (const match of matches) {
+        const lang = match[1];
+        const raw = decodeHtml(match[2] ?? "").replace(/\n$/, "");
+
+        // Bloque sin lenguaje = arbol de archivos: render propio tipo mapa.
+        if (!lang) {
+          out = out.replace(match[0], () => `<div class="code-block">${renderFileTree(raw)}</div>`);
+          continue;
+        }
+
+        const lines = raw.split("\n");
+        const fileMatch = lines[0]?.match(/^\/\/\s?(\S.*)$/);
+        const file = fileMatch ? fileMatch[1].trim() : "";
+        const code = file ? lines.slice(1).join("\n").replace(/^\n+/, "") : raw;
+
+        const highlighted = await codeToHtml(code, {
+          lang,
+          themes: { light: "github-light-high-contrast", dark: "github-dark-high-contrast" },
+          defaultColor: false,
+        });
+        const header = file ? `<div class="code-file">${escapeHtml(file)}</div>` : "";
+        out = out.replace(match[0], () => `<div class="code-block">${header}${highlighted}</div>`);
+      }
+      return out;
+    },
+  };
+};
+
 export default defineConfig({
   base: "./",
   plugins: [
@@ -214,6 +340,7 @@ export default defineConfig({
     sitemap(),
     absolutizeErrorAssets(),
     injectPosts(),
+    highlightCode(),
   ],
   build: {
     target: "es2020",
@@ -225,6 +352,7 @@ export default defineConfig({
         blog: resolve(root, "blog/index.html"),
         "blog-programar-en-la-era-de-la-ia": resolve(root, "blog/programar-en-la-era-de-la-ia/index.html"),
         "blog-el-modelo-de-datos": resolve(root, "blog/el-modelo-de-datos/index.html"),
+        "blog-arquitectura-hexagonal-y-vertical-slicing": resolve(root, "blog/arquitectura-hexagonal-y-vertical-slicing/index.html"),
         error: resolve(root, "404.html"),
       },
       output: {

@@ -68,12 +68,14 @@ export const POSTS: ReadonlyArray<Post> = [
     heroAlt: "Manos sosteniendo a contraluz una hoja impresa.",
   },
   {
-    slug: "arquitectura-hexagonal-vertical-slicing",
+    slug: "arquitectura-hexagonal-y-vertical-slicing",
     title: "Arquitectura hexagonal + vertical slicing en un API real",
-    excerpt: "Cómo estructuro un API Node/Adonis que escala y se mantiene.",
+    excerpt: "Organiza el código por caso de uso, no por capa técnica: una rebanada de punta a punta.",
     pillar: "ing",
-    date: "2026-06-18",
-    status: "upcoming",
+    date: "2026-06-21",
+    status: "published",
+    hero: "/blog/arquitectura-hexagonal-y-vertical-slicing/arquitectura-hexagonal-y-vertical-slicing-hero.webp",
+    heroAlt: "Diagrama técnico de una arquitectura hexagonal cruzada por franjas verticales.",
   },
   {
     slug: "deuda-tecnica-ia",
