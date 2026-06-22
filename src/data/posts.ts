@@ -106,7 +106,7 @@ export const POSTS: ReadonlyArray<Post> = [
     title: "Ágil de verdad: Scrum implementado en un equipo chico",
     excerpt: "La certificación enseña ceremonias; la operación enseña qué tirar.",
     pillar: "dir",
-    date: "2026-06-23",
+    date: "2026-06-22",
     status: "published",
     hero: "/blog/agil-de-verdad-scrum-equipo-chico/agil-de-verdad-scrum-equipo-chico-hero.webp",
     heroAlt: "Tablero físico minimalista con notas en blanco y negro, a contraluz.",
